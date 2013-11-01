@@ -12,4 +12,11 @@ function InputEvent() {
 	var mouse_x = 0;
 	var mouse_y = 0;
 
+
+    var getKeypress = function(key) {
+        var toReturn = InputEvent();
+        toReturn.key = key;
+        return toReturn;
+    }
+
 }

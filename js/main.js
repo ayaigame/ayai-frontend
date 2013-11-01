@@ -6,6 +6,7 @@ var json;
 $(document).ready(function(){
 
     var gameState = GameStateInterface();
+    window.gameState = gameState;
 
     stage = new PIXI.Stage(0xffffff);
     renderer = PIXI.autoDetectRenderer(800, 480);
@@ -54,7 +55,12 @@ $(document).ready(function(){
         registerKeyEvents();
     }
 
-kd
+    function registerKeyEvents() {
+        kd.W.down(function(e) { gameState.sendInputToGameState(InputEvent.getKeypress("w");) });
+        kd.A.down(function(e) { gameState.sendInputToGameState(InputEvent.getKeypress("a");) });
+        kd.S.down(function(e) { gameState.sendInputToGameState(InputEvent.getKeypress("s");) });
+        kd.D.down(function(e) { gameState.sendInputToGameState(InputEvent.getKeypress("d");) });
+    }
 
     function animate() {
         gameState.update();

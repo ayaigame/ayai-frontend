@@ -27,6 +27,7 @@ function GameStateInterface() {
                 case "a": player.position.x -= 2; break;
                 case "s": player.position.y += 2; break;
                 case "d": player.position.x += 2; break;
+            }
         }
     }
 

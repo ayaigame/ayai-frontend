@@ -5,6 +5,8 @@ var json;
 
 $(document).ready(function(){
 
+    var gameState = GameStateInterface();
+
     stage = new PIXI.Stage(0xffffff);
     renderer = PIXI.autoDetectRenderer(800, 480);
     document.body.appendChild(renderer.view);
@@ -52,17 +54,9 @@ $(document).ready(function(){
         registerKeyEvents();
     }
 
-    // test movement
-    function registerKeyEvents() {
-        kd.W.down(function(e) { player.position.y -= 2; });
-        kd.A.down(function(e) { player.position.x -= 2; });
-        kd.S.down(function(e) { player.position.y += 2; });
-        kd.D.down(function(e) { player.position.x += 2; });
-    }
+kd
 
     function animate() {
-        requestAnimFrame(animate);
-        renderer.render(stage);
-        kd.tick();
+        gameState.update();
     } 
 });

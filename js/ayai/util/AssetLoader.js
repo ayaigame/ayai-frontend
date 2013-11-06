@@ -1,20 +1,23 @@
 (function() {
 
     window.ayai = ayai || {};
-    var Connection = function() {
+    var AssetManager = function(assetsFile) {
        // constructor
+       this.assetsFile = assetsFile;
     };
-    var p = Connection.prototype;
-
+    var p = AssetManager.prototype;
+ 
 
    //  public properties 
    //  =================     
+
+    p.assetsFile = null;    
 
 
     //  public methods
     //  ==============
 
-    p.connect = function() {
+    p.a = function() {
     }
 
 
@@ -23,4 +26,4 @@
 
 
 
-window.ayai.Connection = Connection; }(window));
+window.ayai.AssetManager = AssetManager; }(window));

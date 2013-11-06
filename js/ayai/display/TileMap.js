@@ -1,17 +1,16 @@
 (function() {
 
-
-
-    this.TileMap = function(json) {
+    window.ayai = ayai || {};
+    var TileMap = function(json) {
        // constructor
-        this.layers = json.layers;
-        this.tilesets = json.tilesets;
-        this.tileheight = json.tileheight;
-        this.tilewidth = json.tilewidth;
-        this.mapwidth = json.width;
-        this.mapheight = json.height;
+       this.layers = json.layers;    
+		this.tilesets = json.tilesets;
+		this.tileheight = json.tileheight;
+		this.tilewidth = json.tilewidth;
+		this.mapwidth = json.width;
+		this.mapheight = json.height;
         this.map = new PIXI.DisplayObjectContainer();
-        this.renderMap();
+		this.renderMap();
     };
     var p = TileMap.prototype;
 
@@ -66,4 +65,4 @@
 
 
 
-window.TileMap = TileMap; }(window));
+window.ayai.TileMap = TileMap; }(window));

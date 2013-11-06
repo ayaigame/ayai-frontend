@@ -1,26 +1,27 @@
 (function() {
 
     window.ayai = ayai || {};
-    var Connection = function() {
+    var Message = function(type, data) {
        // constructor
+       this.type = type;
+       this.data = data;
     };
-    var p = Connection.prototype;
+    var p = Message.prototype;
 
 
    //  public properties 
    //  =================     
 
+    p.type = null;    
+    p.data = null;
+
 
     //  public methods
     //  ==============
-
-    p.connect = function() {
-    }
 
 
     //  private methods
     //  ===============
 
 
-
-window.ayai.Connection = Connection; }(window));
+window.ayai.Message = Message; }(window));

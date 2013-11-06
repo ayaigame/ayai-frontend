@@ -1,6 +1,5 @@
+this.ayai = this.ayai || {};
 (function() {
-
-    window.ayai = ayai || {};
     var Ayai = function() {
         // constructor
         this._initializeRenderer();
@@ -49,4 +48,4 @@
 
 
 
-window.ayai.Ayai = Ayai; }(window));
+ayai.Ayai = Ayai; }(window));

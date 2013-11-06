@@ -1,6 +1,5 @@
+this.ayai = this.ayai || {};
 (function() {
-
-    window.ayai = ayai || {};
     var Message = function(type, data) {
        // constructor
        this.type = type;
@@ -24,4 +23,4 @@
     //  ===============
 
 
-window.ayai.Message = Message; }(window));
+ayai.Message = Message; }(window));

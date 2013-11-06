@@ -1,6 +1,6 @@
+this.ayai = this.ayai || {};
 (function() {
 
-    window.ayai = ayai || {};
     var Connection = function() {
        // constructor
     };
@@ -23,4 +23,4 @@
 
 
 
-window.ayai.Connection = Connection; }(window));
+ayai.Connection = Connection; }(window));

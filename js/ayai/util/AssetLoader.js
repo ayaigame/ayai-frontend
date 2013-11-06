@@ -1,6 +1,5 @@
+this.ayai = this.ayai || {};
 (function() {
-
-    window.ayai = ayai || {};
     var AssetManager = function(assetsFile) {
        // constructor
        this.assetsFile = assetsFile;
@@ -25,5 +24,4 @@
     //  ===============
 
 
-
-window.ayai.AssetManager = AssetManager; }(window));
+ayai.AssetManager = AssetManager; }(window));

@@ -51,7 +51,7 @@ $(document).ready(function(){
         }
         PIXI.Texture.removeTextureFromCache("assets/tiles/tiles.png");
 
-        tileMap = new TileMap(json).getMap();
+        tileMap = new ayai.TileMap(json).getMap();
         stage.addChild(tileMap);
        
         // test square for player

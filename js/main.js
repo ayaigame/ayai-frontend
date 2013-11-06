@@ -5,27 +5,38 @@ var json;
 
 $(document).ready(function(){
 
-    window.gameState = GameStateInterface();
+
+    Window.gameState= new GameStateInterface();
+    console.log(Window.gameState);
 
     stage = new PIXI.Stage(0xffffff);
     renderer = PIXI.autoDetectRenderer(800, 480);
     document.body.appendChild(renderer.view);
+
+    var jsonDeferred = $.Deferred();
+    var assetDeferred = $.Deferred();
 
     // initializing tiles 
     // TODO: make this code modular/not awful
     var json; 
     var loader = new PIXI.JsonLoader("assets/maps/maps.json");
     loader.addEventListener("loaded", function(evt) {
+        jsonDeferred.resolve();
         json = loader.json;
     });
     loader.load();
 
+
+
+
     var assetLoader = new PIXI.AssetLoader(["assets/tiles/tiles.png"]);
-    assetLoader.addEventListener("onComplete", begin);
+    assetLoader.addEventListener("onComplete", function() {
+        assetDeferred.resolve();
+    });
     assetLoader.load();
 
     var tileMap, player;
-    function begin(evt) {
+    $.when(jsonDeferred, assetDeferred).then(function begin(evt) {
         console.log("assets loaded");   
         
         // adding each tile to cache   
@@ -40,28 +51,36 @@ $(document).ready(function(){
         }
         PIXI.Texture.removeTextureFromCache("assets/tiles/tiles.png");
 
-        tileMap = new TileMap(json).map();
+        tileMap = new TileMap(json).getMap();
         stage.addChild(tileMap);
        
         // test square for player
-        player = new PIXI.Graphics();
-        player.beginFill(0x000000);
-        player.drawRect(0,0,32,32);
-        stage.addChild(player);
+        Window.player = new PIXI.Graphics();
+        Window.player.beginFill(0x000000);
+        Window.player.drawRect(0,0,32,32);
+        stage.addChild(Window.player);
 
         requestAnimFrame( animate );
          
         registerKeyEvents();
-    }
+    });
 
     function registerKeyEvents() {
-        kd.W.down(function(e) { gameState.sendInputToGameState(InputEvent.getKeypress("w")) });
-        kd.A.down(function(e) { gameState.sendInputToGameState(InputEvent.getKeypress("a")) });
-        kd.S.down(function(e) { gameState.sendInputToGameState(InputEvent.getKeypress("s")) });
-        kd.D.down(function(e) { gameState.sendInputToGameState(InputEvent.getKeypress("d")) });
+        console.log("Registering Key Events");
+        console.log(new InputEvent("d"));
+        kd.W.down(function(e) {
+            console.log("GOT W");
+            Window.gameState.sendInputToGameState(new InputEvent("w"))
+        });
+        kd.A.down(function(e) { Window.gameState.sendInputToGameState(new InputEvent("a")) });
+        kd.S.down(function(e) { Window.gameState.sendInputToGameState(new InputEvent("s")) });
+        kd.D.down(function(e) { Window.gameState.sendInputToGameState(new InputEvent("d")) });
     }
 
     function animate() {
-        gameState.update();
+
+
+        Window.gameState.update(renderer);
+        requestAnimFrame(animate);
     } 
 });

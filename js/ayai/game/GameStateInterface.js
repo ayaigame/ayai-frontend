@@ -18,8 +18,29 @@
     //  ==============
 
 
-    p.update = function(){
+    p.update = function(renderer){
+        //requestAnimFrame(animate);
+        renderer.render(stage);
+        kd.tick();
+    }
 
+
+    p.sendInputToGameState = function(inputEvent) {
+        console.log("got input");
+        this.handleKeyEventsInputEvent(inputEvent);
+    }
+
+    p.handleKeyEventsInputEvent = function(ev) {
+        console.log("GOT AN EVENT");
+        console.log(ev);
+        if (ev.inputType == 0) { //Change this to not a magic number
+            switch (ev.key) {
+                case "w": Window.player.position.y -= 2; break;
+                case "a": Window.player.position.x -= 2; break;
+                case "s": Window.player.position.y += 2; break;
+                case "d": Window.player.position.x += 2; break;
+            }
+        }
     }
 
     //  private methods
@@ -37,9 +58,7 @@ function GameStateInterface() {
 
     }
 
-    function sendInputToGameState(inputEvent) {
-        this.handleKeyEventsInputEvent(inputEvent);
-    }
+
 
 
     function sendRoomId(roomId) {
@@ -66,3 +85,4 @@ function GameStateInterface() {
 }
 
 */
+

@@ -1,8 +1,8 @@
 (function() {
 
 
-	//  constructor
-	//  ===========
+    //  constructor
+    //  ===========
 
     var GameStateInterface = function() {
         
@@ -26,13 +26,17 @@
 
 
     p.sendInputToGameState = function(inputEvent) {
-        console.log("got input");
+        if(Window.verboseLogger) {
+            console.log("got input");
+        }
         this.handleKeyEventsInputEvent(inputEvent);
     }
 
     p.handleKeyEventsInputEvent = function(ev) {
-        console.log("GOT AN EVENT");
-        console.log(ev);
+        if(Window.verboseLogger) {
+            console.log("GOT AN EVENT");
+            console.log(ev);
+        }
         if (ev.inputType == 0) { //Change this to not a magic number
             switch (ev.key) {
                 case "w": Window.player.position.y -= 2; break;

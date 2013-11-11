@@ -2,6 +2,8 @@ this.ayai = this.ayai || {};
 (function() {
     var Ayai = function() {
         // constructor
+        ayai.game = this;
+        this.connection = new ayai.Connection("ws://localhost:8000");
         this._initializeRenderer();
         this._registerListeners();
         this._loadAssets();
@@ -12,9 +14,10 @@ this.ayai = this.ayai || {};
     //  public properties 
     //  =================     
 
-    p.stage = null;
-    p.renderer = null;
+    //p.stage = null;
+    //p.renderer = null;
     p.assets = null;
+    p.connection = null;
 
     //  private properties
     //  ==================
@@ -33,17 +36,21 @@ this.ayai = this.ayai || {};
     //  ===============
 
     p._initializeRenderer = function() {
-        this.stage = new PIXI.Stage(0xffffff);
-        this.renderer = PIXI.autoDetectRenderer(800, 480);
+        ayai.stage = new PIXI.Stage(0xffffff);
+        ayai.renderer = PIXI.autoDetectRenderer(800, 480);
         document.body.appendChild(renderer.view);
     }
 
     p._registerListeners = function() {
-        //
+        this.connection.addEventListener("msgReceived", this._messageRecieved);
     }
 
     p._loadAssets = function() {
         this.assets = new ayai.AssetManager();
+    }
+
+    p._messageRecieved = function (evt) {
+        
     }
 
 

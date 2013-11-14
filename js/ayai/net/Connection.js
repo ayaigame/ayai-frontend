@@ -7,11 +7,11 @@ this.ayai = this.ayai || {};
     };
     var p = Connection.prototype;
 
-
    //  public properties 
    //  =================     
-   p.url = null;
    
+    p.url = null;
+   p.readQueue = [];
 
     //  public methods
     //  ==============
@@ -27,8 +27,9 @@ this.ayai = this.ayai || {};
       ayai.WebSocket.onclose = function(evt){}
     }
 
-    p.send = function(msg) {
+   p.send = function(msg) {
       var sender = new ayai.MessageSender(msg);
+
     }
 
     //  private methods

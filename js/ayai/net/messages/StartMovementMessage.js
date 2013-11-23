@@ -1,12 +1,37 @@
 this.ayai = this.ayai || {};
 (function() {
-    var StopMovementMessage = function(isDown, isRight) {
+    var StartMovementMessage = function(isUp, isLeft) {
+        if(isUp == null) {
+          if(isLeft) {
+            direction = 6;
+          } else {
+            direction = 2;
+          }
+        } else if(isLeft == null) {
+          if(isUp) {
+            direction = 0;
+          } else {
+            direction = 4;
+          }
+        } else {
+          if(isUp && isLeft) {
+            direction = 7
+          } else if (isUp && !isLeft) {
+            direciton = 1
+          } else if (!isUp && isLeft) {
+            direction = 5;
+          } else {
+            direction = 3;
+          }
+        }
+        
         this.data = {
           type: "move",
-          start: false,
+          start: true,
+          direction: direction,
         };
     };
-    var p = StopMovementMessage.prototype;
+    var p = StartMovementMessage.prototype;
 
 
    //  public properties 
@@ -23,4 +48,4 @@ this.ayai = this.ayai || {};
     //  ===============
 
 
-ayai.StopMovementMessage = StopMovementMessage; }(window));
+ayai.StartMovementMessage = StartMovementMessage; }(window));

@@ -1,16 +1,12 @@
 this.ayai = this.ayai || {};
 (function() {
-    var StartMovementMessage = function(isDown, isRight) {
-        direction = 0;
-        if(isDown) direction += 1;
-        if(isRight) direction += 1 << 1;
+    var StopMovementMessage = function(isDown, isRight) {
         this.data = {
           type: "move",
-          start: true,
-          direction: direction,
+          start: false,
         };
     };
-    var p = StartMovementMessage.prototype;
+    var p = StopMovementMessage.prototype;
 
 
    //  public properties 
@@ -27,4 +23,4 @@ this.ayai = this.ayai || {};
     //  ===============
 
 
-ayai.StartMovementMessage = StartMovementMessage; }(window));
+ayai.StopMovementMessage = StopMovementMessage; }(window));

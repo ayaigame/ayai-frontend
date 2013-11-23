@@ -18,11 +18,12 @@ this.ayai = this.ayai || {};
 
 
     p.encodeMessage = function(msg) {
-      this.message.data = JSON.stringify(msg);
+      this.message = JSON.stringify(msg.data);
 
       //other input checking and stuff
       
-      ayai.WebSocket.send(this.message);
+      //ayai.WebSocket.send(this.message);
+      trace(this.message);
 
 
     }

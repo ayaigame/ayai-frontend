@@ -3,13 +3,18 @@ this.ayai = this.ayai || {};
 
 (function() {
 
-    var TileMap = function(jsonFile, assetFile) {
+    var TileMap = function(json, assetFile) {
         // constructor
 
-      this._jsonDeferred = $.Deferred();
-      this._assetDeferred = $.Deferred();
-
-      this._loadAssets(jsonFile, assetFile);
+        this.layers = json.layers;    
+        this.tilesets = json.tilesets;
+        this.tileheight = json.tileheight;
+        this.tilewidth = json.tilewidth;
+        this.mapwidth = json.width;
+        this.mapheight = json.height;
+        this.map = new PIXI.DisplayObjectContainer();
+        
+        this._buildMap(assetFile);
 
     };
 
@@ -46,46 +51,13 @@ this.ayai = this.ayai || {};
     }
 
 
-
     //  private methods
     //  ===============
 
-    p._loadAssets = function(jsonFile, assetFile) {
-        
-        var self = this;
-
-        var loader = new PIXI.JsonLoader(jsonFile);
-        loader.addEventListener("loaded", function(evt) {
-            self.json = loader.json;
-            self._jsonDeferred.resolve();
-             
-        }); 
-        loader.load();
-
-
-        var assetLoader = new PIXI.AssetLoader([assetFile]);
-        assetLoader.addEventListener("onComplete", function() {
-            self._assetDeferred.resolve();
-        });
-        assetLoader.load();
-
-        $.when(this._jsonDeferred, this._assetDeferred).then(function() {
-                self._buildMap(assetFile);
-        });
-
-    }
 
     p._buildMap = function(assetFile) {
     
-        this.layers = this.json.layers;    
-        this.tilesets = this.json.tilesets;
-        this.tileheight = this.json.tileheight;
-        this.tilewidth = this.json.tilewidth;
-        this.mapwidth = this.json.width;
-        this.mapheight = this.json.height;
-        this.map = new PIXI.DisplayObjectContainer();
-
-                // adding each tile to cache   
+                    // adding each tile to cache   
         for(var i = 0; i < 36; i++) {
             var tile = new PIXI.Texture.fromFrame(assetFile);
             var x = i%6;
@@ -98,9 +70,6 @@ this.ayai = this.ayai || {};
 
         PIXI.Texture.removeTextureFromCache(assetFile);
         this.renderMap();
-        var event = new Event("MapLoaded"); 
-        document.dispatchEvent(event);
-        
         
 
     }

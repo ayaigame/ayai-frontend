@@ -4,6 +4,9 @@ var renderer;
 
 $(document).ready(function(){
 
+    new ayai.Ayai();
+
+    /*
     Window.verboseLogger = true;
     Window.gameState= new GameStateInterface();
     console.log(Window.gameState);
@@ -51,5 +54,5 @@ $(document).ready(function(){
 
         Window.gameState.update(renderer);
         requestAnimFrame(animate);
-    } 
+    } */
 });

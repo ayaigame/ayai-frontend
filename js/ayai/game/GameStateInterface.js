@@ -1,3 +1,4 @@
+this.ayai = this.ayai || {};
 (function() {
 
 
@@ -20,7 +21,7 @@
 
     p.update = function(renderer){
         //requestAnimFrame(animate);
-        renderer.render(stage);
+        renderer.render(ayai.stage);
         kd.tick();
     }
 
@@ -51,7 +52,7 @@
     //  ===============
 
     
-window.GameStateInterface = GameStateInterface; }(window));
+ayai.GameStateInterface = GameStateInterface; }(window));
 
 
 /*

@@ -50,13 +50,50 @@ this.ayai = this.ayai || {};
                                json: self.json, 
                                asset: assetFile }
                         });    
+                ayai.assetManager._buildMap(assetFile);
                 console.log(evt);
                 document.dispatchEvent(evt);
+
                 
             });
 
         
 
+    };
+
+        p._buildMap = function(assetFile) {
+        console.log("WTF");
+                    // adding each tile to cache
+        for(var i = 0; i < 36; i++) {
+            var tile = new PIXI.Texture.fromFrame(assetFile);
+            var x = i%6;
+            var y = parseInt(i/6);
+            tile.setFrame(new PIXI.Rectangle(x*32, y*32, 32, 32));
+            var temp = new PIXI.RenderTexture(33,33);
+            temp.render(new PIXI.Sprite(tile));
+            PIXI.Texture.addTextureToCache(temp, "tile" + i);
+            console.log("tile" + i);
+            console.log(new PIXI.Texture.fromFrame("tile" + i));
+        }
+
+        PIXI.Texture.removeTextureFromCache(assetFile);
+        //this.renderMap();
+
+
+    }
+
+    p.loadJsonFile = function(file, result) {
+        var deferred = $.Deferred();
+
+        var loader = new PIXI.JsonLoader(file);
+        loader.addEventListener("loaded", function(evt) {
+            console.log(result);
+            result.json = loader.json;
+            console.log(result);
+            deferred.resolve();
+        });
+        loader.load();
+        return deferred;
     };
 
 

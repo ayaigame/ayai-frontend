@@ -18,7 +18,7 @@ this.ayai = this.ayai || {};
 
 
     p.encodeMessage = function(msg) {
-      this.message = JSON.stringify(msg);
+      this.message.data = JSON.stringify(msg);
 
       //other input checking and stuff
       

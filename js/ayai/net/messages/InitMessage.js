@@ -1,12 +1,12 @@
 this.ayai = this.ayai || {};
 (function() {
-    var AttackMessage = function() {
+    var InitMessage = function() {
         // constructor
         this.data = {
-            type: "attack"
+            type: "init"
         };
     };
-    var p = AttackMessage.prototype;
+    var p = InitMessage.prototype;
 
 
    //  public properties 
@@ -23,4 +23,4 @@ this.ayai = this.ayai || {};
     //  ===============
 
 
-ayai.AttackMessage = AttackMessage; }(window));
+ayai.InitMessage = InitMessage; }(window));

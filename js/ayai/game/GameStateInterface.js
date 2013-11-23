@@ -6,10 +6,19 @@ this.ayai = this.ayai || {};
     //  ===========
 
     var GameStateInterface = function() {
-        
+        var that = this;
+        this.mapdata = {};
+        this.getAndCreateRoom();
     };
     var p = GameStateInterface.prototype;
 
+    p.getAndCreateRoom = function() {
+        var that = this;
+
+        $.when(ayai.assetManager.loadJsonFile("assets/maps/room.json", that.mapdata)).then(function(){
+            that.getTileMap(that);
+        });
+    }
 
    //  public properties 
    //  =================     
@@ -17,6 +26,21 @@ this.ayai = this.ayai || {};
 
     //  public methods
     //  ==============
+
+    p.currentMap = null;
+
+    p.getTileMap = function(that) {
+        var tileMap = new ayai.TileMap(that.mapdata);
+        this.currentMap = tileMap;
+        this.showMap();
+
+
+    }
+
+
+    p.getMap = function() {
+        return this.currentMap.getMap();
+    }
 
 
     p.update = function(renderer){
@@ -48,46 +72,39 @@ this.ayai = this.ayai || {};
         }
     }
 
+
+
+    p.tileMap = {};
+
+    p.showMap = function() {
+        //this.tileMap = new ayai.TileMap(e.detail.json, e.detail.asset);
+        console.log(this.getMap());
+        ayai.stage.addChild(this.getMap());
+
+        Window.player = new PIXI.Graphics();
+        Window.player.beginFill(0x000000);
+        Window.player.drawRect(0,0,32,32);
+        ayai.stage.addChild(Window.player);
+
+
+        document.dispatchEvent(new CustomEvent("gameStateDoneLoading"));
+
+
+
+        this.registerKeyEvents();
+    }
+
     //  private methods
     //  ===============
 
+
+    p.registerKeyEvents = function() {
+        console.log("Registering Key Events");
+        console.log(new InputEvent("d"));
+        kd.W.down(function(e) { Window.gameState.sendInputToGameState(new InputEvent("w")) });
+        kd.A.down(function(e) { Window.gameState.sendInputToGameState(new InputEvent("a")) });
+        kd.S.down(function(e) { Window.gameState.sendInputToGameState(new InputEvent("s")) });
+        kd.D.down(function(e) { Window.gameState.sendInputToGameState(new InputEvent("d")) });
+    }
     
 ayai.GameStateInterface = GameStateInterface; }(window));
-
-
-/*
-
-function GameStateInterface() {
-
-    function receiveEntitiesInRoom() {
-
-    }
-
-
-
-
-    function sendRoomId(roomId) {
-
-    }
-
-    function update() {
-        requestAnimFrame(animate);
-        renderer.render(stage);
-        kd.tick();
-    }
-
-   // test movement
-   function handleKeyEventsInputEvent(ev) {
-        if (ev.inputType == InputEvent.KEY_PRESS_EVENT) {
-            switch (ev.key) {
-                case "w": player.position.y -= 2; break;
-                case "a": player.position.x -= 2; break;
-                case "s": player.position.y += 2; break;
-                case "d": player.position.x += 2; break;
-            }
-        }
-    }
-}
-
-*/
-

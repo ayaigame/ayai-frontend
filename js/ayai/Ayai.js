@@ -4,8 +4,10 @@ this.ayai = this.ayai || {};
         // constructor
         ayai.game = this;
         Window.verboseLogger = false;
-        Window.gameState = new ayai.GameStateInterface();
-        this.assetManager = new ayai.AssetManager();
+        ayai.assetManager = new ayai.AssetManager();
+        this.assetManager = ayai.assetManager;
+
+
         this.connection = new ayai.Connection("ws://localhost:8000");
         this._initializeRenderer();
         this._registerListeners();
@@ -33,32 +35,15 @@ this.ayai = this.ayai || {};
 
     p.showMap = function(e) {
 
-        tileMap = new ayai.TileMap(e.detail.json, e.detail.asset);
-        ayai.stage.addChild(tileMap.getMap());
 
-        Window.player = new PIXI.Graphics();
-        Window.player.beginFill(0x000000);
-        Window.player.drawRect(0,0,32,32);
-        ayai.stage.addChild(Window.player);
-
-        requestAnimFrame( animate );
-         
-        registerKeyEvents();
     }
 
-    function registerKeyEvents() {
-        console.log("Registering Key Events");
-        console.log(new InputEvent("d"));
-        kd.W.down(function(e) { Window.gameState.sendInputToGameState(new InputEvent("w")) });
-        kd.A.down(function(e) { Window.gameState.sendInputToGameState(new InputEvent("a")) });
-        kd.S.down(function(e) { Window.gameState.sendInputToGameState(new InputEvent("s")) });
-        kd.D.down(function(e) { Window.gameState.sendInputToGameState(new InputEvent("d")) });
-    }
 
-    function animate() {
 
+    p.animate = function() {
+        console.log("Animating");
         Window.gameState.update(ayai.renderer);
-        requestAnimFrame(animate);
+        window.requestAnimFrame(ayai.game.animate);
     } 
 
     //  private methods
@@ -74,7 +59,13 @@ this.ayai = this.ayai || {};
     p._registerListeners = function() {
 
         document.addEventListener("msgReceived", this._messageReceived);
-        document.addEventListener('assetsLoaded', this.showMap);
+        //document.addEventListener('assetsLoaded', this.showMap);
+        document.addEventListener('assetsLoaded', this.createGamestate);
+        document.addEventListener("gameStateDoneLoading", this.animate);
+    }
+
+    p.createGamestate = function() {
+        Window.gameState = new ayai.GameStateInterface();
     }
     
     p._loadAssets = function() {

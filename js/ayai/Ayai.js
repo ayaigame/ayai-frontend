@@ -4,7 +4,9 @@ this.ayai = this.ayai || {};
         // constructor
         ayai.game = this;
         Window.verboseLogger = false;
-        Window.gameState = new ayai.GameStateInterface();
+        ayai.gameState = new ayai.GameStateInterface();
+
+        ayai.json = [{id: 0, x: 0, y: 0}, {id: 1, x: 200, y: 0}, {id: 2, x: 300, y: 100}];
         this.assetManager = new ayai.AssetManager();
         this.connection = new ayai.Connection("ws://localhost:8000");
         this._initializeRenderer();
@@ -35,11 +37,9 @@ this.ayai = this.ayai || {};
 
         tileMap = new ayai.TileMap(e.detail.json, e.detail.asset);
         ayai.stage.addChild(tileMap.getMap());
+        
+        var time = setInterval(function() {ayai.gameState.updateEntities();}, 1000);
 
-        Window.player = new PIXI.Graphics();
-        Window.player.beginFill(0x000000);
-        Window.player.drawRect(0,0,32,32);
-        ayai.stage.addChild(Window.player);
 
         requestAnimFrame( animate );
          
@@ -49,15 +49,15 @@ this.ayai = this.ayai || {};
     function registerKeyEvents() {
         console.log("Registering Key Events");
         console.log(new InputEvent("d"));
-        kd.W.down(function(e) { Window.gameState.sendInputToGameState(new InputEvent("w")) });
-        kd.A.down(function(e) { Window.gameState.sendInputToGameState(new InputEvent("a")) });
-        kd.S.down(function(e) { Window.gameState.sendInputToGameState(new InputEvent("s")) });
-        kd.D.down(function(e) { Window.gameState.sendInputToGameState(new InputEvent("d")) });
+        kd.W.down(function(e) { ayai.gameState.sendInputToGameState(new InputEvent("w")) });
+        kd.A.down(function(e) { ayai.gameState.sendInputToGameState(new InputEvent("a")) });
+        kd.S.down(function(e) { ayai.gameState.sendInputToGameState(new InputEvent("s")) });
+        kd.D.down(function(e) { ayai.gameState.sendInputToGameState(new InputEvent("d")) });
     }
 
     function animate() {
 
-        Window.gameState.update(ayai.renderer);
+        ayai.gameState.update(ayai.renderer);
         requestAnimFrame(animate);
     } 
 
@@ -86,7 +86,8 @@ this.ayai = this.ayai || {};
     }
 
     p._messageReceived = function (evt) {
-    
+
+        gameState.UpdateEntities(evt.detail.entities);
         console.log(evt.detail);
     }
 

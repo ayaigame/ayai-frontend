@@ -6,7 +6,10 @@ this.ayai = this.ayai || {};
     //  ===========
 
     var GameStateInterface = function() {
-        
+        this.isUp = false;
+        this.isDown = false;
+        this.isRight = false;
+        this.isLeft = false;
     };
     var p = GameStateInterface.prototype;
 
@@ -14,6 +17,10 @@ this.ayai = this.ayai || {};
    //  public properties 
    //  =================     
 
+   p.isUp = null;
+   p.isDown = null;
+   p.isRight = null;
+   p.isLeft = null;
 
     //  public methods
     //  ==============
@@ -23,6 +30,26 @@ this.ayai = this.ayai || {};
         //requestAnimFrame(animate);
         renderer.render(ayai.stage);
         kd.tick();
+        
+        var vertical = null;
+        if(isUp && !isDown) {
+            vertical = true;
+        } else if (isDown && !isUp) {
+            vertical = false;
+        }
+
+        var horizontal = null;
+        if(isLeft && !isRight) {
+            horizontal = true;
+        } else if (!isLeft && isRight) {
+            horizontal = false;
+        }
+
+        var id = 0;
+        if(vertical != null || horizontal != null) {
+            var message = new ayai.StartMovementMessage(id, vertical, horizontal);
+            var sender = new ayai.MessageSender(message);
+        }
     }
 
 
@@ -40,10 +67,30 @@ this.ayai = this.ayai || {};
         }
         if (ev.inputType == 0) { //Change this to not a magic number
             switch (ev.key) {
-                case "w": Window.player.position.y -= 2; break;
-                case "a": Window.player.position.x -= 2; break;
-                case "s": Window.player.position.y += 2; break;
-                case "d": Window.player.position.x += 2; break;
+                case "w":
+                    Window.player.position.y -= 2; break;
+                case "a":
+                    Window.player.position.x -= 2; break;
+                case "s":
+                    Window.player.position.y += 2; break;
+                case "d":
+                    Window.player.position.x += 2; break;
+                case "isUp":
+                    isUp = true; 
+                case "isLeft": 
+                    isLeft = true; 
+                case "isRight": 
+                    isRight = true;
+                case "isDown": 
+                    isDown = true;
+                case "!isUp":
+                    isUp = false; 
+                case "!isLeft": 
+                    isLeft = false; 
+                case "!isRight": 
+                    isRight = false;
+                case "!isDown": 
+                    isDown = false;
             }
         }
     }

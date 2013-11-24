@@ -1,9 +1,10 @@
 this.ayai = this.ayai || {};
 (function() {
-    var StopMovementMessage = function(isDown, isRight) {
+    var StopMovementMessage = function(id) {
         this.data = {
           type: "move",
           start: false,
+          id: id
         };
     };
     var p = StopMovementMessage.prototype;

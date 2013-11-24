@@ -49,10 +49,21 @@ this.ayai = this.ayai || {};
     function registerKeyEvents() {
         console.log("Registering Key Events");
         console.log(new InputEvent("d"));
+
         kd.W.down(function(e) { Window.gameState.sendInputToGameState(new InputEvent("w")) });
         kd.A.down(function(e) { Window.gameState.sendInputToGameState(new InputEvent("a")) });
         kd.S.down(function(e) { Window.gameState.sendInputToGameState(new InputEvent("s")) });
         kd.D.down(function(e) { Window.gameState.sendInputToGameState(new InputEvent("d")) });
+
+        kd.W.press(function(e) { Window.gameState.sendInputToGameState(new InputEvent("isUp")) });
+        kd.A.press(function(e) { Window.gameState.sendInputToGameState(new InputEvent("isLeft")) });
+        kd.S.press(function(e) { Window.gameState.sendInputToGameState(new InputEvent("isDown")) });
+        kd.D.press(function(e) { Window.gameState.sendInputToGameState(new InputEvent("isRight")) });
+
+        kd.W.up(function(e) { Window.gameState.sendInputToGameState(new InputEvent("!isUp")) });
+        kd.A.up(function(e) { Window.gameState.sendInputToGameState(new InputEvent("!isLeft")) });
+        kd.S.up(function(e) { Window.gameState.sendInputToGameState(new InputEvent("!isDown")) });
+        kd.D.up(function(e) { Window.gameState.sendInputToGameState(new InputEvent("!isRight")) });
     }
 
     function animate() {

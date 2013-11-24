@@ -1,9 +1,10 @@
 this.ayai = this.ayai || {};
 (function() {
-    var InitMessage = function() {
+    var InitMessage = function(id) {
         // constructor
         this.data = {
-            type: "init"
+            type: "init",
+            id: id
         };
     };
     var p = InitMessage.prototype;

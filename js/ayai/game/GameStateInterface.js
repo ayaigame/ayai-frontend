@@ -6,7 +6,13 @@ this.ayai = this.ayai || {};
     //  ===========
 
     var GameStateInterface = function() {
-        
+
+        this.isUp = false;
+        this.isDown = false;
+        this.isRight = false;
+        this.isLeft = false;
+    
+    
     };
     var p = GameStateInterface.prototype;
 
@@ -17,19 +23,42 @@ this.ayai = this.ayai || {};
 
 
    p.entities = [];
+    p.isUp = null;
+    p.isDown = null;
+    p.isLeft = null;
+    p.isRight = null;
 
 
     //  public methods
     //  ==============
 
 
-    p.update = function(renderer){
-       
+ p.update = function(renderer){
         //requestAnimFrame(animate);
-
         renderer.render(ayai.stage);
         kd.tick();
+       
+        var vertical = null;
+        if(this.isUp && !this.isDown) {
+            vertical = true;
+        } else if (this.isDown && !this.isUp) {
+            vertical = false;
+        }
+
+        var horizontal = null;
+        if(this.isLeft && !this.isRight) {
+            horizontal = true;
+        } else if (!this.isLeft && this.isRight) {
+            horizontal = false;
+        }
+
+        if(vertical != null || horizontal != null) {
+            var message = new ayai.StartMovementMessage(ayai.playerId, vertical, horizontal);
+            var sender = new ayai.MessageSender(message);
+            console.log(sender);
+        }
     }
+
 
     p.updateEntitiesFull = function(){
         
@@ -129,16 +158,45 @@ this.ayai = this.ayai || {};
             console.log("GOT AN EVENT");
             console.log(ev);
         }
-        if (ev.inputType == 0) { //Change this to not a magic number
+        if (ev.inputType == 0) { 
+            
+            //Change this to not a magic number
             switch (ev.key) {
-                case "w": Window.player.graphic.position.y -= 2; break;
-                case "a": Window.player.graphic.position.x -= 2; break;
-                case "s": Window.player.graphic.position.y += 2; break;
-                case "d": Window.player.graphic.position.x += 2; break;
+                case "w":
+                    Window.player.position.y -= 2; break;
+                case "a":
+                    Window.player.position.x -= 2; break;
+                case "s":
+                    Window.player.position.y += 2; break;
+                case "d":
+                    Window.player.position.x += 2; break;
+                case "isUp":
+                    this.isUp = true;
+                    break;
+                case "isLeft": 
+                    this.isLeft = true; 
+                    break;
+                case "isRight": 
+                    this.isRight = true;
+                    break;
+                case "isDown": 
+                    this.isDown = true;
+                    break;
+                case "!isUp":
+                    this.isUp = false; 
+                    break;
+                case "!isLeft": 
+                    this.isLeft = false; 
+                    break;
+                case "!isRight": 
+                    this.isRight = false;
+                    break;
+                case "!isDown": 
+                    this.isDown = false;
+                    break;
             }
         }
     }
-
     //  private methods
     //  ===============
 

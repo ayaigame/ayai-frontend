@@ -50,6 +50,17 @@ this.ayai = this.ayai || {};
     function registerKeyEvents() {
         console.log("Registering Key Events");
         console.log(new InputEvent("d"));
+    
+         kd.W.press(function(e) { ayai.gameState.sendInputToGameState(new InputEvent("isUp")) });
+         kd.A.press(function(e) { ayai.gameState.sendInputToGameState(new InputEvent("isLeft")) });
+         kd.S.press(function(e) { ayai.gameState.sendInputToGameState(new InputEvent("isDown")) });
+         kd.D.press(function(e) { ayai.gameState.sendInputToGameState(new InputEvent("isRight")) });
+ 
+        kd.W.up(function(e) { ayai.gameState.sendInputToGameState(new InputEvent("!isUp")) });
+        kd.A.up(function(e) { ayai.gameState.sendInputToGameState(new InputEvent("!isLeft")) });
+        kd.S.up(function(e) { ayai.gameState.sendInputToGameState(new InputEvent("!isDown")) });
+        kd.D.up(function(e) { ayai.gameState.sendInputToGameState(new InputEvent("!isRight")) });  
+        
         kd.W.down(function(e) { ayai.gameState.sendInputToGameState(new InputEvent("w")) });
         kd.A.down(function(e) { ayai.gameState.sendInputToGameState(new InputEvent("a")) });
         kd.S.down(function(e) { ayai.gameState.sendInputToGameState(new InputEvent("s")) });
@@ -89,7 +100,7 @@ this.ayai = this.ayai || {};
     p._messageReceived = function (evt) {
 
 
-        console.log(evt.detail);
+    //    console.log(evt.detail);
 
         switch(evt.detail.msg.type){
 

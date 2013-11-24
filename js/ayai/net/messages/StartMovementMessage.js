@@ -1,6 +1,6 @@
 this.ayai = this.ayai || {};
 (function() {
-    var StartMovementMessage = function(isUp, isLeft) {
+    var StartMovementMessage = function(id, isUp, isLeft) {
         var direction;
 
         if(isUp == null) {
@@ -36,6 +36,7 @@ this.ayai = this.ayai || {};
           type: "move",
           start: true,
           dir: direction,
+          id: id
         };
     };
     var p = StartMovementMessage.prototype;

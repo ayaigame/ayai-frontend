@@ -22,7 +22,7 @@ this.ayai = this.ayai || {};
 
       //other input checking and stuff
       
-      //ayai.WebSocket.send(this.message);
+      ayai.WebSocket.send(this.message);
       trace(this.message);
 
 

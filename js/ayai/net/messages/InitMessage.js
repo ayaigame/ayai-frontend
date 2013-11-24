@@ -1,17 +1,17 @@
 this.ayai = this.ayai || {};
 (function() {
-    var Message = function(data) {
-       // constructor
-       //this.type = type;
-       this.data = data;
+    var InitMessage = function() {
+        // constructor
+        this.data = {
+            type: "init"
+        };
     };
-    var p = Message.prototype;
+    var p = InitMessage.prototype;
 
 
    //  public properties 
    //  =================     
-
-    p.type = null;    
+   
     p.data = null;
 
 
@@ -23,4 +23,4 @@ this.ayai = this.ayai || {};
     //  ===============
 
 
-ayai.Message = Message; }(window));
+ayai.InitMessage = InitMessage; }(window));

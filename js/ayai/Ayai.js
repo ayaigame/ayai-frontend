@@ -9,7 +9,7 @@ this.ayai = this.ayai || {};
         ayai.playerId = null;
         //ayai.json = [{id: 0, x: 0, y: 0}, {id: 1, x: 200, y: 0}, {id: 2, x: 300, y: 100}];
         this.assetManager = new ayai.AssetManager();
-        this.connection = new ayai.Connection("ws://129.25.141.129:8007");
+        this.connection = new ayai.Connection("ws://localhost:8007");
         this._initializeRenderer();
         this._registerListeners();
         this._loadAssets();

@@ -22,7 +22,7 @@ this.ayai = this.ayai || {};
    //  =================     
 
 
-   p.entities = [];
+   p.entities = {};
     p.isUp = null;
     p.isDown = null;
     p.isLeft = null;
@@ -72,7 +72,6 @@ this.ayai = this.ayai || {};
             console.log('does entity '+ entity.id +' exist?');
 
             if(this.entities[entity.id.toString()] == null) {
-
                 console.log('found new entity '+entity.id);
                 this.addCharacter(entity.id, entity.x, entity.y);
             }
@@ -85,39 +84,46 @@ this.ayai = this.ayai || {};
         }
 
         Window.player = ayai.gameState.entities[ayai.playerId];
-    }
+    };
 
     p.updateEntities = function(json) {
 
         var newEntities = json;
-        console.log(newEntities);
 
-        for(var key in newEntities) {
+        for(var index in newEntities) {
 
-            var entity = newEntities[key];
+            var key = newEntities[index].id;
+            var entity = newEntities[index];
+
             if(this.entities[key] == null)
                 this.addCharacter(entity.id, entity.x, entity.y);
             else
                 this.updateCharacter(entity);
         }
 
+        // TODO: Need to figure out a diff way for this
+        /**
         for(var key in this.entities) {
-            
             var entity = this.entities[key];
+            console.log(key);
+            console.log(newEntities);
+            console.log(newEntities["1"]);
+            console.log("YO");
             if(!(key in newEntities))
                 this.removeCharacter(entity);
-            
         }
+        **/
 
-        Window.player = this.entities[0];
+        Window.player = this.entities[ayai.playerId];
 
 
     }
 
     p.addCharacter = function(id, x, y) {
 
-        newChar = new ayai.Character(id, x, y);
-        this.entities[id] = newChar;
+        var newChar = new ayai.Character(id, x, y);
+        ayai.gameState.entities[id] = newChar;
+
         return newChar;
     }
 
@@ -130,7 +136,6 @@ this.ayai = this.ayai || {};
     }
 
     p.removeCharacter = function(e) {
-   
         e.removeFromStage();
         delete this.entities[e.id.toString()];
     }
@@ -142,7 +147,7 @@ this.ayai = this.ayai || {};
             this.entities[i].removeFromStage();
         }
 
-        this.entities = [];
+        this.entities = {};
     }
 
 

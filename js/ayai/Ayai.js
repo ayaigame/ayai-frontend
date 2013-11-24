@@ -6,9 +6,10 @@ this.ayai = this.ayai || {};
         Window.verboseLogger = false;
         ayai.gameState = new ayai.GameStateInterface();
 
-        ayai.json = [{id: 0, x: 0, y: 0}, {id: 1, x: 200, y: 0}, {id: 2, x: 300, y: 100}];
+        ayai.playerId = null;
+        //ayai.json = [{id: 0, x: 0, y: 0}, {id: 1, x: 200, y: 0}, {id: 2, x: 300, y: 100}];
         this.assetManager = new ayai.AssetManager();
-        this.connection = new ayai.Connection("ws://localhost:8000");
+        this.connection = new ayai.Connection("ws://129.25.141.129:8007");
         this._initializeRenderer();
         this._registerListeners();
         this._loadAssets();
@@ -38,7 +39,7 @@ this.ayai = this.ayai || {};
         tileMap = new ayai.TileMap(e.detail.json, e.detail.asset);
         ayai.stage.addChild(tileMap.getMap());
         
-        var time = setInterval(function() {ayai.gameState.updateEntities();}, 1000);
+        //var time = setInterval(function() {ayai.gameState.updateEntities();}, 1000);
 
 
         requestAnimFrame( animate );
@@ -87,8 +88,20 @@ this.ayai = this.ayai || {};
 
     p._messageReceived = function (evt) {
 
-        gameState.UpdateEntities(evt.detail.entities);
+
         console.log(evt.detail);
+
+        switch(evt.detail.msg.type){
+
+            case "id":
+                ayai.playerId = evt.detail.msg.id;
+                break;
+
+            case "fullsync":
+                ayai.gameState.updateEntities(evt.detail.msg.players);
+                break;
+        }
+
     }
 
 

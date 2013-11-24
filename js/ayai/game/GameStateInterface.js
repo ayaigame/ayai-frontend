@@ -55,12 +55,13 @@ this.ayai = this.ayai || {};
 
         }
 
-        Window.player = ayai.gameState.entities[0];
+        Window.player = ayai.gameState.entities[ayai.playerId];
     }
 
-    p.updateEntities = function() {
+    p.updateEntities = function(json) {
 
-        var newEntities = ayai.json;
+        var newEntities = json;
+        console.log(newEntities);
 
         for(var key in newEntities) {
 

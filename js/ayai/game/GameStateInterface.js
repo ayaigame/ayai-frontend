@@ -144,6 +144,7 @@ this.ayai = this.ayai || {};
         var entity = this.entities[e.id.toString()];
         
         entity.setPosition(e.x, e.y);
+        entity.setHealth(e.currHealth, e.maximumHealth);
 
     }
 

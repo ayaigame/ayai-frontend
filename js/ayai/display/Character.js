@@ -1,32 +1,25 @@
 this.ayai = this.ayai || {};
 (function() {
-<<<<<<< HEAD
-    var Character = function(id,x,y,currHealth, maximumHealth) {
-=======
-    var Character = function(texture, id, x, y) {
->>>>>>> 7a9c09e132be1081d39d21f436d04033bbb30b82
+    var Character = function(id,x,y,currHealth,maximumHealth) {
         // constructor
         //
         this.id = id;
-<<<<<<< HEAD
         this.graphic = new PIXI.Graphics();
-        this.graphic.beginFill(0x000000);
-        this.graphic.drawRect(0, 0, 32, 32);
-        this.graphic.beginFill(0xff0000);
-        this.graphic.drawRect(0, -10, 32, 5);
-        this.setPosition(x,y);
-        this.setHealth(currHealth,maximumHealth);
-        ayai.stage.addChild(this.graphic);
-=======
         var texture = new PIXI.Texture.fromFrame(ayai.charTexture);
-      
         this.sprite = new PIXI.Sprite(texture);
 
         console.log(this.sprite);
         this.sprite.position.x = x;
         this.sprite.position.y = y;
+
+        //this.graphic.beginFill(0x000000);
+        //this.graphic.drawRect(0, 0, 32, 32);
+        this.graphic.beginFill(0xff0000);
+        this.graphic.drawRect(0, -10, 32, 5);
+        this.setPosition(x,y);
+        this.setHealth(currHealth,maximumHealth);
+        ayai.stage.addChild(this.graphic);
         ayai.stage.addChild(this.sprite);
->>>>>>> 7a9c09e132be1081d39d21f436d04033bbb30b82
     };
     var p = Character.prototype;
 
@@ -50,6 +43,8 @@ this.ayai = this.ayai || {};
 
         this.sprite.position.x = x;
         this.sprite.position.y = y;
+        this.graphic.position.x = x;
+        this.graphic.position.y = y;
 
 
     }

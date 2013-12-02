@@ -37,8 +37,10 @@ this.ayai = this.ayai || {};
         //requestAnimFrame(animate);
         renderer.render(ayai.stage);
         kd.tick();
-       
-        var vertical = null;
+    }
+
+	p.sendMovement = function() {
+		var vertical = null;
         if(this.isUp && !this.isDown) {
             vertical = true;
         } else if (this.isDown && !this.isUp) {
@@ -57,7 +59,8 @@ this.ayai = this.ayai || {};
             var sender = new ayai.MessageSender(message);
             console.log(sender);
         }
-    }
+	}
+	
 
 
     p.updateEntitiesFull = function(){
@@ -176,28 +179,35 @@ this.ayai = this.ayai || {};
                 case "d":
                     Window.player.position.x += 2; break;
                 case "isUp":
-                    this.isUp = true;
+                    //this.isUp = true;
                     break;
                 case "isLeft": 
                     this.isLeft = true; 
+					sendMovement();
                     break;
                 case "isRight": 
                     this.isRight = true;
+					sendMovement();
                     break;
                 case "isDown": 
-                    this.isDown = true;
+                    this.isDown = true; 
+					sendMovement();
                     break;
                 case "!isUp":
-                    this.isUp = false; 
+                    this.isUp = false;  
+					sendMovement();
                     break;
                 case "!isLeft": 
                     this.isLeft = false; 
+					sendMovement(); 
                     break;
                 case "!isRight": 
-                    this.isRight = false;
+                    this.isRight = false; 
+					sendMovement();
                     break;
                 case "!isDown": 
-                    this.isDown = false;
+                    this.isDown = false; 
+					sendMovement();
                     break;
             }
         }

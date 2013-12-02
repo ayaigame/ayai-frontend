@@ -7,10 +7,10 @@ this.ayai = this.ayai || {};
 
     var GameStateInterface = function() {
 
-        this.isUp = false;
-        this.isDown = false;
-        this.isRight = false;
-        this.isLeft = false;
+        p.isUp = false;
+        p.isDown = false;
+        p.isRight = false;
+        p.isLeft = false;
     
     
     };
@@ -41,16 +41,16 @@ this.ayai = this.ayai || {};
 
 	p.sendMovement = function() {
 		var vertical = null;
-        if(this.isUp && !this.isDown) {
+        if(p.isUp && !p.isDown) {
             vertical = true;
-        } else if (this.isDown && !this.isUp) {
+        } else if (p.isDown && !p.isUp) {
             vertical = false;
         }
 
         var horizontal = null;
-        if(this.isLeft && !this.isRight) {
+        if(p.isLeft && !p.isRight) {
             horizontal = true;
-        } else if (!this.isLeft && this.isRight) {
+        } else if (!p.isLeft && p.isRight) {
             horizontal = false;
         }
 
@@ -60,6 +60,9 @@ this.ayai = this.ayai || {};
             console.log(sender);
         } else {
 			var message = new ayai.StopMovementMessage(ayai.playerId);
+			var sender = new ayai.MessageSender(message);
+            console.log(sender);
+
 		}
 	}
 	
@@ -181,35 +184,36 @@ this.ayai = this.ayai || {};
                 case "d":
                     Window.player.position.x += 2; break;
                 case "isUp":
-                    //this.isUp = true;
+                    p.isUp = true;
+					p.sendMovement();
                     break;
                 case "isLeft": 
-                    this.isLeft = true; 
-					sendMovement();
+                    p.isLeft = true; 
+					p.sendMovement();
                     break;
                 case "isRight": 
-                    this.isRight = true;
-					sendMovement();
+                    p.isRight = true;
+					p.sendMovement();
                     break;
                 case "isDown": 
-                    this.isDown = true; 
-					sendMovement();
+                    p.isDown = true; 
+					p.sendMovement();
                     break;
                 case "!isUp":
-                    this.isUp = false;  
-					sendMovement();
+                    p.isUp = false;  
+					p.sendMovement();
                     break;
                 case "!isLeft": 
-                    this.isLeft = false; 
-					sendMovement(); 
+                    p.isLeft = false; 
+					p.sendMovement(); 
                     break;
                 case "!isRight": 
-                    this.isRight = false; 
-					sendMovement();
+                    p.isRight = false; 
+					p.sendMovement();
                     break;
                 case "!isDown": 
-                    this.isDown = false; 
-					sendMovement();
+                    p.isDown = false; 
+					p.sendMovement();
                     break;
             }
         }

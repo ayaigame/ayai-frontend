@@ -41,26 +41,6 @@ this.ayai = this.ayai || {};
         //requestAnimFrame(animate);
         renderer.render(ayai.stage);
         kd.tick();
-        
-        var vertical = null;
-        if(isUp && !isDown) {
-            vertical = true;
-        } else if (isDown && !isUp) {
-            vertical = false;
-        }
-
-        var horizontal = null;
-        if(isLeft && !isRight) {
-            horizontal = true;
-        } else if (!isLeft && isRight) {
-            horizontal = false;
-        }
-
-        var id = 0;
-        if(vertical != null || horizontal != null) {
-            var message = new ayai.StartMovementMessage(id, vertical, horizontal);
-            var sender = new ayai.MessageSender(message);
-        }
     }
 
 	p.sendMovement = function() {

@@ -58,7 +58,9 @@ this.ayai = this.ayai || {};
             var message = new ayai.StartMovementMessage(ayai.playerId, vertical, horizontal);
             var sender = new ayai.MessageSender(message);
             console.log(sender);
-        }
+        } else {
+			var message = new ayai.StopMovementMessage(ayai.playerId);
+		}
 	}
 	
 

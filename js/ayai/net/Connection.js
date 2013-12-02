@@ -4,6 +4,8 @@ this.ayai = this.ayai || {};
     var Connection = function(url) {
        // constructor
        this.url = url;
+       console.log("connection established");
+       this.connect();
     };
     var p = Connection.prototype;
 
@@ -19,10 +21,14 @@ this.ayai = this.ayai || {};
     p.connect = function() {
       var self = this;
       ayai.WebSocket = new WebSocket(this.url);
-      ayai.WebSocket.onload = function(evt){}
+      ayai.WebSocket.onopen = function(evt){
+          var msg = {'type': 'init'};
+          this.send(JSON.stringify(msg));
+
+      }
       ayai.WebSocket.onmessage = function(evt){
         var receiver = new ayai.MessageReceiver(evt.data);
-        self.dispatchEvent(receiver.createEvent());
+        document.dispatchEvent(receiver.createEvent());
       }
       ayai.WebSocket.onclose = function(evt){}
     }

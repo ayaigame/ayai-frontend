@@ -16,7 +16,7 @@ this.ayai = this.ayai || {};
     //  ==============
 
     p.parseMessage = function(msg) {
-      this.message = JSON.decode(msg);
+      this.message = JSON.parse(msg);
     }
 
     p.createEvent = function() {

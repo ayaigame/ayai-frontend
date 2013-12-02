@@ -4,7 +4,7 @@ this.ayai = this.ayai || {};
         this.data = {
           type: "move",
           start: false,
-          id: id
+		  id: id
         };
     };
     var p = StopMovementMessage.prototype;

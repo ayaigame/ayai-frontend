@@ -7,10 +7,10 @@ this.ayai = this.ayai || {};
 
     var GameStateInterface = function() {
 
-        this.isUp = false;
-        this.isDown = false;
-        this.isRight = false;
-        this.isLeft = false;
+        p.isUp = false;
+        p.isDown = false;
+        p.isRight = false;
+        p.isLeft = false;
     
     
     };
@@ -21,6 +21,10 @@ this.ayai = this.ayai || {};
    //  public properties 
    //  =================     
 
+   p.isUp = null;
+   p.isDown = null;
+   p.isRight = null;
+   p.isLeft = null;
 
    p.entities = {};
     p.isUp = null;
@@ -37,18 +41,20 @@ this.ayai = this.ayai || {};
         //requestAnimFrame(animate);
         renderer.render(ayai.stage);
         kd.tick();
-       
-        var vertical = null;
-        if(this.isUp && !this.isDown) {
+    }
+
+	p.sendMovement = function() {
+		var vertical = null;
+        if(p.isUp && !p.isDown) {
             vertical = true;
-        } else if (this.isDown && !this.isUp) {
+        } else if (p.isDown && !p.isUp) {
             vertical = false;
         }
 
         var horizontal = null;
-        if(this.isLeft && !this.isRight) {
+        if(p.isLeft && !p.isRight) {
             horizontal = true;
-        } else if (!this.isLeft && this.isRight) {
+        } else if (!p.isLeft && p.isRight) {
             horizontal = false;
         }
 
@@ -56,8 +62,14 @@ this.ayai = this.ayai || {};
             var message = new ayai.StartMovementMessage(ayai.playerId, vertical, horizontal);
             var sender = new ayai.MessageSender(message);
             console.log(sender);
-        }
-    }
+        } else {
+			var message = new ayai.StopMovementMessage(ayai.playerId);
+			var sender = new ayai.MessageSender(message);
+            console.log(sender);
+
+		}
+	}
+	
 
 
     p.updateEntitiesFull = function(){
@@ -176,28 +188,36 @@ this.ayai = this.ayai || {};
                 case "d":
                     Window.player.position.x += 2; break;
                 case "isUp":
-                    this.isUp = true;
+                    p.isUp = true;
+					p.sendMovement();
                     break;
                 case "isLeft": 
-                    this.isLeft = true; 
+                    p.isLeft = true; 
+					p.sendMovement();
                     break;
                 case "isRight": 
-                    this.isRight = true;
+                    p.isRight = true;
+					p.sendMovement();
                     break;
                 case "isDown": 
-                    this.isDown = true;
+                    p.isDown = true; 
+					p.sendMovement();
                     break;
                 case "!isUp":
-                    this.isUp = false; 
+                    p.isUp = false;  
+					p.sendMovement();
                     break;
                 case "!isLeft": 
-                    this.isLeft = false; 
+                    p.isLeft = false; 
+					p.sendMovement(); 
                     break;
                 case "!isRight": 
-                    this.isRight = false;
+                    p.isRight = false; 
+					p.sendMovement();
                     break;
                 case "!isDown": 
-                    this.isDown = false;
+                    p.isDown = false; 
+					p.sendMovement();
                     break;
             }
         }

@@ -7,9 +7,10 @@ this.ayai = this.ayai || {};
         ayai.gameState = new ayai.GameStateInterface();
 
         ayai.playerId = null;
+        ayai.charTexture = null;
         //ayai.json = [{id: 0, x: 0, y: 0}, {id: 1, x: 200, y: 0}, {id: 2, x: 300, y: 100}];
         this.assetManager = new ayai.AssetManager();
-        this.connection = new ayai.Connection("ws://localhost:8007");
+        this.connection = new ayai.Connection("ws://129.25.33.98:8007");
         this._initializeRenderer();
         this._registerListeners();
         this._loadAssets();
@@ -37,10 +38,9 @@ this.ayai = this.ayai || {};
     p.showMap = function(e) {
 
         tileMap = new ayai.TileMap(e.detail.json, e.detail.asset);
+        ayai.charTexture = e.detail.charSheet;
         ayai.stage.addChild(tileMap.getMap());
         
-        //var time = setInterval(function() {ayai.gameState.updateEntities();}, 1000);
-
 
         requestAnimFrame( animate );
          
@@ -78,7 +78,7 @@ this.ayai = this.ayai || {};
 
     p._initializeRenderer = function() {
         ayai.stage = new PIXI.Stage(0xffffff);
-        ayai.renderer = PIXI.autoDetectRenderer(800, 480);
+        ayai.renderer = PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight);
         document.body.appendChild(ayai.renderer.view);
     }
 
@@ -91,10 +91,11 @@ this.ayai = this.ayai || {};
     
     p._loadAssets = function() {
         
-        this.assetManager.loadMapAssets(
-                "/assets/maps/maps.json", 
-                "/assets/tiles/tiles.png");
-
+        this.assetManager.loadTestAssets(
+                "/assets/maps/maps2.json", 
+                "/assets/tiles/tiles.png",
+                "/assets/sprites/guydown.png");
+    
     }
 
     p._messageReceived = function (evt) {

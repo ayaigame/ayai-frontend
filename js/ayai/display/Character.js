@@ -1,13 +1,17 @@
 this.ayai = this.ayai || {};
 (function() {
-    var Character = function(id,x,y) {
+    var Character = function(texture, id, x, y) {
         // constructor
+        //
         this.id = id;
-        this.graphic = new PIXI.Graphics();
-        this.graphic.beginFill(0x000000);
-        this.graphic.drawRect(0, 0, 32, 32);
-        this.setPosition(x,y);
-        ayai.stage.addChild(this.graphic);
+        var texture = new PIXI.Texture.fromFrame(ayai.charTexture);
+      
+        this.sprite = new PIXI.Sprite(texture);
+
+        console.log(this.sprite);
+        this.sprite.position.x = x;
+        this.sprite.position.y = y;
+        ayai.stage.addChild(this.sprite);
     };
     var p = Character.prototype;
 
@@ -15,7 +19,7 @@ this.ayai = this.ayai || {};
     //  public properties 
     //  =================     
     p.id = null;
-    p.graphic = null;
+    p.sprite = null;
     p.position = {x: 0, y: 0};
     
 
@@ -29,15 +33,15 @@ this.ayai = this.ayai || {};
 
     p.setPosition = function(x, y){
 
-        this.graphic.position.x = x;
-        this.graphic.position.y = y;
+        this.sprite.position.x = x;
+        this.sprite.position.y = y;
 
 
     }
 
     p.removeFromStage = function() {
 
-        ayai.stage.removeChild(this.graphic);
+        ayai.stage.removeChild(this.sprite);
 
     }
 

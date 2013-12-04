@@ -85,7 +85,7 @@ this.ayai = this.ayai || {};
 
             if(this.entities[entity.id.toString()] == null) {
                 console.log('found new entity '+entity.id);
-                this.addCharacter(entity.id, entity.x, entity.y);
+                this.addCharacter(entity.id, entity.x, entity.y, entity.currHealth, entity.maximumHealth);
             }
 
             else {
@@ -108,7 +108,7 @@ this.ayai = this.ayai || {};
             var entity = newEntities[index];
 
             if(this.entities[key] == null)
-                this.addCharacter(entity.id, entity.x, entity.y);
+                this.addCharacter(entity.id, entity.x, entity.y, entity.currHealth, entity.maximumHealth);
             else
                 this.updateCharacter(entity);
         }
@@ -131,9 +131,9 @@ this.ayai = this.ayai || {};
 
     }
 
-    p.addCharacter = function(id, x, y) {
+    p.addCharacter = function(id, x, y, currHealth, maximumHealth) {
 
-        var newChar = new ayai.Character(id, x, y);
+        var newChar = new ayai.Character(id, x, y, currHealth, maximumHealth);
         ayai.gameState.entities[id] = newChar;
 
         return newChar;

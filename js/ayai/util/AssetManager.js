@@ -13,7 +13,12 @@ this.ayai = this.ayai || {};
 
     p._jsonDeferred = null;
     p._assetDeferred = null;
+    p._charDeferred = null;
 
+    p.charSheet = null;
+
+
+    p.json = null;
 
     //  public methods
     //  ==============
@@ -21,11 +26,36 @@ this.ayai = this.ayai || {};
     p.a = function() {
     }
 
-    p.loadMapAssets = function(jsonFile, assetFile) {
-    
+    p.loadTestAssets = function(mapFile, mapTiles, charSheet)
+    {
+
+        var self = this;
+
         this._jsonDeferred = $.Deferred();
         this._assetDeferred = $.Deferred();
+        this._charDeferred = $.Deferred();
 
+        this.loadMapAssets(mapFile, mapTiles);
+        this.loadCharacterAssets(charSheet);
+    
+        
+        $.when(this._jsonDeferred, this._assetDeferred, this._charDeferred).
+            then(function() {
+                var evt = new CustomEvent("assetsLoaded",{ 
+                    detail: { 
+                               json: self.json, 
+                               asset: mapTiles,
+                               charSheet: charSheet}
+                        });    
+                console.log(evt);
+                document.dispatchEvent(evt);
+                
+            });
+
+        }
+
+    p.loadMapAssets = function(jsonFile, assetFile) {
+    
         var self = this;
 
         var loader = new PIXI.JsonLoader(jsonFile);
@@ -43,22 +73,22 @@ this.ayai = this.ayai || {};
         });
         assetLoader.load();
 
-        $.when(this._jsonDeferred, this._assetDeferred).
-            then(function() {
-                var evt = new CustomEvent("assetsLoaded",{ 
-                    detail: { 
-                               json: self.json, 
-                               asset: assetFile }
-                        });    
-                console.log(evt);
-                document.dispatchEvent(evt);
-                
-            });
-
         
-
     };
 
+
+    p.loadCharacterAssets = function(file) {
+
+        var self = this;
+
+        var assetLoader = new PIXI.AssetLoader([file]);
+            assetLoader.addEventListener("onComplete", function() {
+                  self._charDeferred.resolve();
+        });
+    
+        assetLoader.load();
+
+    }
 
     //  private methods
     //  ===============

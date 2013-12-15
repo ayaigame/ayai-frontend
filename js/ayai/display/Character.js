@@ -4,22 +4,27 @@ this.ayai = this.ayai || {};
         // constructor
         //
         this.id = id;
-        this.graphic = new PIXI.Graphics();
-        var texture = new PIXI.Texture.fromFrame(ayai.charTexture);
-        this.sprite = new PIXI.Sprite(texture);
+
+        this.sprite = ayai.game.add.sprite(x, y, 'guy');
+
+        this.sprite.animations.add('facedown', [1]);
+        this.sprite.animations.add('faceleft', [4]);
+        this.sprite.animations.add('faceright', [7]);
+        this.sprite.animations.add('faceup', [10]);
+        this.sprite.animations.add('walkdown', [0, 1, 2]);
+        this.sprite.animations.add('walkleft', [3, 4, 5]);
+        this.sprite.animations.add('walkright', [6, 7, 8]);
+        this.sprite.animations.add('walkup', [9, 10, 11]);
+
+        //  And this starts the animation playing by using its key ("static")
+        //  1 is the frame rate (1fps)
+        //  true means it will loop when it finishes
+        this.sprite.animations.play('facedown', 1, true);
 
         console.log(this.sprite);
-        this.sprite.position.x = x;
-        this.sprite.position.y = y;
 
-        //this.graphic.beginFill(0x000000);
-        //this.graphic.drawRect(0, 0, 32, 32);
-        this.graphic.beginFill(0xff0000);
-        this.graphic.drawRect(0, -10, 32, 5);
         this.setPosition(x,y);
         this.setHealth(currHealth,maximumHealth);
-        ayai.stage.addChild(this.graphic);
-        ayai.stage.addChild(this.sprite);
     };
     var p = Character.prototype;
 
@@ -39,14 +44,14 @@ this.ayai = this.ayai || {};
     //  ==============
 
 
+    p.setAnimation = function(animationName) {
+        this.sprite.animations.play(animationName, 15, true);
+
+    }
+
     p.setPosition = function(x, y){
 
-        this.sprite.position.x = x;
-        this.sprite.position.y = y;
-        this.graphic.position.x = x;
-        this.graphic.position.y = y;
-
-
+        this.sprite.centerOn(x, y);
     }
 
     p.setHealth = function(currHealth, maximumHealth) {

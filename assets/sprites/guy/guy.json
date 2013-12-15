@@ -1,0 +1,44 @@
+{"frames": [
+
+{
+	"filename": "guydown.png",
+	"frame": {"x":2,"y":62,"w":28,"h":32},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":2,"y":0,"w":28,"h":32},
+	"sourceSize": {"w":32,"h":32}
+},
+{
+	"filename": "guyleft.png",
+	"frame": {"x":2,"y":32,"w":28,"h":32},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":0,"w":28,"h":32},
+	"sourceSize": {"w":32,"h":32}
+},
+{
+	"filename": "guyright.png",
+	"frame": {"x":2,"y":2,"w":28,"h":32},
+	"rotated": true,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":0,"w":28,"h":32},
+	"sourceSize": {"w":32,"h":32}
+},
+{
+	"filename": "guyup.png",
+	"frame": {"x":36,"y":2,"w":26,"h":32},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":5,"y":0,"w":26,"h":32},
+	"sourceSize": {"w":32,"h":32}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker ",
+	"version": "1.0",
+	"image": "test.png",
+	"format": "RGBA8888",
+	"size": {"w":64,"h":128},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:f0d43c545dcfb2cb73f3ad9d99f103c5:78532ceea8de03e0bcf84ff0b8fbe599:02ab132358d6d8b512e80119463a8329$"
+}
+}

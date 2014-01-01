@@ -4,7 +4,7 @@ this.ayai = this.ayai || {};
         // constructor
         ayai.game = this;
         ayai.verboseLogger = true;
-        ayai.connection = new ayai.Connection("ws://localhost:8007");
+        ayai.connection = new ayai.Connection("ws://162.243.59.149:8007");
         ayai.gameState = new ayai.GameStateInterface();
         ayai.game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.WebGL, '', {
             preload: preload,
@@ -80,6 +80,7 @@ this.ayai = this.ayai || {};
         ayai.game.load.spritesheet('guy', '../assets/sprites/guy/guysheet.png', 32, 32);
         ayai.game.load.tilemap('map2', '../assets/maps/map2.json', null, Phaser.Tilemap.TILED_JSON);
         ayai.game.load.tileset('grasstiles', '../assets/tiles/grasstiles.png', 32, 32);
+        ayai.game.load.spritesheet('frames', '../assets/sprites/ui/framesheet.png', 128, 32);
     }
     window.onresize = function() {
 
@@ -88,6 +89,8 @@ this.ayai = this.ayai || {};
     }
 
     function create() {
+
+        ayai.connection.connect();
         var map = ayai.game.add.tilemap('map2');
         var tileset = ayai.game.add.tileset('grasstiles');
         layer = ayai.game.add.tilemapLayer(0, 0, window.innerWidth, window.innerHeight, tileset, map, 0);
@@ -96,11 +99,13 @@ this.ayai = this.ayai || {};
     function update() {};
 
     function render() {};
+
     p._messageReceived = function(evt) {
-        //    console.log(evt.detail);
+           console.log(evt.detail.msg);
         switch (evt.detail.msg.type) {
             case "id":
                 ayai.playerId = evt.detail.msg.id;
+                    console.log("connection established");
                 break;
             case "fullsync":
                 ayai.gameState.updateEntities(evt.detail.msg.players);

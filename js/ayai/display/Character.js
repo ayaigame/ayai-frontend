@@ -6,6 +6,8 @@ this.ayai = this.ayai || {};
         this.id = id;
 
         this.sprite = ayai.game.add.sprite(x, y, 'guy');
+        this.healthframe = ayai.game.add.sprite(x - 5, y - 40, 'frames');
+        this.healthbar = ayai.game.add.sprite(x - 5, y - 40, 'frames');
 
         this.sprite.animations.add('facedown', [1]);
         this.sprite.animations.add('faceleft', [4]);
@@ -16,15 +18,19 @@ this.ayai = this.ayai || {};
         this.sprite.animations.add('walkright', [6, 7, 8]);
         this.sprite.animations.add('walkup', [9, 10, 11]);
 
+        this.healthframe.animations.add('frame', [0]);
+        this.healthbar.animations.add('bar', [1]);
+
         //  And this starts the animation playing by using its key ("static")
         //  1 is the frame rate (1fps)
         //  true means it will loop when it finishes
         this.sprite.animations.play('facedown', 1, true);
-
-        console.log(this.sprite);
+        this.healthframe.animations.play('frame', 1, true);
+        this.healthbar.animations.play('bar', 1, true);
 
         this.setPosition(x,y);
         this.setHealth(currHealth,maximumHealth);
+
     };
     var p = Character.prototype;
 
@@ -49,10 +55,15 @@ this.ayai = this.ayai || {};
 
     }
 
-    p.setPosition = function(x, y){
+    p.setPosition = function(x, y) {
 
-        this.sprite.centerOn(x, y);
-    }
+        this.sprite.x = x;
+        this.sprite.y = y;
+        this.healthframe.x  = x - 50;
+        this.healthframe.y = y - 40;
+        this.healthbar.x = x - 50;
+        this.healthbar.y = y - 40;
+     }
 
     p.setHealth = function(currHealth, maximumHealth) {
         this.health.currHealth = currHealth;

@@ -4,8 +4,7 @@ this.ayai = this.ayai || {};
     var Connection = function(url) {
        // constructor
        this.url = url;
-       console.log("connection established");
-       this.connect();
+
     };
     var p = Connection.prototype;
 

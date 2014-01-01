@@ -124,16 +124,16 @@ this.ayai = this.ayai || {};
             //Change this to not a magic number
             switch (ev.key) {
                 case "w":
-                    Window.player.position.y -= 2;
+                    //Window.player.position.y -= 2;
                     break;
                 case "a":
-                    Window.player.position.x -= 2;
+                    //Window.player.position.x -= 2;
                     break;
                 case "s":
-                    Window.player.position.y += 2;
+                    //Window.player.position.y += 2;
                     break;
                 case "d":
-                    Window.player.position.x += 2;
+                    //Window.player.position.x += 2;
                     break;
                 case "isUp":
                     p.isUp = true;

@@ -2,7 +2,7 @@
 var stage;
 var renderer;
 window.trace = function(msg) {
-	console.log(msg);
+
 }
 window.onload = function() {
 	

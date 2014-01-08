@@ -43,11 +43,11 @@ this.ayai = this.ayai || {};
         if (vertical != null || horizontal != null) {
             var message = new ayai.StartMovementMessage(ayai.playerId, vertical, horizontal);
             var sender = new ayai.MessageSender(message);
-            console.log(sender);
+
         } else {
             var message = new ayai.StopMovementMessage(ayai.playerId);
             var sender = new ayai.MessageSender(message);
-            console.log(sender);
+
         }
     }
     p.updateEntitiesFull = function() {
@@ -65,6 +65,27 @@ this.ayai = this.ayai || {};
         }
         Window.player = ayai.gameState.entities[ayai.playerId];
     };
+
+
+    //Have to call this using this singleton-esque way
+    //because the player sprite is not created until we get
+    //a message back from the server.
+    p.setCameraOnce = true;
+    p.setCamera = function() {
+        if (Window.player == null) {
+            return;
+        }
+
+        if(p.setCameraOnce) {
+            console.log("CAMERA IS SET!");
+            console.log(Window.player);
+            ayai.game.camera.follow(Window.player.sprite, Phaser.Camera.FOLLOW_TOPDOWN_TIGHT);
+            ayai.game.camera.setSize(100, 100);
+        }
+
+    }
+
+
     p.updateEntities = function(json) {
         var newEntities = json;
         for (var index in newEntities) {
@@ -88,10 +109,14 @@ this.ayai = this.ayai || {};
         }
         **/
         Window.player = this.entities[ayai.playerId];
+        p.setCamera();
     }
     p.addCharacter = function(id, x, y, currHealth, maximumHealth) {
         var newChar = new ayai.Character(id, x, y, currHealth, maximumHealth);
         ayai.gameState.entities[id] = newChar;
+
+
+
         return newChar;
     }
     p.updateCharacter = function(e) {

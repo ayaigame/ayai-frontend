@@ -77,10 +77,16 @@ this.ayai = this.ayai || {};
         }
 
         if(p.setCameraOnce) {
+            //needs jquery
+            var browserWidth = $(window).width();
+            var browserHeight = $(window).height();
+
             console.log("CAMERA IS SET!");
             console.log(Window.player);
-            ayai.game.camera.follow(Window.player.sprite, Phaser.Camera.FOLLOW_TOPDOWN_TIGHT);
-            ayai.game.camera.setSize(100, 100);
+            ayai.game.camera.follow(Window.player.sprite, Phaser.Camera.FOLLOW_TOPDOWN);
+
+            ayai.game.camera.setSize(Math.floor(browserWidth *.95), Math.floor(browserHeight *.95) );
+
         }
 
     }

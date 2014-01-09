@@ -4,7 +4,7 @@ this.ayai = this.ayai || {};
         // constructor
         //
         this.id = id;
-
+        this.name = "";
         this.sprite = ayai.game.add.sprite(x, y, 'guy');
         this.healthframe = ayai.game.add.sprite(x - 5, y - 40, 'frames');
         this.healthbar = ayai.game.add.sprite(x - 5, y - 40, 'frames');
@@ -61,14 +61,15 @@ this.ayai = this.ayai || {};
         this.sprite.y = y;
         this.healthframe.x  = x - 50;
         this.healthframe.y = y - 40;
-        this.healthbar.x = x - 50;
+        this.healthbar.x = x  - 50;
         this.healthbar.y = y - 40;
      }
 
     p.setHealth = function(currHealth, maximumHealth) {
         this.health.currHealth = currHealth;
         this.health.maximumHealth = maximumHealth;
-            
+        this.healthbar.width = (currHealth / maximumHealth) * 126;
+
     }
 
     p.removeFromStage = function() {

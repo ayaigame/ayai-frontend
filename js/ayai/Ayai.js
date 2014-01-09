@@ -4,7 +4,7 @@ this.ayai = this.ayai || {};
         // constructor
         ayai.game = this;
         ayai.verboseLogger = true;
-        ayai.connection = new ayai.Connection("ws://162.243.59.149:8007");
+        ayai.connection = new ayai.Connection("ws://localhost:8007");
         ayai.gameState = new ayai.GameStateInterface();
         ayai.game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.WebGL, '', {
             preload: preload,
@@ -80,7 +80,7 @@ this.ayai = this.ayai || {};
         ayai.game.load.spritesheet('guy', '../assets/sprites/guy/guysheet.png', 32, 32);
         ayai.game.load.tilemap('map2', '../assets/maps/map2.json', null, Phaser.Tilemap.TILED_JSON);
         ayai.game.load.tileset('grasstiles', '../assets/tiles/grasstiles.png', 32, 32);
-        ayai.game.load.spritesheet('frames', '../assets/sprites/ui/framesheet.png', 128, 32);
+        ayai.game.load.spritesheet('frames', '../assets/sprites/ui/framesheet.png', 128, 16);
     }
     window.onresize = function() {
 

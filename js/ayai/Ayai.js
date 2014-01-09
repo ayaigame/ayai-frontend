@@ -3,7 +3,7 @@ this.ayai = this.ayai || {};
     var Ayai = function() {
         // constructor
         ayai.game = this;
-        ayai.verboseLogger = true;
+        ayai.verboseLogger = false;
         ayai.connection = new ayai.Connection("ws://localhost:8007");
         ayai.gameState = new ayai.GameStateInterface();
         ayai.game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.WebGL, '', {
@@ -17,6 +17,9 @@ this.ayai = this.ayai || {};
         //ayai.json = [{id: 0, x: 0, y: 0}, {id: 1, x: 200, y: 0}, {id: 2, x: 300, y: 100}];
         this._registerListeners();
         this.registerKeyEvents();
+
+
+
     };
     var p = Ayai.prototype;
     //  public properties 
@@ -101,7 +104,7 @@ this.ayai = this.ayai || {};
     function render() {};
 
     p._messageReceived = function(evt) {
-           console.log(evt.detail.msg);
+
         switch (evt.detail.msg.type) {
             case "id":
                 ayai.playerId = evt.detail.msg.id;

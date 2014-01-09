@@ -46,8 +46,7 @@ this.ayai = this.ayai || {};
                                json: self.json, 
                                asset: mapTiles,
                                charSheet: charSheet}
-                        });    
-                console.log(evt);
+                        });
                 document.dispatchEvent(evt);
                 
             });

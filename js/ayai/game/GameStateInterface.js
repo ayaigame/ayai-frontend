@@ -87,8 +87,7 @@ this.ayai = this.ayai || {};
             }
 
             ayai.game.camera.follow(Window.player.sprite, Phaser.Camera.FOLLOW_TOPDOWN);
-
-            ayai.game.camera.setSize(Math.floor(browserWidth), Math.floor(browserHeight) );
+            ayai.game.camera.setSize(browserWidth, browserHeight);
 
         }
 

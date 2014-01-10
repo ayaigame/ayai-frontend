@@ -113,8 +113,8 @@ this.ayai = this.ayai || {};
 
         ayai.connection.connect();
 
-        //hardcoded values for the map bounds (99 * 32 = 3168)
-        ayai.game.world.setBounds(0, 0, 3168, 3168);
+        //hardcoded values for the map bounds (100 * 32 = 3200)
+        ayai.game.world.setBounds(0, 0, 3200, 3200);
 
         renderMap('grasstiles', 'map2');
         var actionBar = new ayai.ActionBar();

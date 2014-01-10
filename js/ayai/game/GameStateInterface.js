@@ -81,11 +81,14 @@ this.ayai = this.ayai || {};
             var browserWidth = $(window).width();
             var browserHeight = $(window).height();
 
+            if(ayai.verboseLogger) {
             console.log("CAMERA IS SET!");
             console.log(Window.player);
+            }
+
             ayai.game.camera.follow(Window.player.sprite, Phaser.Camera.FOLLOW_TOPDOWN);
 
-            ayai.game.camera.setSize(Math.floor(browserWidth *.95), Math.floor(browserHeight *.95) );
+            ayai.game.camera.setSize(Math.floor(browserWidth), Math.floor(browserHeight) );
 
         }
 
@@ -97,8 +100,9 @@ this.ayai = this.ayai || {};
         for (var index in newEntities) {
             var key = newEntities[index].id;
             var entity = newEntities[index];
-            if (this.entities[key] == null)
+            if (this.entities[key] == null) {
                 this.addCharacter(entity.id, entity.x, entity.y, entity.currHealth, entity.maximumHealth);
+            }
             else
                 this.updateCharacter(entity);
         }
@@ -115,13 +119,10 @@ this.ayai = this.ayai || {};
         }
         **/
         Window.player = this.entities[ayai.playerId];
-        p.setCamera();
     }
     p.addCharacter = function(id, x, y, currHealth, maximumHealth) {
         var newChar = new ayai.Character(id, x, y, currHealth, maximumHealth);
-        ayai.gameState.entities[id] = newChar;
-
-
+        this.entities[id] = newChar;
 
         return newChar;
     }

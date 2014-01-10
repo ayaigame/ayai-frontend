@@ -14,7 +14,6 @@ this.ayai = this.ayai || {};
         });
         ayai.playerId = null;
         ayai.charTexture = null;
-        //ayai.json = [{id: 0, x: 0, y: 0}, {id: 1, x: 200, y: 0}, {id: 2, x: 300, y: 100}];
         this._registerListeners();
         this.registerKeyEvents();
 
@@ -28,6 +27,7 @@ this.ayai = this.ayai || {};
     //p.renderer = null;
     p.assets = null;
     p.connection = null;
+
     //  private properties
     //  ==================
     //  public methods
@@ -84,19 +84,51 @@ this.ayai = this.ayai || {};
         ayai.game.load.tilemap('map2', '../assets/maps/map2.json', null, Phaser.Tilemap.TILED_JSON);
         ayai.game.load.tileset('grasstiles', '../assets/tiles/grasstiles.png', 32, 32);
         ayai.game.load.spritesheet('frames', '../assets/sprites/ui/framesheet.png', 128, 16);
+        ayai.game.load.image('skillicon', '../assets/sprites/ui/skillsheet.png');
     }
+
     window.onresize = function() {
 
-        ayai.game.width = window.innerWidth;
-        ayai.game.height = window.innerHeight;
+        var width = $(window).width();
+        var height = $(window).height();   
+
+
+        $('canvas')[0].width = width;
+        $('canvas')[0].height = height;
+
+        ayai.game.width = width;
+        ayai.game.height = height;
+
+        ayai.game.stage.bounds.width = width;
+        ayai.game.stage.bounds.height = height;
+
+        ayai.game.renderer.resize(width, height);
+
+        //TODO: Re-render all the sprites, tilemaplayers, and probably ui elements
+
+
     }
 
     function create() {
 
         ayai.connection.connect();
-        var map = ayai.game.add.tilemap('map2');
-        var tileset = ayai.game.add.tileset('grasstiles');
-        layer = ayai.game.add.tilemapLayer(0, 0, window.innerWidth, window.innerHeight, tileset, map, 0);
+
+        //hardcoded values for the map bounds (99 * 32 = 3168)
+        ayai.game.world.setBounds(0, 0, 3168, 3168);
+
+        renderMap('grasstiles', 'map2');
+        var actionBar = new ayai.ActionBar();
+
+    }
+
+    function renderMap(tileSheet, jsonFile){
+        
+        var map = ayai.game.add.tilemap(jsonFile);
+        var tileset = ayai.game.add.tileset(tileSheet);
+
+        for(var i = 0; i < map.layers.length; i++) {
+            ayai.game.add.tilemapLayer(0, 0, window.innerWidth, window.innerHeight, tileset, map, i);
+        }
     }
 
     function update() {};
@@ -108,10 +140,13 @@ this.ayai = this.ayai || {};
         switch (evt.detail.msg.type) {
             case "id":
                 ayai.playerId = evt.detail.msg.id;
-                    console.log("connection established");
+                console.log("connection established");
+
                 break;
+
             case "fullsync":
                 ayai.gameState.updateEntities(evt.detail.msg.players);
+                ayai.gameState.setCamera();
                 break;
         }
     }

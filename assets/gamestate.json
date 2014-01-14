@@ -52,7 +52,7 @@
 					"id":1,
 					"x":0,
 					"y":0,
-					"type": "Player",
+					"type": "Character",
 					"name": "Player1",
 					"onMap": true,
 					"content": [

@@ -20712,7 +20712,7 @@ Phaser.Sprite.prototype.play = function (name, frameRate, loop, killOnComplete) 
 
 /**
 * Indicates the rotation of the Sprite, in degrees, from its original orientation. Values from 0 to 180 represent clockwise rotation; values from 0 to -180 represent counterclockwise rotation.
-* Values outside this range are added to or subtracted from 360 to obtain a value within the range. For example, the statement player.angle = 450 is the same as player.angle = 90.
+* Values outside this range are added to or subtracted from 360 to obtain a value within the range. For example, the statement character.angle = 450 is the same as character.angle = 90.
 * If you wish to work in radians instead of degrees use the property Sprite.rotation instead.
 * @name Phaser.Sprite#angle
 * @property {number} angle - Gets or sets the Sprites angle of rotation in degrees.
@@ -24698,7 +24698,7 @@ Phaser.Math = {
 	/**
 	* Generate a random bool result based on the chance value.
 	* <p>
-	* Returns true or false based on the chance value (default 50%). For example if you wanted a player to have a 30% chance
+	* Returns true or false based on the chance value (default 50%). For example if you wanted a character to have a 30% chance
 	* of getting a bonus, call chanceRoll(30) - true means the chance passed, false means it failed.
 	* </p>
 	* @method Phaser.Math#chanceRoll

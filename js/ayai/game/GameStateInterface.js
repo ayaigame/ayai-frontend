@@ -41,11 +41,11 @@ this.ayai = this.ayai || {};
             horizontal = false;
         }
         if (vertical != null || horizontal != null) {
-            var message = new ayai.StartMovementMessage(ayai.playerId, vertical, horizontal);
+            var message = new ayai.StartMovementMessage(ayai.characterId, vertical, horizontal);
             var sender = new ayai.MessageSender(message);
 
         } else {
-            var message = new ayai.StopMovementMessage(ayai.playerId);
+            var message = new ayai.StopMovementMessage(ayai.characterId);
             var sender = new ayai.MessageSender(message);
 
         }
@@ -63,16 +63,16 @@ this.ayai = this.ayai || {};
                 console.log('should update entity ' + entity.id)
             }
         }
-        Window.player = ayai.gameState.entities[ayai.playerId];
+        Window.character = ayai.gameState.entities[ayai.characterId];
     };
 
 
     //Have to call this using this singleton-esque way
-    //because the player sprite is not created until we get
+    //because the character sprite is not created until we get
     //a message back from the server.
     p.setCameraOnce = true;
     p.setCamera = function() {
-        if (Window.player == null) {
+        if (Window.character == null) {
             return;
         }
 
@@ -83,10 +83,10 @@ this.ayai = this.ayai || {};
 
             if(ayai.verboseLogger) {
             console.log("CAMERA IS SET!");
-            console.log(Window.player);
+            console.log(Window.character);
             }
 
-            ayai.game.camera.follow(Window.player.sprite, Phaser.Camera.FOLLOW_TOPDOWN);
+            ayai.game.camera.follow(Window.character.sprite, Phaser.Camera.FOLLOW_TOPDOWN);
 
             ayai.game.camera.setSize(Math.floor(browserWidth), Math.floor(browserHeight) );
 
@@ -118,7 +118,7 @@ this.ayai = this.ayai || {};
                 this.removeCharacter(entity);
         }
         **/
-        Window.player = this.entities[ayai.playerId];
+        Window.character = this.entities[ayai.characterId];
     }
     p.addCharacter = function(id, x, y, currHealth, maximumHealth) {
         var newChar = new ayai.Character(id, x, y, currHealth, maximumHealth);
@@ -156,55 +156,55 @@ this.ayai = this.ayai || {};
             //Change this to not a magic number
             switch (ev.key) {
                 case "w":
-                    //Window.player.position.y -= 2;
+                    //Window.character.position.y -= 2;
                     break;
                 case "a":
-                    //Window.player.position.x -= 2;
+                    //Window.character.position.x -= 2;
                     break;
                 case "s":
-                    //Window.player.position.y += 2;
+                    //Window.character.position.y += 2;
                     break;
                 case "d":
-                    //Window.player.position.x += 2;
+                    //Window.character.position.x += 2;
                     break;
                 case "isUp":
                     p.isUp = true;
-                    Window.player.setAnimation('walkup');
+                    Window.character.setAnimation('walkup');
                     p.sendMovement();
                     break;
                 case "isLeft":
                     p.isLeft = true;
-                    Window.player.setAnimation('walkleft');
+                    Window.character.setAnimation('walkleft');
                     p.sendMovement();
                     break;
                 case "isRight":
                     p.isRight = true;
-                    Window.player.setAnimation('walkright');
+                    Window.character.setAnimation('walkright');
                     p.sendMovement();
                     break;
                 case "isDown":
                     p.isDown = true;
-                    Window.player.setAnimation('walkdown');
+                    Window.character.setAnimation('walkdown');
                     p.sendMovement();
                     break;
                 case "!isUp":
                     p.isUp = false;
-                    Window.player.setAnimation('faceup');
+                    Window.character.setAnimation('faceup');
                     p.sendMovement();
                     break;
                 case "!isLeft":
                     p.isLeft = false;
-                    Window.player.setAnimation('faceleft');
+                    Window.character.setAnimation('faceleft');
                     p.sendMovement();
                     break;
                 case "!isRight":
                     p.isRight = false;
-                    Window.player.setAnimation('faceright');
+                    Window.character.setAnimation('faceright');
                     p.sendMovement();
                     break;
                 case "!isDown":
                     p.isDown = false;
-                    Window.player.setAnimation('facedown');
+                    Window.character.setAnimation('facedown');
                     p.sendMovement();
                     break;
             }

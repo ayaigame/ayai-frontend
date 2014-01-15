@@ -85,6 +85,9 @@ this.ayai = this.ayai || {};
         ayai.game.load.tileset('grasstiles', '../assets/tiles/grasstiles.png', 32, 32);
         ayai.game.load.spritesheet('frames', '../assets/sprites/ui/framesheet.png', 128, 16);
         ayai.game.load.image('skillicon', '../assets/sprites/ui/skillsheet.png');
+
+        ayai.game.load.tilemap('map3', '../assets/maps/map3.json', null, Phaser.Tilemap.TILED_JSON);
+        ayai.game.load.tileset('sd3', '../assets/tiles/sd33.png', 32, 32);
     }
 
     window.onresize = function() {
@@ -114,9 +117,10 @@ this.ayai = this.ayai || {};
         ayai.connection.connect();
 
         //hardcoded values for the map bounds (100 * 32 = 3200)
-        ayai.game.world.setBounds(0, 0, 3200, 3200);
+        ayai.game.world.setBounds(0, 0, 1280, 1280);
 
-        renderMap('grasstiles', 'map2');
+        //renderMap('grasstiles', 'map2');
+        renderMap('sd3', 'map3')
         var actionBar = new ayai.ActionBar();
 
     }

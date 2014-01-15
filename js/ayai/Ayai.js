@@ -12,7 +12,7 @@ this.ayai = this.ayai || {};
             update: update,
             render: render
         });
-        ayai.playerId = null;
+        ayai.characterId = null;
         ayai.charTexture = null;
         this._registerListeners();
         this.registerKeyEvents();
@@ -143,13 +143,13 @@ this.ayai = this.ayai || {};
 
         switch (evt.detail.msg.type) {
             case "id":
-                ayai.playerId = evt.detail.msg.id;
+                ayai.characterId = evt.detail.msg.id;
                 console.log("connection established");
 
                 break;
 
             case "fullsync":
-                ayai.gameState.updateEntities(evt.detail.msg.players);
+                ayai.gameState.updateEntities(evt.detail.msg.characters);
                 ayai.gameState.setCamera();
                 break;
         }

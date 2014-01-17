@@ -5,18 +5,18 @@ this.ayai = this.ayai || {};
         ayai.game = this;
         ayai.verboseLogger = false;
         ayai.connection = new ayai.Connection("ws://localhost:8007");
+
         ayai.gameState = new ayai.GameStateInterface();
-        ayai.game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.WebGL, '', {
-            preload: preload,
-            create: create,
-            update: update,
-            render: render
-        });
+
         ayai.characterId = null;
         ayai.charTexture = null;
         this._registerListeners();
         this.registerKeyEvents();
 
+        ayai.TILE_WIDTH = 32;
+        ayai.TILE_HEIGHT = 32;
+
+        ayai.connection.connect();
 
 
     };
@@ -76,18 +76,17 @@ this.ayai = this.ayai || {};
     //  ===============
     p._registerListeners = function() {
         document.addEventListener("msgReceived", this._messageReceived);
-        document.addEventListener('assetsLoaded', this.showMap);
     }
 
     function preload() {
+
+        console.log("Loading assets...");
         ayai.game.load.spritesheet('guy', '../assets/sprites/guy/guysheet.png', 32, 32);
-        ayai.game.load.tilemap('map2', '../assets/maps/map2.json', null, Phaser.Tilemap.TILED_JSON);
-        ayai.game.load.tileset('grasstiles', '../assets/tiles/grasstiles.png', 32, 32);
         ayai.game.load.spritesheet('frames', '../assets/sprites/ui/framesheet.png', 128, 16);
         ayai.game.load.image('skillicon', '../assets/sprites/ui/skillsheet.png');
 
-        ayai.game.load.tilemap('map3', '../assets/maps/map3.json', null, Phaser.Tilemap.TILED_JSON);
-        ayai.game.load.tileset('sd3', '../assets/tiles/sd33.png', 32, 32);
+        ayai.game.load.tilemap('tilemap', ayai.tilemap, null, Phaser.Tilemap.TILED_JSON); 
+        ayai.game.load.tileset('tileset', ayai.tileset, ayai.TILE_WIDTH, ayai.TILE_HEIGHT);
     }
 
     window.onresize = function() {
@@ -114,43 +113,61 @@ this.ayai = this.ayai || {};
 
     function create() {
 
-        ayai.connection.connect();
+        console.log("Assets loaded. Ready to PLAY!!!111")
 
-        //hardcoded values for the map bounds (100 * 32 = 3200)
-        ayai.game.world.setBounds(0, 0, 1280, 1280);
+        //Tell the gamestate that we have loaded all the assets and that it can start updating from sync messages
+        ayai.gameState.isLoaded = true;
 
-        //renderMap('grasstiles', 'map2');
-        renderMap('sd3', 'map3')
+        renderMap('tileset', 'tilemap');
+        ayai.gameState.createPlayerCharacter(ayai.characterId, ayai.startingX, ayai.startingY);
+
+        //Create UI Elements
         var actionBar = new ayai.ActionBar();
 
     }
 
     function renderMap(tileSheet, jsonFile){
         
-        var map = ayai.game.add.tilemap(jsonFile);
         var tileset = ayai.game.add.tileset(tileSheet);
+        var map = ayai.game.add.tilemap(jsonFile);
+
+        ayai.game.world.setBounds(0, 0, map.layers[0].width * ayai.TILE_WIDTH, map.layers[0].height * ayai.TILE_HEIGHT);
 
         for(var i = 0; i < map.layers.length; i++) {
             ayai.game.add.tilemapLayer(0, 0, window.innerWidth, window.innerHeight, tileset, map, i);
         }
     }
 
+
     function update() {};
 
     function render() {};
 
     p._messageReceived = function(evt) {
+        
+        if(ayai.verboseLogger)
+            console.log(evt.detail.msg);
 
         switch (evt.detail.msg.type) {
             case "id":
-                ayai.characterId = evt.detail.msg.id;
                 console.log("connection established");
+                ayai.game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.WebGL, '', {
+                    preload: preload,
+                    create: create,
+                    update: update,
+                    render: render
+                });
+
+                ayai.characterId = evt.detail.msg.id;
+                ayai.startingX  = evt.detail.msg.x;
+                ayai.startingY = evt.detail.msg.y;
+                ayai.tileset = evt.detail.msg.tileset;
+                ayai.tilemap = evt.detail.msg.tilemap;
 
                 break;
 
             case "fullsync":
                 ayai.gameState.updateEntities(evt.detail.msg.characters);
-                ayai.gameState.setCamera();
                 break;
         }
     }

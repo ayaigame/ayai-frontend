@@ -7,6 +7,7 @@ this.ayai = this.ayai || {};
         p.isDown = false;
         p.isRight = false;
         p.isLeft = false;
+        p.isLoaded = false;
     };
     var p = GameStateInterface.prototype;
     //  public properties 
@@ -20,6 +21,7 @@ this.ayai = this.ayai || {};
     p.isDown = null;
     p.isLeft = null;
     p.isRight = null;
+    p.isLoaded = false;
     //  public methods
     //  ==============
     p.update = function(renderer) {
@@ -63,62 +65,59 @@ this.ayai = this.ayai || {};
                 console.log('should update entity ' + entity.id)
             }
         }
+
         Window.character = ayai.gameState.entities[ayai.characterId];
     };
 
 
-    //Have to call this using this singleton-esque way
-    //because the character sprite is not created until we get
-    //a message back from the server.
-    p.setCameraOnce = true;
-    p.setCamera = function() {
-        if (Window.character == null) {
-            return;
-        }
 
-        if(p.setCameraOnce) {
-            //needs jquery
-            var browserWidth = $(window).width();
-            var browserHeight = $(window).height();
+    p.createPlayerCharacter = function(id, x, y) {
 
-            if(ayai.verboseLogger) {
+        Window.character = this.addCharacter(id, x, y, 1, 1);
+        
+        //needs jquery
+        var browserWidth = $(window).width();
+        var browserHeight = $(window).height();
+
+        if(ayai.verboseLogger) {
             console.log("CAMERA IS SET!");
             console.log(Window.character);
-            }
-
-            ayai.game.camera.follow(Window.character.sprite, Phaser.Camera.FOLLOW_TOPDOWN);
-
-            ayai.game.camera.setSize(Math.floor(browserWidth), Math.floor(browserHeight) );
-
         }
 
-    }
+        ayai.game.camera.follow(Window.character.sprite, Phaser.Camera.FOLLOW_TOPDOWN);
+
+        ayai.game.camera.setSize(Math.floor(browserWidth), Math.floor(browserHeight) );
+
+    };
 
 
     p.updateEntities = function(json) {
-        var newEntities = json;
-        for (var index in newEntities) {
-            var key = newEntities[index].id;
-            var entity = newEntities[index];
-            if (this.entities[key] == null) {
-                this.addCharacter(entity.id, entity.x, entity.y, entity.currHealth, entity.maximumHealth);
+
+        if(this.isLoaded) {
+            var newEntities = json;
+            for (var index in newEntities) {
+                var key = newEntities[index].id;
+                var entity = newEntities[index];
+                if (this.entities[key] == null) {
+                    this.addCharacter(entity.id, entity.x, entity.y, entity.currHealth, entity.maximumHealth);
+                }
+                else
+                    this.updateCharacter(entity);
             }
-            else
-                this.updateCharacter(entity);
+            // TODO: Need to figure out a diff way for this
+            /**
+            for(var key in this.entities) {
+                var entity = this.entities[key];
+                console.log(key);
+                console.log(newEntities);
+                console.log(newEntities["1"]);
+                console.log("YO");
+                if(!(key in newEntities))
+                    this.removeCharacter(entity);
+            }
+            **/
+            Window.character = this.entities[ayai.characterId];
         }
-        // TODO: Need to figure out a diff way for this
-        /**
-        for(var key in this.entities) {
-            var entity = this.entities[key];
-            console.log(key);
-            console.log(newEntities);
-            console.log(newEntities["1"]);
-            console.log("YO");
-            if(!(key in newEntities))
-                this.removeCharacter(entity);
-        }
-        **/
-        Window.character = this.entities[ayai.characterId];
     }
     p.addCharacter = function(id, x, y, currHealth, maximumHealth) {
         var newChar = new ayai.Character(id, x, y, currHealth, maximumHealth);

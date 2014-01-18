@@ -70,55 +70,34 @@ this.ayai = this.ayai || {};
     };
 
 
-
-    p.createPlayerCharacter = function(id, x, y) {
-
-        Window.character = this.addCharacter(id, x, y, 1, 1);
-        
-        //needs jquery
-        var browserWidth = $(window).width();
-        var browserHeight = $(window).height();
-
-        if(ayai.verboseLogger) {
-            console.log("CAMERA IS SET!");
-            console.log(Window.character);
-        }
-
-        ayai.game.camera.follow(Window.character.sprite, Phaser.Camera.FOLLOW_TOPDOWN);
-
-        ayai.game.camera.setSize(Math.floor(browserWidth), Math.floor(browserHeight) );
-
-    };
-
-
     p.updateEntities = function(json) {
 
         if(this.isLoaded) {
-            var newEntities = json;
+
+            var you = json.you;
+            var newEntities = json.others;
+            this.updateCharacter(you);
+
             for (var index in newEntities) {
                 var key = newEntities[index].id;
                 var entity = newEntities[index];
+
                 if (this.entities[key] == null) {
-                    this.addCharacter(entity.id, entity.x, entity.y, entity.currHealth, entity.maximumHealth);
+                    this.addCharacter(entity.id, entity.position.x, entity.position.y, entity.health.current, entity.health.max);
                 }
                 else
                     this.updateCharacter(entity);
             }
-            // TODO: Need to figure out a diff way for this
-            /**
+
+            /*
             for(var key in this.entities) {
                 var entity = this.entities[key];
-                console.log(key);
-                console.log(newEntities);
-                console.log(newEntities["1"]);
-                console.log("YO");
                 if(!(key in newEntities))
                     this.removeCharacter(entity);
-            }
-            **/
-            Window.character = this.entities[ayai.characterId];
+            }*/
         }
     }
+
     p.addCharacter = function(id, x, y, currHealth, maximumHealth) {
         var newChar = new ayai.Character(id, x, y, currHealth, maximumHealth);
         this.entities[id] = newChar;
@@ -127,8 +106,8 @@ this.ayai = this.ayai || {};
     }
     p.updateCharacter = function(e) {
         var entity = this.entities[e.id.toString()];
-        entity.setPosition(e.x, e.y);
-        entity.setHealth(e.currHealth, e.maximumHealth);
+        entity.setPosition(e.position.x, e.position.y);
+        entity.setHealth(e.health.current, e.health.max);
     }
     p.removeCharacter = function(e) {
         e.removeFromStage();
@@ -154,18 +133,6 @@ this.ayai = this.ayai || {};
         if (ev.inputType == 0) {
             //Change this to not a magic number
             switch (ev.key) {
-                case "w":
-                    //Window.character.position.y -= 2;
-                    break;
-                case "a":
-                    //Window.character.position.x -= 2;
-                    break;
-                case "s":
-                    //Window.character.position.y += 2;
-                    break;
-                case "d":
-                    //Window.character.position.x += 2;
-                    break;
                 case "isUp":
                     p.isUp = true;
                     Window.character.setAnimation('walkup');

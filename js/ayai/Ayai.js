@@ -7,11 +7,11 @@ this.ayai = this.ayai || {};
         ayai.connection = new ayai.Connection("ws://localhost:8007");
 
         ayai.gameState = new ayai.GameStateInterface();
+        ayai.uiElements = [];
 
         ayai.characterId = null;
         ayai.charTexture = null;
         this._registerListeners();
-        this.registerKeyEvents();
 
         ayai.TILE_WIDTH = 32;
         ayai.TILE_HEIGHT = 32;
@@ -30,48 +30,10 @@ this.ayai = this.ayai || {};
 
     //  private properties
     //  ==================
+
     //  public methods
     //  ==============
-    p.registerKeyEvents = function() {
-        console.log("Registering Key Events");
-        console.log(new InputEvent("d"));
-        kd.W.press(function(e) {
-            ayai.gameState.sendInputToGameState(new InputEvent("isUp"))
-        });
-        kd.A.press(function(e) {
-            ayai.gameState.sendInputToGameState(new InputEvent("isLeft"))
-        });
-        kd.S.press(function(e) {
-            ayai.gameState.sendInputToGameState(new InputEvent("isDown"))
-        });
-        kd.D.press(function(e) {
-            ayai.gameState.sendInputToGameState(new InputEvent("isRight"))
-        });
-        kd.W.up(function(e) {
-            ayai.gameState.sendInputToGameState(new InputEvent("!isUp"))
-        });
-        kd.A.up(function(e) {
-            ayai.gameState.sendInputToGameState(new InputEvent("!isLeft"))
-        });
-        kd.S.up(function(e) {
-            ayai.gameState.sendInputToGameState(new InputEvent("!isDown"))
-        });
-        kd.D.up(function(e) {
-            ayai.gameState.sendInputToGameState(new InputEvent("!isRight"))
-        });
-        kd.W.down(function(e) {
-            ayai.gameState.sendInputToGameState(new InputEvent("w"))
-        });
-        kd.A.down(function(e) {
-            ayai.gameState.sendInputToGameState(new InputEvent("a"))
-        });
-        kd.S.down(function(e) {
-            ayai.gameState.sendInputToGameState(new InputEvent("s"))
-        });
-        kd.D.down(function(e) {
-            ayai.gameState.sendInputToGameState(new InputEvent("d"))
-        });
-    }
+
     //  private methods
     //  ===============
     p._registerListeners = function() {
@@ -91,38 +53,47 @@ this.ayai = this.ayai || {};
 
     window.onresize = function() {
 
-        var width = $(window).width();
-        var height = $(window).height();   
+        if(ayai.gameState.isLoaded) {
+            var width = $(window).width();
+            var height = $(window).height();   
 
 
-        $('canvas')[0].width = width;
-        $('canvas')[0].height = height;
+            $('canvas')[0].width = width;
+            $('canvas')[0].height = height;
 
-        ayai.game.width = width;
-        ayai.game.height = height;
+            ayai.game.width = width;
+            ayai.game.height = height;
 
-        ayai.game.stage.bounds.width = width;
-        ayai.game.stage.bounds.height = height;
+            //ayai.game.stage.bounds.width = width;
+            //ayai.game.stage.bounds.height = height;
 
-        ayai.game.renderer.resize(width, height);
+            //ayai.game.renderer.resize(width, height);
 
-        //TODO: Re-render all the sprites, tilemaplayers, and probably ui elements
+            //TODO: Re-render all the sprites, tilemaplayers, and probably ui elements
 
+            //renderMap('tileset', 'tilemap') //this works, but is really inefficient. need to figure out why.
+
+            for(var i = 0; i < ayai.uiElements.length; i++) {
+                ayai.uiElements[i].reposition();
+            }
+        }
 
     }
 
     function create() {
 
-        console.log("Assets loaded. Ready to PLAY!!!111")
+        console.log("Assets loaded. Ready to PLAY!!!111");
 
-        //Tell the gamestate that we have loaded all the assets and that it can start updating from sync messages
+        //Tell the gamestate that we have loaded all the assets and that it can start updating from update messages
         ayai.gameState.isLoaded = true;
+        
+        ayai.inputHandler = new ayai.InputHandler();
 
         renderMap('tileset', 'tilemap');
-        ayai.gameState.createPlayerCharacter(ayai.characterId, ayai.startingX, ayai.startingY);
 
         //Create UI Elements
-        var actionBar = new ayai.ActionBar();
+        ayai.actionBar = new ayai.ActionBar();
+        ayai.uiElements.push(ayai.actionBar);
 
     }
 
@@ -131,25 +102,49 @@ this.ayai = this.ayai || {};
         var tileset = ayai.game.add.tileset(tileSheet);
         var map = ayai.game.add.tilemap(jsonFile);
 
-        ayai.game.world.setBounds(0, 0, map.layers[0].width * ayai.TILE_WIDTH, map.layers[0].height * ayai.TILE_HEIGHT);
+        //needs jquery
+        var browserWidth = $(window).width();
+        var browserHeight = $(window).height();
+        var mapWidth =  map.layers[0].width * ayai.TILE_WIDTH;
+        var mapHeight = map.layers[0].height * ayai.TILE_HEIGHT;
+
+        //if the dimensions of the browser are less than the dimensions of the map, the camera gets set to the dimensions of the map.
+        var width = Math.min(browserWidth, mapWidth);
+        var height = Math.min(browserHeight, mapHeight);
 
         for(var i = 0; i < map.layers.length; i++) {
-            ayai.game.add.tilemapLayer(0, 0, window.innerWidth, window.innerHeight, tileset, map, i);
+            ayai.game.add.tilemapLayer(0, 0, width, height, tileset, map, i);
         }
+
+        Window.character = ayai.gameState.addCharacter(ayai.characterId, ayai.startingX, ayai.startingY, 1, 1);
+        ayai.game.world.setBounds(0, 0, mapWidth, mapHeight);
+
+        ayai.game.camera.follow(Window.character.sprite, Phaser.Camera.FOLLOW_TOPDOWN);
+
+
+
+        ayai.game.camera.setSize(width, height);
+
+
     }
 
 
-    function update() {};
+    function update() {
+
+        //ayai.inputHandler.update();
+
+    };
 
     function render() {};
 
     p._messageReceived = function(evt) {
-        
+
         if(ayai.verboseLogger)
             console.log(evt.detail.msg);
 
         switch (evt.detail.msg.type) {
             case "id":
+                console.log(evt.detail.msg);
                 console.log("connection established");
                 ayai.game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.WebGL, '', {
                     preload: preload,
@@ -164,10 +159,17 @@ this.ayai = this.ayai || {};
                 ayai.tileset = evt.detail.msg.tileset;
                 ayai.tilemap = evt.detail.msg.tilemap;
 
+
                 break;
 
-            case "fullsync":
-                ayai.gameState.updateEntities(evt.detail.msg.characters);
+            case "map":
+                ayai.tileset = "/assets/tiles/" + evt.detail.msg.tilesets[0].image;
+                ayai.tilemap = "/assets/maps/" + evt.detail.msg.tilemap;
+                ayai.game.load.tilemap('tilemap', ayai.tilemap, null, Phaser.Tilemap.TILED_JSON); 
+                ayai.game.load.tileset('tileset', ayai.tileset, ayai.TILE_WIDTH, ayai.TILE_HEIGHT);
+
+            case "update":
+                ayai.gameState.updateEntities(evt.detail.msg);
                 break;
         }
     }

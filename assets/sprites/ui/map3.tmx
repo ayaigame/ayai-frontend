@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="40" height="40" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="5202_1075650560" tilewidth="32" tileheight="32">
+  <image source="../tiles/5202_1075650560.png" trans="ff00cc" width="1184" height="640"/>
+  <terraintypes>
+   <terrain name="grass" tile="-1"/>
+   <terrain name="dirt" tile="-1"/>
+   <terrain name="tallgrass" tile="-1"/>
+  </terraintypes>
+  <tile id="160">
+   <properties>
+    <property name="collision" value="1"/>
+   </properties>
+  </tile>
+  <tile id="198">
+   <properties>
+    <property name="collision" value="1"/>
+   </properties>
+  </tile>
+  <tile id="233">
+   <properties>
+    <property name="test" value="2"/>
+   </properties>
+  </tile>
+  <tile id="296" terrain="0,0,0,0">
+   <properties>
+    <property name="test" value="3"/>
+   </properties>
+  </tile>
+  <tile id="374" terrain="2,2,2,2"/>
+  <tile id="592" terrain="1,1,1,1"/>
+  <tile id="593" terrain="0,0,0,1"/>
+  <tile id="594" terrain="0,0,1,1"/>
+  <tile id="595" terrain="0,0,1,1"/>
+  <tile id="596" terrain="0,0,1,0"/>
+  <tile id="603" terrain="0,0,0,2"/>
+  <tile id="604" terrain="0,0,2,2"/>
+  <tile id="605" terrain="0,0,2,2"/>
+  <tile id="606" terrain="0,0,2,0"/>
+  <tile id="630" terrain="0,1,0,1"/>
+  <tile id="631" terrain="1,1,1,0"/>
+  <tile id="632" terrain="1,1,0,1"/>
+  <tile id="633" terrain="1,0,1,0"/>
+  <tile id="640" terrain="0,2,0,2"/>
+  <tile id="641" terrain="2,2,2,0"/>
+  <tile id="642" terrain="2,2,0,2"/>
+  <tile id="643" terrain="2,0,2,0"/>
+  <tile id="667" terrain="0,1,0,1"/>
+  <tile id="668" terrain="1,0,1,1"/>
+  <tile id="669" terrain="0,1,1,1"/>
+  <tile id="670" terrain="1,0,1,0"/>
+  <tile id="677" terrain="0,2,0,2"/>
+  <tile id="678" terrain="2,0,2,2"/>
+  <tile id="679" terrain="0,2,2,2"/>
+  <tile id="680" terrain="2,0,2,0"/>
+  <tile id="704" terrain="0,1,0,0"/>
+  <tile id="705" terrain="1,1,0,0"/>
+  <tile id="706" terrain="1,1,0,0"/>
+  <tile id="707" terrain="1,0,0,0"/>
+  <tile id="714" terrain="0,2,0,0"/>
+  <tile id="715" terrain="2,2,0,0"/>
+  <tile id="716" terrain="2,2,0,0"/>
+  <tile id="717" terrain="2,0,0,0"/>
+ </tileset>
+ <layer name="ground/water" width="40" height="40">
+  <data encoding="base64" compression="zlib">
+   eJztmF9SAjEMxpc9gY6n4AAehEXfVj3Gom8gx0B8Ez0G4tuKZzKdacYYmzb9s6AzPnwzKND9kaZfko5HVTWvq6ob+bWBz1xbXYFuQONROa1gvQnozrHuU4BvAe/vQe9EH4X5trDeLegBdMnWluK3GIhFUifEsIe/7+ufbIfi4nyPjuf2ZA/3SrbW5mOpXPTlYIowb18KrYfxc+VgjFp7hp8L8+EZyY2hiduC5MKJ4jtLoiH3uLVx25C8O7fvnSnYQozI5zojGlEvQs82nKfK2IUYJY+JiR33yVD+xcTP5zExbLSmuLwIz5DWfxr4zAVoncg3t2cCfXzjeS79LSGfN1xTyzUD7azeIvl6+xz0ccO5FOKmYePxmiUwaXhd/997ahDnGoItVQ2LV+peluSZEmGOvR6JCfeO8kxYvIbmwpjw+t0wHsp1yHjRPpfHiubUsXLLFadD7Z1GnYMthSu2vkhr8O+u6ry84r2jkcvntWvQ2k/3NrX/ofWH9kGaGOI8Ybiw/tMasLUxM+cjd0bgM1mIMaamr+qvGQE9L2VeoIyhZ2J/opl3qceU2G/DGIqfVO99jLjXuTMX9uSl5iyJM5WxV+5bCc7f4NH/+ntCb6Z3kPg6pT629fe7zIb4ZewZkubanPs/Oscb3+iIX8Z4pcQWUxddQs/A34d9RayXS2zaO0qpn+afWSfySffM2jtKemc3tbWY9tWuOSTGI7X1WRK9s/MptV/EXiqntmDtQO3Y65ze/xOdP7pH
+  </data>
+ </layer>
+ <layer name="cliffs" width="40" height="40">
+  <data encoding="base64" compression="zlib">
+   eJxjYKAMtDJiFxfBIQ4CqnjkqA1G3UcZwOU+4UHiPlMsdoHc1oXHDRZ0dF8H0C4BJPtAYbMESK9HEgPF9RYGBL5LP+cxrMXivpNA+gpaGN1Ewlvp5zyGS2juAMUtyG0/oeIi0PBEBreA+DY9HAcE4mjuA7nlHRIf5D5lLOkN5EYvOqXDDqg96OkOBHCVMwl0zCOgNKiOI92BQCIjJqYnAKVBH2i6e0dYOd3BayB+wzA43TYKRsEoGAWjYBSMglEwCkbBKBgFgx3Qc4yDHOAGxO4D7QgCYCi4cRSMbAAAMNglSw==
+  </data>
+ </layer>
+ <layer name="props" width="40" height="40">
+  <data encoding="base64" compression="zlib">
+   eJzt2MtKAlEcx/HRrBdo2diusloHLQK7gERl9RDddpXVQ3RbFN0fIquF0v0hui2iezsfoG3fouAIzpSj/s8Bzw8+KDPo/Dhn5M/oODY2NuVKA1xE0agc/wjp6aMmjm70oBd9yjk37P25eqHuYxjHBCYxpZyL+vSTyiKWsIwVrOqtUzBpHOAQR5q7FMo1bnCLfc1d/OJyz1/pLmFjY5MXr/lqQvzmqwnxm6+VSjH7JT1fg+yX5HwNsl/qfL2rXLXvlLpfEvM/6H51Cc1/yf2yqbLwzBRCGDWIoBZ1BjxLfaWJHs1oQQytaEO7If0G6DGIISQxjBGMFtGvvwT3f3z3ND1mMIsU5jCPBaH1S6DD47+BTo5v0GMTW9jGDnaxJ7i/OSd/Tde49joeeH/M6wlOcYZzXOBS4/2X4drZn+s/8vqEZ7zgFW94N+T38Z/8rrfXPa476nrbVF8+Ady/Ttc=
+  </data>
+ </layer>
+ <layer name="props2" width="40" height="40">
+  <data encoding="base64" compression="zlib">
+   eJzt1rENgDAMRNHLIDAAW7AMG8EwMAlMAk3gWgoQXRz0n5T+y5IjS8A3Y5KmVLri2ey2JXAfAKkPvqND8D4Adev4YwAA+K3d7ygd8aLxHdJyi9ysnscWeCbZbWfgPqAWFxIsCVs=
+  </data>
+ </layer>
+</map>

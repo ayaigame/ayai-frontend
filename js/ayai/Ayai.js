@@ -19,6 +19,8 @@ this.ayai = this.ayai || {};
         ayai.connection.connect();
 
 
+
+
     };
     var p = Ayai.prototype;
     //  public properties 
@@ -49,6 +51,8 @@ this.ayai = this.ayai || {};
 
         ayai.game.load.tilemap('tilemap', ayai.tilemap, null, Phaser.Tilemap.TILED_JSON); 
         ayai.game.load.tileset('tileset', ayai.tileset, ayai.TILE_WIDTH, ayai.TILE_HEIGHT);
+
+        console.log(ayai.game.load);
     }
 
     window.onresize = function() {
@@ -101,6 +105,8 @@ this.ayai = this.ayai || {};
         
         var tileset = ayai.game.add.tileset(tileSheet);
         var map = ayai.game.add.tilemap(jsonFile);
+
+        console.log(map);
 
         //needs jquery
         var browserWidth = $(window).width();
@@ -159,17 +165,27 @@ this.ayai = this.ayai || {};
                 ayai.tileset = evt.detail.msg.tileset;
                 ayai.tilemap = evt.detail.msg.tilemap;
 
-
                 break;
 
             case "map":
-                ayai.tileset = "/assets/tiles/" + evt.detail.msg.tilesets[0].image;
-                ayai.tilemap = "/assets/maps/" + evt.detail.msg.tilemap;
-                ayai.game.load.tilemap('tilemap', ayai.tilemap, null, Phaser.Tilemap.TILED_JSON); 
-                ayai.game.load.tileset('tileset', ayai.tileset, ayai.TILE_WIDTH, ayai.TILE_HEIGHT);
+
+                ayai.tileset2 = "/assets/tiles/" + evt.detail.msg.tilesets[0].image;
+                ayai.tilemap2 = "/assets/maps/"+ evt.detail.msg.tilemap;
+
+                ayai.game.load.tilemap('tilemap2', ayai.tilemap2, null, Phaser.Tilemap.TILED_JSON); 
+                ayai.game.load.tileset('tileset2', ayai.tileset2, ayai.TILE_WIDTH, ayai.TILE_HEIGHT);
+                ayai.game.load.start();
+                ayai.gameState.isLoaded = false;
+                
+                ayai.game.load.onLoadComplete.dispatch = function() {
+                    ayai.gameState.isLoaded = true;
+                    renderMap('tileset2', 'tilemap2');
+                }
+
 
             case "update":
                 ayai.gameState.updateEntities(evt.detail.msg);
+
                 break;
         }
     }

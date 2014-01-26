@@ -103,6 +103,7 @@ this.ayai = this.ayai || {};
 
     function renderMap(tileSheet, jsonFile){
         
+        ayai.game.world.destroy();
         var tileset = ayai.game.add.tileset(tileSheet);
         var map = ayai.game.add.tilemap(jsonFile);
 

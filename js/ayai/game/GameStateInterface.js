@@ -52,6 +52,12 @@ this.ayai = this.ayai || {};
 
         }
     }
+
+
+    p.sendAttack = function() {
+
+    }
+
     p.updateEntitiesFull = function() {
         this.removeAll();
         var newEntities = ayai.json;
@@ -89,6 +95,7 @@ this.ayai = this.ayai || {};
                     this.updateCharacter(entity);
             }
 
+            
             /*
             for(var key in this.entities) {
                 var entity = this.entities[key];

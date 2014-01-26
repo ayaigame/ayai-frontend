@@ -52,8 +52,6 @@ this.ayai = this.ayai || {};
         ayai.game.load.tilemap('tilemap', ayai.tilemap, null, Phaser.Tilemap.TILED_JSON); 
         ayai.game.load.tileset('tileset', ayai.tileset, ayai.TILE_WIDTH, ayai.TILE_HEIGHT);
         ayai.game.load.audio('zelda', ['../assets/audio/overworld.mp3']);
-
-        console.log(ayai.game.load);
     }
 
     window.onresize = function() {
@@ -62,25 +60,13 @@ this.ayai = this.ayai || {};
             var width = $(window).width();
             var height = $(window).height();   
 
-
             $('canvas')[0].width = width;
             $('canvas')[0].height = height;
 
             ayai.game.width = width;
             ayai.game.height = height;
 
-            //ayai.game.stage.bounds.width = width;
-            //ayai.game.stage.bounds.height = height;
-
-            //ayai.game.renderer.resize(width, height);
-
-            //TODO: Re-render all the sprites, tilemaplayers, and probably ui elements
-
-            //renderMap('tileset', 'tilemap') //this works, but is really inefficient. need to figure out why.
-
-            for(var i = 0; i < ayai.uiElements.length; i++) {
-                ayai.uiElements[i].reposition();
-            }
+            renderMap(ayai.currentTileset, ayai.currentTilemap);
         }
     }
 
@@ -93,21 +79,17 @@ this.ayai = this.ayai || {};
         
         ayai.inputHandler = new ayai.InputHandler();
 
-        renderMap('tileset', 'tilemap');
-
-        //Create UI Elements
-        ayai.actionBar = new ayai.ActionBar();
-        ayai.uiElements.push(ayai.actionBar);
+        renderMap(ayai.currentTileset, ayai.currentTilemap);
 
         music = ayai.game.add.audio('zelda');
-        music.play();
+        //music.play();
     }
 
-    function renderMap(tileSheet, jsonFile){
+    function renderMap(tileset, tilemap){
         
         ayai.game.world.destroy();
-        var tileset = ayai.game.add.tileset(tileSheet);
-        var map = ayai.game.add.tilemap(jsonFile);
+        var tileset = ayai.game.add.tileset(tileset);
+        var map = ayai.game.add.tilemap(tilemap);
 
         console.log(map);
 
@@ -117,22 +99,30 @@ this.ayai = this.ayai || {};
         var mapWidth =  map.layers[0].width * ayai.TILE_WIDTH;
         var mapHeight = map.layers[0].height * ayai.TILE_HEIGHT;
 
+        console.log(mapWidth);
+
         //if the dimensions of the browser are less than the dimensions of the map, the camera gets set to the dimensions of the map.
         var width = Math.min(browserWidth, mapWidth);
         var height = Math.min(browserHeight, mapHeight);
 
         for(var i = 0; i < map.layers.length; i++) {
-            ayai.game.add.tilemapLayer(0, 0, width, height, tileset, map, i);
+            if(map.name != "collision")
+                ayai.game.add.tilemapLayer(0, 0, width, height, tileset, map, i);
         }
 
         Window.character = ayai.gameState.addCharacter(ayai.characterId, ayai.startingX, ayai.startingY, 1, 1);
         ayai.game.world.setBounds(0, 0, mapWidth, mapHeight);
 
         ayai.game.camera.follow(Window.character.sprite, Phaser.Camera.FOLLOW_TOPDOWN);
-
-
-
         ayai.game.camera.setSize(width, height);
+        ayai.game.stage.width = width;
+        ayai.game.stage.height = height;
+
+
+        //Create UI Elements
+        ayai.actionBar = new ayai.ActionBar();
+        ayai.uiElements.push(ayai.actionBar);
+
 
 
     }
@@ -167,10 +157,13 @@ this.ayai = this.ayai || {};
                 ayai.startingY = evt.detail.msg.y;
                 ayai.tileset = evt.detail.msg.tileset;
                 ayai.tilemap = evt.detail.msg.tilemap;
+                ayai.currentTileset = 'tileset';
+                ayai.currentTilemap = 'tilemap';
 
                 break;
 
             case "map":
+
 
                 ayai.tileset2 = "/assets/tiles/" + evt.detail.msg.tilesets[0].image;
                 ayai.tilemap2 = "/assets/maps/"+ evt.detail.msg.tilemap;
@@ -182,7 +175,9 @@ this.ayai = this.ayai || {};
                 
                 ayai.game.load.onLoadComplete.dispatch = function() {
                     ayai.gameState.isLoaded = true;
-                    renderMap('tileset2', 'tilemap2');
+                    ayai.currentTileset = 'tileset2'
+                    ayai.currentTilemap = 'tilemap2';
+                    renderMap(ayai.currentTileset, ayai.currentTilemap);
                 }
 
 

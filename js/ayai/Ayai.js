@@ -51,6 +51,7 @@ this.ayai = this.ayai || {};
 
         ayai.game.load.tilemap('tilemap', ayai.tilemap, null, Phaser.Tilemap.TILED_JSON); 
         ayai.game.load.tileset('tileset', ayai.tileset, ayai.TILE_WIDTH, ayai.TILE_HEIGHT);
+        ayai.game.load.audio('zelda', ['../assets/audio/overworld.mp3']);
 
         console.log(ayai.game.load);
     }
@@ -81,7 +82,6 @@ this.ayai = this.ayai || {};
                 ayai.uiElements[i].reposition();
             }
         }
-
     }
 
     function create() {
@@ -99,6 +99,8 @@ this.ayai = this.ayai || {};
         ayai.actionBar = new ayai.ActionBar();
         ayai.uiElements.push(ayai.actionBar);
 
+        music = ayai.game.add.audio('zelda');
+        music.play();
     }
 
     function renderMap(tileSheet, jsonFile){

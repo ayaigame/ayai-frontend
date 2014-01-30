@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Ayai (Prototype)</title>
+        <link href="styles.css" rel="stylesheet">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script src="menus.js"></script>
+        <script src="js/lib/pixi.js"></script>
+        <script src="js/lib/keydrown.js"></script>
+        <script src="js/lib/phaser.js"></script>
+        <script src="js/ayai/display/Character.js"></script>
+        <script src="js/ayai/display/hud/HealthBar.js"></script>
+        <script src="js/ayai/display/hud/ActionBar.js"></script>
+        <script src="js/ayai/display/TileMap.js"></script>
+        <script src="js/ayai/util/AssetManager.js"></script>
+        
+        <script src="js/ayai/game/GameStateInterface.js"></script>
+        <script src="js/ayai/game/InputHandler.js"></script>
+        <script src="js/ayai/game/InputEvent.js"></script>
+        <script src="js/ayai/AyaiBot.js"></script>
+        
+        <script src="js/ayai/net/MessageSender.js"></script>
+        <script src="js/ayai/net/MessageReceiver.js"></script>
+        <script src="js/ayai/net/MessageSender.js"></script>
+        <script src="js/ayai/net/MessageReceiver.js"></script>
+        <script src="js/ayai/net/Connection.js"></script>
+        <script src="js/ayai/net/messages/StartMovementMessage.js"></script>
+        <script src="js/ayai/net/messages/StopMovementMessage.js"></script>
+        <script src="js/ayai/net/messages/AttackMessage.js"></script>
+    </head>
+    <body>
+        <div id="float">
+            Ayai WebGL Browser Test
+        </div>
+        <div class="overlay top right">
+            <ul class="icons">
+                <li class="help"><div></div></li>
+                <li class="settings"><div></div></li>
+            </ul>
+        </div>
+        <div class="overlay submenu settings">
+            <ul>
+                <li>Graphics</li>
+                <li>Sound</li>
+                <hr />
+                <li>Switch Character</li>
+                <li>Logout</li>
+            </ul>
+        </div>
+        <div class="overlay submenu help">
+            <ul>
+                <li>How to Play</li>
+                <li>The Ayai Team</li>
+                <li>Source Code</li>
+            </ul>
+        </div>
+        <div class="container">
+        </div>
+        <script>
+        window.onload = function() {
+    
+                new ayai.AyaiBot();
+
+
+            };
+
+            window.trace = function() {};
+        </script>
+
+    </body>
+</html>

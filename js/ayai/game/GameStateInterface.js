@@ -114,7 +114,7 @@ this.ayai = this.ayai || {};
     p.updateCharacter = function(e) {
         var entity = this.entities[e.id.toString()];
         entity.setPosition(e.position.x, e.position.y);
-        entity.setHealth(e.health.current, e.health.max);
+        entity.setHealth(e.health.currHealth, e.health.maximumHealth);
     }
     p.removeCharacter = function(e) {
         e.removeFromStage();

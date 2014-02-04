@@ -3,14 +3,14 @@ this.ayai = this.ayai || {};
 
 	var HealthBar = function() {
 
-		this.frame = ayai.game.add.sprite(0, 0, 'frames');
-		this.bar = ayai.game.add.sprite(0, 0, 'frames');
+		this.frame = ayai.game.add.sprite(0, 0, '');
+		this.bar = ayai.game.add.sprite(0, 0, '');
 
-		this.frame.animations.add('frame', [0]);
-		this.bar.animations.add('bar', [1]);
+		//this.frame.animations.add('frame', [0]);
+		//this.bar.animations.add('bar', [1]);
 
-		this.frame.animations.play('frame', 1, true);
-		this.bar.animations.play('bar', 1, true);
+		//this.frame.animations.play('frame', 1, true);
+		//this.bar.animations.play('bar', 1, true);
 
 
 	};

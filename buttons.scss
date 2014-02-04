@@ -1,0 +1,26 @@
+ul#buttons {
+
+	float: left;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	bottom: 5px;
+	position: fixed;
+	right: 30%;
+
+	li {
+
+		width: 25px;
+		height: 25px;
+		float: left;
+		list-style-type: none;
+		background: rgba(0, 0, 0, 0.7);
+		margin: 0 5px 0 0;
+		padding: 0;
+
+		border-radius: 50%;
+		border: 1px solid #bbbbbb;
+
+	}
+
+}

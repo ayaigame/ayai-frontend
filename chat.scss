@@ -1,0 +1,57 @@
+div#chat{
+	
+	font-family: 'Alef', sans-serif;
+	color: White;
+	font-size: 10pt;
+	float: right;
+	width: 400px;
+	height: 150px;
+	background: rgba(0, 0, 0, 0.7);
+	border: 2px solid #bbbbbb;
+	border-radius: 3px;
+	position: relative;
+	transition: 0.25s all ease-out;
+	padding: 5px;
+	overflow-y: scroll;
+
+}
+
+div#chat.open {
+	bottom: 25px;
+}
+
+div#editbox {
+
+	font-family: 'Alef', sans-serif;
+	background: rgba(0, 0, 0, 0.7);
+	border: 2px solid #bbbbbb;
+	border-radius: 2px;
+	width: 400px;
+	padding: 0px 5px 0px 5px;
+	height: 20px;
+	position: absolute;
+	bottom: -25px;
+	right: 0;
+	opacity: 0;
+
+
+	transition: 0.25s all ease-out;
+
+	input
+	{
+		color: white;	
+		background: none;
+		border: none;
+		width: 100%;
+	}
+
+	input:focus
+	{
+		outline: none;
+	}
+}
+
+div#editbox.open {
+	opacity: 1;
+	bottom: 0;
+}

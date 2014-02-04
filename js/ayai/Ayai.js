@@ -66,7 +66,7 @@ this.ayai = this.ayai || {};
             ayai.game.width = width;
             ayai.game.height = height;
 
-            renderMap(ayai.currentTileset, ayai.currentTilemap);
+            ayai.renderMap(ayai.currentTileset, ayai.currentTilemap);
         }
     }
 
@@ -77,21 +77,26 @@ this.ayai = this.ayai || {};
         //Tell the gamestate that we have loaded all the assets and that it can start updating from update messages
         ayai.gameState.isLoaded = true;
         
+        ayai.chat = new ayai.Chat();
+
         ayai.inputHandler = new ayai.InputHandler();
 
-        renderMap(ayai.currentTileset, ayai.currentTilemap);
+        ayai.renderMap(ayai.currentTileset, ayai.currentTilemap);
 
         music = ayai.game.add.audio('zelda');
         //music.play();
     }
 
-    function renderMap(tileset, tilemap){
-        
+    ayai.renderMap = function(tileset, tilemap, options){
+
         ayai.game.world.destroy();
         var tileset = ayai.game.add.tileset(tileset);
-        var map = ayai.game.add.tilemap(tilemap);
+        ayai.map = ayai.game.add.tilemap(tilemap);
+        var map = ayai.map;
 
         console.log(map);
+
+        var a = options == 'undefined' ? options : {};
 
         //needs jquery
         var browserWidth = $(window).width();
@@ -106,7 +111,7 @@ this.ayai = this.ayai || {};
         var height = Math.min(browserHeight, mapHeight);
 
         for(var i = 0; i < map.layers.length; i++) {
-            if(map.name != "collision")
+            if(map.layers[i].name != "collision")
                 ayai.game.add.tilemapLayer(0, 0, width, height, tileset, map, i);
         }
 
@@ -120,13 +125,12 @@ this.ayai = this.ayai || {};
 
 
         //Create UI Elements
-        ayai.actionBar = new ayai.ActionBar();
-        ayai.uiElements.push(ayai.actionBar);
+        //ayai.actionBar = new ayai.ActionBar();
+        //ayai.uiElements.push(ayai.actionBar);
 
 
 
     }
-
 
     function update() {
 
@@ -168,16 +172,16 @@ this.ayai = this.ayai || {};
                 ayai.tileset2 = "/assets/tiles/" + evt.detail.msg.tilesets[0].image;
                 ayai.tilemap2 = "/assets/maps/"+ evt.detail.msg.tilemap;
 
-                ayai.game.load.tilemap('tilemap2', ayai.tilemap2, null, Phaser.Tilemap.TILED_JSON); 
-                ayai.game.load.tileset('tileset2', ayai.tileset2, ayai.TILE_WIDTH, ayai.TILE_HEIGHT);
+                ayai.game.load.tilemap('tilemap', ayai.tilemap2, null, Phaser.Tilemap.TILED_JSON); 
+                ayai.game.load.tileset('tileset', ayai.tileset2, ayai.TILE_WIDTH, ayai.TILE_HEIGHT);
                 ayai.game.load.start();
                 ayai.gameState.isLoaded = false;
                 
                 ayai.game.load.onLoadComplete.dispatch = function() {
                     ayai.gameState.isLoaded = true;
-                    ayai.currentTileset = 'tileset2'
-                    ayai.currentTilemap = 'tilemap2';
-                    renderMap(ayai.currentTileset, ayai.currentTilemap);
+                    ayai.currentTileset = 'tileset'
+                    ayai.currentTilemap = 'tilemap';
+                    ayai.renderMap(ayai.currentTileset, ayai.currentTilemap);
                 }
 
 

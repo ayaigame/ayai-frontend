@@ -1,0 +1,33 @@
+ul#skills {
+
+	list-style-type: none;
+	margin: 0;
+	position: fixed;
+	left: 38%;
+	bottom: 5px;
+	li {
+
+		position: relative;
+		border-radius: 5px;
+		border: 1px solid #bbbbbb;
+		float: left;
+		margin-right: 10px;
+		width: 40px;
+		height: 40px;
+		background: rgba(0, 0, 0, 0.7);
+		list-style-type: none;
+		padding: 5px;
+		margin: 0 5px 0 0;
+
+		span.key {
+
+			font-family: 'Press Start 2P', 'sans-serif';
+			color: White;
+			position: absolute;
+			right: 5px;
+			bottom: 5px;
+
+		}
+	}
+}
+

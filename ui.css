@@ -1,0 +1,6 @@
+div#interface {
+  position: fixed;
+  bottom: 5px;
+  left: 5px;
+  right: 5px;
+  width: 99%; }

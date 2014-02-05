@@ -4,7 +4,7 @@ this.ayai = this.ayai || {};
         // constructor
         ayai.game = this;
         ayai.verboseLogger = false;
-        ayai.connection = new ayai.Connection("ws://localhost:8007");
+        ayai.connection = new ayai.Connection("ws://144.118.100.181:8007");
 
         ayai.gameState = new ayai.GameStateInterface();
         ayai.uiElements = [];
@@ -115,7 +115,7 @@ this.ayai = this.ayai || {};
                 ayai.game.add.tilemapLayer(0, 0, width, height, tileset, map, i);
         }
 
-        Window.character = ayai.gameState.addCharacter(ayai.characterId, ayai.startingX, ayai.startingY, 1, 1);
+        Window.character = ayai.gameState.addCharacter({id: ayai.characterId, position: {x: ayai.startingX, y: ayai.startingY}, health: {currHealth: 1, maximumHealth: 1}});
         ayai.game.world.setBounds(0, 0, mapWidth, mapHeight);
 
         ayai.game.camera.follow(Window.character.sprite, Phaser.Camera.FOLLOW_TOPDOWN);

@@ -55,6 +55,6 @@
         "end_x" : 1,
         "end_y" : 100,
         "toRoomId" : 0,
-        "toRoomFile" : "map3.json",
+        "toRoomFile" : "map3.json"
   }]
 }

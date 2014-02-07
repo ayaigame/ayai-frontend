@@ -80,13 +80,13 @@ this.ayai = this.ayai || {};
                     
             }
             
-            
+            /*  TODO: If an entity hasn't been updated in 10-20 syncs, remove it?
             for(var key in this.entities) {
                 var entity = this.entities[key];
                 if(!(newEntities.contains(entity))) {
-                    
                     console.log("should remove entity "entity.id);
-            }
+                }
+            }*/
         }
     }
 

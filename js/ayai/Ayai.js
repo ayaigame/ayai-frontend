@@ -4,7 +4,7 @@ this.ayai = this.ayai || {};
         // constructor
         ayai.game = this;
         ayai.verboseLogger = false;
-        ayai.connection = new ayai.Connection("ws://144.118.100.181:8007");
+        ayai.connection = new ayai.Connection("ws://localhost:8007");
 
         ayai.gameState = new ayai.GameStateInterface();
         ayai.uiElements = [];

@@ -49,8 +49,8 @@ this.ayai = this.ayai || {};
     p.syncPlayer = function(e) {
         this.sprite.x = e.position.x;
         this.sprite.y = e.position.y;
-        var percent = (currHealth / maximumHealth) * 100 + "%";
-        $("div#player div.health span.total").html(e.health.currHealth.toString() + "/" + e.health.maxHealth.toString());
+        var percent = (e.health.currHealth / e.health.maximumHealth) * 100 + "%";
+        $("div#player div.health span.total").html(e.health.currHealth.toString() + "/" + e.health.maximumHealth.toString());
         $("div#player div.health span.percent").html(percent);
         $("div#player div.health div.bar").css("width", percent);
     }

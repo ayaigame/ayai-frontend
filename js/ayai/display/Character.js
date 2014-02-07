@@ -1,11 +1,11 @@
 this.ayai = this.ayai || {};
 (function() {
-    var Character = function(id,x,y,currHealth,maximumHealth) {
+    var Character = function(json) {
         // constructor
 
-        this.id = id;
+        this.id = json.id;
         this.name = "";
-        this.sprite = ayai.game.add.sprite(x, y, 'guy');
+        this.sprite = ayai.game.add.sprite(json.position.x, json.position.y, 'guy');
 
 
         this.sprite.animations.add('facedown', [1]);
@@ -22,10 +22,9 @@ this.ayai = this.ayai || {};
         //  true means it will loop when it finishes
         this.sprite.animations.play('facedown', 1, true);
 
-        this.healthbar = new ayai.HealthBar();
+        //this.healthbar = new ayai.HealthBar();
 
-        this.setPosition(x,y);
-        this.setHealth(currHealth,maximumHealth);
+        //this.syncPlayer(json);
 
     };
 
@@ -47,9 +46,11 @@ this.ayai = this.ayai || {};
     //  ==============
 
 
-    p.setHealth = function(currHealth, maximumHealth) {
+    p.syncPlayer = function(e) {
+        this.sprite.x = e.position.x;
+        this.sprite.y = e.position.y;
         var percent = (currHealth / maximumHealth) * 100 + "%";
-        $("div#player div.health span.total").html(currHealth.toString() + "/" + maximumHealth.toString());
+        $("div#player div.health span.total").html(e.health.currHealth.toString() + "/" + e.health.maxHealth.toString());
         $("div#player div.health span.percent").html(percent);
         $("div#player div.health div.bar").css("width", percent);
     }
@@ -59,12 +60,10 @@ this.ayai = this.ayai || {};
 
     }
 
-    p.setPosition = function(x, y) {
-
-        this.sprite.x = x;
-        this.sprite.y = y;
-        this.healthbar.setPosition(x, y);
-     }
+    p.syncCharacter = function(e) {
+        this.sprite.x = e.position.x;
+        this.sprite.y = e.position.y;
+    }
 
     p.removeFromStage = function() {
         ayai.stage.removeChild(this.sprite);

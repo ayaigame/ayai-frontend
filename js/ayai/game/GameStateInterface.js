@@ -59,68 +59,48 @@ this.ayai = this.ayai || {};
             var sender = new ayai.MessageSender(message);
     }
 
-    p.updateEntitiesFull = function() {
-        this.removeAll();
-        var newEntities = ayai.json;
-        for (var i = 0; i < newEntities.length; i++) {
-            var entity = newEntities[i];
-            console.log('does entity ' + entity.id + ' exist?');
-            if (this.entities[entity.id.toString()] == null) {
-                console.log('found new entity ' + entity.id);
-                this.addCharacter(entity.id, entity.x, entity.y, entity.currHealth, entity.maximumHealth);
-            } else {
-                console.log('should update entity ' + entity.id)
-            }
-        }
-
-        Window.character = ayai.gameState.entities[ayai.characterId];
-    };
-
-
     p.updateEntities = function(json) {
 
         if(this.isLoaded) {
 
-            var you = json.you;
             var newEntities = json.others;
-            this.updateCharacter(you);
+            var player = this.entities[json.you.id];
+            player.syncPlayer(json.you);
 
             for (var index in newEntities) {
-                var key = newEntities[index].id;
-                var entity = newEntities[index];
+                var characterJson = newEntities[index];
 
-                if (this.entities[key] == null) {
-                    this.addCharacter(entity.id, entity.position.x, entity.position.y, entity.health.current, entity.health.max);
+                if (this.entities[characterJson.id] == null) {
+                    this.addCharacter(characterJson);
                 }
-                else
-                    this.updateCharacter(entity);
+                else {
+                    var entity = this.entities[characterJson.id];
+                    entity.syncCharacter(characterJson);
+                }
+                    
             }
-
             
-            /*
+            
             for(var key in this.entities) {
                 var entity = this.entities[key];
-                if(!(key in newEntities))
-                    this.removeCharacter(entity);
-            }*/
+                if(!(newEntities.contains(entity))) {
+                    
+                    console.log("should remove entity "entity.id);
+            }
         }
     }
 
-    p.addCharacter = function(id, x, y, currHealth, maximumHealth) {
-        var newChar = new ayai.Character(id, x, y, currHealth, maximumHealth);
-        this.entities[id] = newChar;
-
+    p.addCharacter = function(json) {
+        var newChar = new ayai.Character(json);
+        this.entities[json.id] = newChar;
         return newChar;
     }
-    p.updateCharacter = function(e) {
-        var entity = this.entities[e.id.toString()];
-        entity.setPosition(e.position.x, e.position.y);
-        entity.setHealth(e.health.currHealth, e.health.maximumHealth);
-    }
+
     p.removeCharacter = function(e) {
         e.removeFromStage();
         delete this.entities[e.id.toString()];
     }
+
     p.removeAll = function() {
         for (var i = 0; i < this.entities.length; i++) {
             this.entities[i].removeFromStage();

@@ -55,7 +55,8 @@ this.ayai = this.ayai || {};
 
 
     p.sendAttack = function() {
-
+            var message = new ayai.AttackMessage();
+            var sender = new ayai.MessageSender(message);
     }
 
     p.updateEntitiesFull = function() {

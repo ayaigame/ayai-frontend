@@ -48,7 +48,10 @@ this.ayai = this.ayai || {};
 
 
     p.setHealth = function(currHealth, maximumHealth) {
-        $("div#player div.health div.bar").css("width", (currHealth / maximumHealth) * 100 +"%");
+        var percent = (currHealth / maximumHealth) * 100 + "%";
+        $("div#player div.health span.total").html(currHealth.toString() + "/" + maximumHealth.toString());
+        $("div#player div.health span.percent").html(percent);
+        $("div#player div.health div.bar").css("width", percent);
     }
 
     p.setAnimation = function(animationName) {

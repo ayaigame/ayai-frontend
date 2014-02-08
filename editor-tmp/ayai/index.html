@@ -259,7 +259,9 @@ table {
 	margin: auto;
 }
 
-td { vertical-align: middle; }
+td { 
+	vertical-align: middle; 
+}
 
 
 		</style>
@@ -363,8 +365,8 @@ td { vertical-align: middle; }
 						</div>
 					</div>
 					<div class="main">
-						<div class="selection">
-							<h2>character selection</h2>
+						<h2>character selection</h2>
+						<div class="selection">	
 							<div class="char">
 								<div class="icon"></div>
 								<div class="name">Orunin</div>
@@ -400,6 +402,7 @@ td { vertical-align: middle; }
 
 			$emailInput = $(".email-input");
 			$passwordInput = $(".pw-input");
+			$charSelect = $(".selection");
 
 			$loginDivs = $(".login-page .side div");
 
@@ -434,6 +437,12 @@ td { vertical-align: middle; }
 
 			$loginBtn.click(function(evt){
 				evt.preventDefault();
+				
+				$(".login-page").hide();
+				$(".accounts, .player-content").show();
+				initAccount();
+		
+				/*
 				var info = {
 					email: $emailInput.val(),
 					password: $passwordInput.val()
@@ -450,8 +459,20 @@ td { vertical-align: middle; }
 						console.log(data);
 					}
 				});
+				*/
 			});
 
+			templates = {
+				characterItem: function(obj) {
+					return '' +
+						'<div class="char">' +
+						'<div class="icon"></div>' +
+						'<div class="name">' + obj.name + '</div>' +
+						'<div class="info">Level ' + obj.level + " " + obj.class + "</div>" +
+						'</div>';
+				}
+			}
+		
 			$registerBtn.click(function(evt){
 				evt.preventDefault();
 				var info = {
@@ -459,10 +480,26 @@ td { vertical-align: middle; }
 					password: $passwordInput.val()
 				}
 				$.post("/register", info, function(data){
-					console.log(data);
+					
+						var template = templates.characterItem(data);
+					
 				});
 			});
 
+			
+
+			function initAccount() {
+				$charSelect.html("");
+	
+				$.get("characters.json", function(data){
+					for(var obj in data){
+						var $template = $(templates.characterItem(data[obj])).hide();
+						$charSelect.append($template);
+						$template.fadeIn();
+					}
+				});
+			}	
+	
 			function makeBaseAuth(info) {
 			  var tok = info.email + ':' + info.password;
 			  var hash = btoa(tok);

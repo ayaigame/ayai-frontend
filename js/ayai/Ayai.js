@@ -78,7 +78,7 @@ this.ayai = this.ayai || {};
         ayai.gameState.isLoaded = true;
         
         ayai.chat = new ayai.Chat();
-
+        ayai.inventory = new ayai.Inventory();
         ayai.inputHandler = new ayai.InputHandler();
 
         ayai.renderMap(ayai.currentTileset, ayai.currentTilemap);

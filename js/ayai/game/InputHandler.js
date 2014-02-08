@@ -9,17 +9,22 @@ this.ayai = this.ayai || {};
 	    downKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.S);
 	    leftKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.A);
 	    rightKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.D);
-	    enterKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
 	    spaceKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-	    
+	    iKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.I);
+
+	    boundKeys.push(upKey);
+	    boundKeys.push(downKey);
+	    boundKeys.push(leftKey);
+	    boundKeys.push(rightKey);
+	    boundKeys.push(spaceKey);
+	    boundKeys.push(iKey);
+
+	    enterKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+
 		enterKey.onDown.add(function() {
 
 	    	if(!ayai.chat.isEditBoxOpen) {
 		    	ayai.chat.openEditBox();
-
-		    	//ayai.game.input.keyboard.stop();
-		    	upKey.onDown.removeAll();
-		    	upKey.onUp.removeAll();
 
 				ayai.gameState.sendInputToGameState(new InputEvent("!isUp"));
 				ayai.gameState.sendInputToGameState(new InputEvent("!isRight"));
@@ -27,27 +32,18 @@ this.ayai = this.ayai || {};
 				ayai.gameState.sendInputToGameState(new InputEvent("!isDown"));
 
 
-
-		    	ayai.game.input.keyboard.removeKey(Phaser.Keyboard.W);
-		    	ayai.game.input.keyboard.removeKey(Phaser.Keyboard.A);
-		    	ayai.game.input.keyboard.removeKey(Phaser.Keyboard.S);
-		    	ayai.game.input.keyboard.removeKey(Phaser.Keyboard.D);
-		    	ayai.game.input.keyboard.removeKey(Phaser.Keyboard.SPACEBAR);
+				for(var i = 0 ; i < boundKeys.length; i++) {
+			    	ayai.game.input.keyboard.removeKey(boundKeys[i].keyCode);
+		    	}
 		    	
-		    	ayai.game.input.keyboard.removeKeyCapture(Phaser.Keyboard.W);
-		    	ayai.game.input.keyboard.removeKeyCapture(Phaser.Keyboard.A);
-		    	ayai.game.input.keyboard.removeKeyCapture(Phaser.Keyboard.S);
-		    	ayai.game.input.keyboard.removeKeyCapture(Phaser.Keyboard.D);
-		    	ayai.game.input.keyboard.removeKeyCapture(Phaser.Keyboard.SPACEBAR);
+		    	ayai.game.input.keyboard.clearCaptures();
 		    }
 		    else {
 		    	ayai.chat.send();
 		    	ayai.chat.closeEditBox();
-		    	upKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.W);
-			    downKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.S);
-			    leftKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.A);
-			    rightKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.D);
-			    spaceKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+				for(var i = 0 ; i < boundKeys.length; i++) {
+			    	ayai.game.input.keyboard.addKey(boundKeys[i].keyCode);
+		    	}
 		    	registerKeyPresses();
 		    	//ayai.game.input.keyboard.start();
 		    }

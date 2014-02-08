@@ -1,4 +1,5 @@
 .idea/
+css/.sass-cache/
 *.sublime-workspace
 *.sublime-project
 *~

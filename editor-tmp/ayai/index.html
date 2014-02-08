@@ -1,0 +1,477 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Ayai</title>
+		<link href='//fonts.googleapis.com/css?family=Overlock:400,700' rel='stylesheet' type='text/css'>
+		<link href='//fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+		<style>
+
+
+.login-page {
+	display: block;
+}
+
+.accounts, .player-content, .admin-content {
+	display: none;
+}
+
+
+*, *:before, *:after {
+ 	-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;	
+ }
+ 
+ div { 
+ 	font-size: 13px;
+ }
+
+body {
+	color: #333;
+	margin: 0;
+	font-family: "Lato", sans-serif;
+}
+
+body,html,.container,.login-page, table{ 
+	height:100%;
+}
+
+.container { 
+	width: 80%;
+	margin: 20px auto 0 auto;
+}
+
+.header { 
+	height: 100px;
+}
+
+.accounts .logo {
+	float:left;
+	position: relative;
+	left: -10px;
+}
+
+.menu { 
+	line-height: 100px;
+	float: right;
+}
+
+.links a {
+	font-family: "Overlock";
+	font-size: 18px;
+	font-weight: 700;
+	margin-left: 10px;
+	
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+h2 { 
+	font-family: "Overlock";
+	margin: 0 0 15px 0;
+	padding: 0;
+}
+
+.content { 
+	clear: both;
+}
+
+.accounts .side { 
+	width: 27%;
+	padding-right: 20px;
+	float: left;
+}
+
+.overview { 
+	margin-bottom: 15px;
+}
+
+.overview span {
+	font-weight: 700;
+}
+
+.main {
+	width: 73%;
+	float: left;
+}
+
+.main .label {
+	float: left;
+	width: 18%;
+	padding: 10px;
+}
+
+.main input {
+	float:left;
+	width: 82%;
+	padding: 10px;
+	border: 1px solid #555;
+	outline: none;
+}
+
+.main textarea {
+	float:left;
+	width: 82%;
+	padding: 10px;
+	border: 1px solid #555;
+}
+
+.footer {
+	text-align: center;
+	padding-top: 25px;
+	clear: both;
+}
+
+.selection > div {
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	border-top-left-radius: 0;
+	margin-bottom: 10px;
+	transition: background .4s;
+	cursor: pointer;
+}
+
+.selection > div:hover {
+	background: #eee;
+}
+
+.updates > div {
+	margin-bottom: 8px;
+}
+
+.navigation a {
+	display: block;
+	font-size: 15px;
+}
+
+.navigation h2:first-child { margin: 0 0 5px 0; }
+.navigation h2 {
+	margin: 10px 0 5px 0;
+}
+
+.char .name {
+	font-size: 16px;
+	font-weight: 700;
+}
+
+.login-page .main { 
+	float: left;
+	width: 50%;
+}
+
+.login-page .logo {
+	
+}
+
+.login-page .side {
+	position:relative;
+	float: right;
+	width: 50%;
+	padding-left: 10px;
+	top: 80px;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.login-page .subtext {
+	font-family: "Overlock";
+	font-size: 25px;
+	margin: 10px 0;
+	position: relative;
+	top: -61px;
+	right: -158px;
+	width: 180px;
+	line-height: 90%;
+}
+
+.login-page .intro {
+	font-size: 14px;
+	position: relative;
+	top: -55px;
+	left: 15px;
+	width: 300px;
+}
+
+.login-page .side input {
+	border: 0px;
+	background: none;
+	font-size: 16px;
+	color: #666666;
+	width: 78%;
+	font-family: "Lato", sans-serif;
+	outline: none;
+} 
+
+.login-page .side > div {
+	width: 100%;
+	background: #fff;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	border-top-left-radius: 0;
+	font-size: 16px;
+	color: #666666;
+	border: 1px solid #999999;
+	padding: 10px;
+	cursor: pointer;
+}
+
+.login-page .side div span {
+	width: 21%;
+	display: inline-block;
+}
+
+.login-page .button{
+	display:inline-block;
+	background: #666666;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	font-size: 16px;
+	color: #fff;
+	padding: 10px;
+	width: 48%;
+	cursor: pointer;
+	transition: background .3s;
+}
+
+.login-page .button:hover {
+	background: #888;
+}
+
+.login-page .register {
+	position: absolute;
+	right: 0;
+}
+
+.login-page .login {
+}
+
+table {
+	width: 815px;
+	margin: auto;
+}
+
+td { vertical-align: middle; }
+
+
+		</style>
+	</head>
+	<body>
+
+		<div class="container">
+			<div class="login-page">
+				<table><tr><td>
+					<div class="content">
+						<div class="main">
+							<div class="logo">
+								<img src="splashlogo.png">
+							</div>
+							<div class="subtext">
+								an intelligent open source mmo
+							</div>
+							<!--<div class="intro">
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ante lorem. Ut pulvinar tristique odio eget sagittis. Vestibulum felis augue, lacinia sed ultricies quis, ultrices in lectus. 
+							</div>-->
+						</div>
+						<div class="side">
+							<div class="email">
+								<span>email</span>
+								<input class="email-input" type="text"></input>
+							</div>
+							<div class="password">
+								<span>password</span>
+								<input class="pw-input" type="password"></input>
+							</div>
+							<span class="login button">
+								login
+							</span>
+							<span class="register button">
+								register
+							</span>
+						</div>
+					</div>
+				</td></tr></table>
+			</div>
+			<div class="accounts">
+				<div class="header">
+					<div class="logo"><img src="header.png"></div>
+					<div class="menu">
+						<div class="links">
+							<a href="#">messages (0)</a>
+							<a href="#game">game</a>
+							<a href="#admin">admin</a>
+							<a href="#">settings</a>
+							<a href="#logout">logout</a>
+						</div>
+					</div>
+				</div>
+				<div class="content admin-content">
+					<div class="side">
+						<div class="navigation">
+							<h2>game</h2>
+							<a href="#">spells</a>
+							<a href="#">items</a>
+							<a href="#">npcs</a>
+							<a href="#">maps</a>
+							<h2>community</h2>
+							<a href="#">users</a>
+							<a href="#">groups</a>
+							<a href="#">banlist</a>
+							<a href="#">tickets</a>
+						</div>
+					</div>
+					<div class="main">
+						<div>
+							<span class="label">Field</span>
+							<input type="text"></input>
+						</div>
+						<div>
+							<span class="label">Field</span>
+							<textarea></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="content player-content">
+					<div class="side">
+						<div class="overview">
+							<h2>overview</h2>
+							<div class="game"><span>Game:</span> Ayai (1.2)</div>
+							<div class="revision"><span>Last Revision:</span> January 5, 2014</div>
+
+							<div class="server"><span>Server:</span> US East</div>
+							<div class="players"><span>Players online:</span> 237</div>
+						</div>
+						<div class="updates">
+							<h2>latest updates</h2>
+							<div>
+								Bandit's (NPC) health raised from 150 to 175.
+							</div>
+							<div>
+								Salvage's (NPC) walking speed increased by 20%.
+							</div>
+							<div>
+								<a>View all recent updates (7 since your last login)</a>
+							</div>
+						</div>
+					</div>
+					<div class="main">
+						<div class="selection">
+							<h2>character selection</h2>
+							<div class="char">
+								<div class="icon"></div>
+								<div class="name">Orunin</div>
+								<div class="info">Level 15 Paladin</div>
+							</div>
+							<div class="char">
+								<div class="icon"></div>
+								<div class="name">Torle</div>
+								<div class="info">Level 15 Druid</div>
+							</div>
+							<div class="new">
+								<div class="plus"></div>
+								<div class="text">Create a new character...</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="footer">
+					<a href="#">about</a> &ndash;
+					<a href="#">github</a> &ndash;
+					<a href="#">change log</a> &ndash;
+					<a href="#">faq</a> &ndash;
+					<a href="#">contact</a>
+				</div>
+			</div>
+		</div>
+
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+		<script>
+			$links = $(".links a");
+			$registerBtn = $(".register.button");
+			$loginBtn = $(".login.button");
+
+			$emailInput = $(".email-input");
+			$passwordInput = $(".pw-input");
+
+			$loginDivs = $(".login-page .side div");
+
+			$links.on("click", function(evt) {
+				var $this = $(this);
+				var hash = $this.attr("href");
+				location.hash = hash;
+				if(hash == "#game"){
+					$(".login-page").css("display", "none");
+					$(".admin-content").css("display", "none");
+					$(".accounts").css("display", "block");
+					$(".player-content").css("display", "block");
+				} else if (hash == "#admin") {
+					$(".login-page").css("display", "none");
+					$(".player-content").css("display", "none");
+					$(".accounts").css("display", "block");
+					$(".admin-content").css("display", "block");
+				} else if (hash == "#logout") {
+					$(".login-page").css("display", "block");
+					$(".player-content").css("display", "none");
+					$(".accounts").css("display", "none");
+					$(".admin-content").css("display", "none");
+				}
+
+				evt.preventDefault();
+			});
+
+			$loginDivs.click(function(evt) {
+				var $this = $(this);
+				$this.find("input").focus();
+			});
+
+			$loginBtn.click(function(evt){
+				evt.preventDefault();
+				var info = {
+					email: $emailInput.val(),
+					password: $passwordInput.val()
+				}
+				var hash = makeBaseAuth(info);
+			
+				$.ajax({
+					type:"POST",
+					url: "/login",
+					beforeSend: function(xhr) {
+						xhr.setRequestHeader("Authorization", hash);
+					},
+					success: function(data) {
+						console.log(data);
+					}
+				});
+			});
+
+			$registerBtn.click(function(evt){
+				evt.preventDefault();
+				var info = {
+					email: $emailInput.val(),
+					password: $passwordInput.val()
+				}
+				$.post("/register", info, function(data){
+					console.log(data);
+				});
+			});
+
+			function makeBaseAuth(info) {
+			  var tok = info.email + ':' + info.password;
+			  var hash = btoa(tok);
+			  return "Basic " + hash;
+			}
+
+			function goToPage(hash) {
+
+			}
+		</script>
+	</body>
+</html>

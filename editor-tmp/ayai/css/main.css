@@ -1,0 +1,284 @@
+
+a {
+	color: #028302;
+}
+
+a:hover {
+	color: #045f04;
+}
+
+.login-page {
+	display: block;
+}
+
+.accounts, .player-content, .admin-content {
+	display: none;
+}
+
+
+*, *:before, *:after {
+ 	-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;	
+ }
+ 
+ div { 
+ 	font-size: 13px;
+ }
+
+body {
+	color: #333;
+	margin: 0;
+	font-family: "Lato", sans-serif;
+}
+
+body,html,.container,.login-page, table{ 
+	height:100%;
+}
+
+.container { 
+	width: 80%;
+	margin: 20px auto 0 auto;
+}
+
+.header { 
+	height: 100px;
+}
+
+.accounts .logo {
+	float:left;
+	position: relative;
+	left: -10px;
+}
+
+.menu { 
+	line-height: 100px;
+	float: right;
+}
+
+.links a {
+	font-family: "Overlock";
+	font-size: 18px;
+	font-weight: 700;
+	margin-left: 10px;
+	
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+h2 { 
+	font-family: "Overlock";
+	margin: 0 0 15px 0;
+	padding: 0;
+}
+
+.content { 
+	clear: both;
+}
+
+.accounts .side { 
+	width: 27%;
+	padding-right: 20px;
+	float: left;
+}
+
+.overview { 
+	margin-bottom: 15px;
+}
+
+.overview span {
+	font-weight: 700;
+}
+
+.main {
+	width: 73%;
+	float: left;
+}
+
+.main .label {
+	float: left;
+	width: 18%;
+	padding: 10px 0;
+}
+
+.admin-content .main {
+	width: 82%;
+}
+
+.admin-content .side {
+	width: 18%;
+}
+
+.admin-content .main h2 {
+	font-size: 24px;
+	margin: 0;
+}
+
+.admin-content .breadcrumb {
+	margin-bottom: 10px;
+}
+
+.main input, .main textarea {
+	float:left;
+	width: 82%;
+	padding: 10px;
+	border: 1px solid #999;
+	border-radius: 5px;
+	border-top-left-radius: 0;
+	outline: none;
+	transition: border .5s;
+	font-family: "Lato", sans-serif;
+}
+
+.main input:hover, .main textarea:hover,
+.main input:focus, .main textarea:focus {
+	border: 1px solid #222;
+}
+
+.footer {
+	text-align: center;
+	padding-top: 25px;
+	clear: both;
+}
+
+.selection > div {
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	border-top-left-radius: 0;
+	margin-bottom: 10px;
+	transition: background .4s;
+	cursor: pointer;
+}
+
+.selection > div:hover {
+	background: #eee;
+}
+
+.updates > div {
+	margin-bottom: 8px;
+}
+
+.navigation a {
+	display: block;
+	font-size: 15px;
+}
+
+.navigation h2:first-child { margin: 0 0 5px 0; }
+.navigation h2 {
+	margin: 10px 0 5px 0;
+}
+
+.char .name {
+	font-size: 16px;
+	font-weight: 700;
+}
+
+.login-page .main { 
+	float: left;
+	width: 50%;
+}
+
+.login-page .logo {
+	
+}
+
+.login-page .side {
+	position:relative;
+	float: right;
+	width: 50%;
+	padding-left: 10px;
+	top: 80px;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.login-page .subtext {
+	font-family: "Overlock";
+	font-size: 25px;
+	margin: 10px 0;
+	position: relative;
+	top: -61px;
+	right: -158px;
+	width: 180px;
+	line-height: 90%;
+}
+
+.login-page .intro {
+	font-size: 14px;
+	position: relative;
+	top: -55px;
+	left: 15px;
+	width: 300px;
+}
+
+.login-page .side input {
+	border: 0px;
+	background: none;
+	font-size: 16px;
+	color: #666666;
+	width: 78%;
+	font-family: "Lato", sans-serif;
+	outline: none;
+} 
+
+.login-page .side > div {
+	width: 100%;
+	background: #fff;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	border-top-left-radius: 0;
+	font-size: 16px;
+	color: #666666;
+	border: 1px solid #999999;
+	padding: 10px;
+	cursor: pointer;
+}
+
+.login-page .side div span {
+	width: 21%;
+	display: inline-block;
+}
+
+.login-page .button{
+	display:inline-block;
+	background: #666666;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	font-size: 16px;
+	color: #fff;
+	padding: 10px;
+	width: 48%;
+	cursor: pointer;
+	transition: background .3s;
+}
+
+.login-page .button:hover {
+	background: #888;
+}
+
+.login-page .register {
+	position: absolute;
+	right: 0;
+}
+
+.login-page .login {
+}
+
+table {
+	width: 815px;
+	margin: auto;
+}
+
+td { 
+	vertical-align: middle; 
+}
+

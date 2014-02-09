@@ -66,6 +66,7 @@ this.ayai = this.ayai || {};
             var newEntities = json.others;
             var player = this.entities[json.you.id];
             player.syncPlayer(json.you);
+            ayai.inventory.update(json.you.inventory);
 
             for (var index in newEntities) {
                 var characterJson = newEntities[index];

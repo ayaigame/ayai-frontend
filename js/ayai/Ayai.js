@@ -47,7 +47,9 @@ this.ayai = this.ayai || {};
         console.log("Loading assets...");
         ayai.game.load.spritesheet('guy', '../assets/sprites/guy/guysheet.png', 32, 32);
         ayai.game.load.spritesheet('frames', '../assets/sprites/ui/framesheet.png', 128, 16);
+        ayai.game.load.spritesheet('itemicons', '../assets/sprites/ui/itemicons.png', 40, 40);
         ayai.game.load.image('skillicon', '../assets/sprites/ui/skillsheet.png');
+
 
         ayai.game.load.tilemap('tilemap', ayai.tilemap, null, Phaser.Tilemap.TILED_JSON); 
         ayai.game.load.tileset('tileset', ayai.tileset, ayai.TILE_WIDTH, ayai.TILE_HEIGHT);

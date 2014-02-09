@@ -49,10 +49,17 @@ this.ayai = this.ayai || {};
     p.syncPlayer = function(e) {
         this.sprite.x = e.position.x;
         this.sprite.y = e.position.y;
-        var percent = (e.health.currHealth / e.health.maximumHealth) * 100 + "%";
+        var healthPercent = Math.floor((e.health.currHealth / e.health.maximumHealth) * 100) + "%";
+        var manaPercent = Math.floor((e.Mana.currMana / e.Mana.maximumMana) * 100) + "%";
+
         $("div#player div.health span.total").html(e.health.currHealth.toString() + "/" + e.health.maximumHealth.toString());
-        $("div#player div.health span.percent").html(percent);
-        $("div#player div.health div.bar").css("width", percent);
+        $("div#player div.health span.percent").html(healthPercent);
+        $("div#player div.health div.bar").css("width", healthPercent);
+
+        $("div#player div.mana span.total").html(e.Mana.currMana.toString() + "/" + e.Mana.maximumMana.toString());
+        $("div#player div.mana span.percent").html(manaPercent);
+        $("div#player div.mana div.bar").css("width", manaPercent);
+
     }
 
     p.setAnimation = function(animationName) {

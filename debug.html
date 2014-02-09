@@ -8,27 +8,25 @@
             <link href="css/unitframe.css" rel="stylesheet">
             <link href="css/skillbar.css" rel="stylesheet">
             <link href="css/buttons.css" rel="stylesheet">
-
             <link href="css/chat.css" rel="stylesheet">
             <link href="css/inventory.css" rel="stylesheet">
             <!--<link href="css/spellbook.css" rel="stylesheet">
             
             <link href="css/questlog.css" rel="stylesheet">
-        -->
+            -->
             
             <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
+            <script src="js/lib/jquery-ui-1.10.4.custom.min.js"></script>
             <script src="menus.js"></script>
             <script src="js/lib/pixi.js"></script>
             <script src="js/lib/keydrown.js"></script>
             <script src="js/lib/phaser.js"></script>
-            <script src="js/lib/draggabilly.pkgd.min.js"></script>
+            <script src="js/lib/draggabilly.pkgd.js"></script>
             <script src="js/ayai/display/Inventory.js"></script>
             <script src="js/ayai/display/Character.js"></script>
             <script src="js/ayai/display/hud/HealthBar.js"></script>
             <script src="js/ayai/display/hud/ActionBar.js"></script>
             <script src="js/ayai/display/hud/Chat.js"></script>
-
             
             <script src="js/ayai/game/GameStateInterface.js"></script>
             <script src="js/ayai/game/InputHandler.js"></script>
@@ -69,7 +67,65 @@
                 </div>
                 <div id="editbox"><input type="text"></input></div>
             </div>
-            <div id="char-window"></div>
+            <div id="char-window">
+                <div id="container">
+                    <div id="equipment">
+                        <div>
+                        <span class="title">Equipment</span> </div>
+                        <div id="slots">
+                            <ul class="slots left">
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                            </ul>
+                            <ul class="slots top">
+                                <li></li>
+                                <li></li>
+                            </ul>
+                            <ul class="slots right">
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                            </ul>
+                            <ul class="slots bottom">
+                                <li></li>
+                                <li></li>
+                            </ul>
+                            
+                        </div>
+                    </div>
+                    <div id="statistics">
+                        <div> <span class="title">Statistics</span></div>
+                    </div>
+                    <div id="inventory">
+                        <div> <span class="title">Inventory</span></div>
+                        <ul class="categories">
+                            <li>
+                                <div><span class="title">
+                                    Weapons/Armor
+                                </span></div>
+                                <ul class="slots">
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div><span class="title">
+                                    Consumables
+                                </span></div>
+                                <ul class="slots">
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
             <div id="float">
                 Ayai WebGL Browser Test
             </div>

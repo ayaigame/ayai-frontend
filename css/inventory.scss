@@ -1,26 +1,161 @@
+$width: 550px;
+$height: 600px;
+$padding: 10px;
+
 div#char-window {
 
 	background: rgba(0, 0, 0, 0.7);
     border: 2px solid #bbbbbb;
-    height: 400px;
-    width: 200px;
     z-index: 50;
     position: absolute;
-    right: 100px;
-    bottom: 100px;
+    right: 500px;
+    bottom: 60px;
+    transition: opacity 0.25s ease-out;
+    opacity: 0; 
+    text-align: center;
+
+    div#container {
+        float: left;
+        width: $width;
+        min-height: $height;
+    }
+
+
+
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+        height: auto;
+
+        li {
+            padding: 0;
+            list-style-type: none;
+            margin: 5px;
+        }
+    }
+
+    ul.slots li {
+        border-radius: 3px;
+        background: rgba(0, 0, 0, 0.6);
+        border: 1px solid #bbbbbb;
+        width: 40px;
+        height: 40px;
+    }
+
+   
+    span.title {
+        color: White;
+        text-align: center;
+    }
+
+
+
+    div#container>div {
+        float: left;
+        padding: $padding;
+    }
 
     div#equipment {
+        position: relative;
+        width: $width / 2;
+        height: $height / 2;
+        background: url("../assets/sprites/guy/guy.png") no-repeat scroll center center;
+
+        div#slots {
+            position: relative;
+            float: left;
+            width: 240px;
+            height: 250px;
+            left: 20px;
+            top: 17px;     
+
+            ul.slots {
+                position: absolute;
+
+
+            }
+        
+             ul.slots.top, ul.slots.bottom {   
+
+                    left: 50%;
+
+                    li {
+                        float: left;
+                    }
+                }
+
+
+                ul.slots.left, ul.slots.right {   
+
+                    top: 25px;
+                }
+
+
+                ul.slots.bottom, ul.slots.top {   
+                    left: 68px;
+                }
+
+        }
 
     }
 
     div#statistics {
+        border-left: 1px solid white;
+        width: $width / 2.5;
+        height: $height / 2;
 
     }
 
 
     div#inventory {
+        border-top: 1px solid white;
+        margin-top: 5px;
+        width: $width - $padding * 2;
+        min-height: $height / 2;
+
+        ul.categories li {
+
+            float: left;
+            position: relative;
+            display: block;
+
+            span.title {
+                float: left;
+            }
+        }
+
+        ul.slots {
+            float: left;
+
+            li {
+                float: left;
+                color: White;
+                margin: 2px;
+
+                div.item {
+
+                    float: left;
+                    width: 40px;
+                    height: 40px;
+                    background: url("../assets/sprites/ui/itemicons.png")  no-repeat;
+
+                }
+
+                div.item-1 {
+
+                    background-scroll: 0 0;
+                }
+                
+            }
+        }
 
     }
 
+}
 
+div#char-window.open {
+
+    transition: opacity 0.25s ease-out;
+    opacity: 1;
 }

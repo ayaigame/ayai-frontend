@@ -24,6 +24,7 @@ this.ayai = this.ayai || {};
 		enterKey.onDown.add(function() {
 
 	    	if(!ayai.chat.isEditBoxOpen) {
+
 		    	ayai.chat.openEditBox();
 
 				ayai.gameState.sendInputToGameState(new InputEvent("!isUp"));
@@ -37,15 +38,23 @@ this.ayai = this.ayai || {};
 		    	}
 		    	
 		    	ayai.game.input.keyboard.clearCaptures();
+		    	
 		    }
+
 		    else {
 		    	ayai.chat.send();
 		    	ayai.chat.closeEditBox();
-				for(var i = 0 ; i < boundKeys.length; i++) {
-			    	ayai.game.input.keyboard.addKey(boundKeys[i].keyCode);
-		    	}
+
+
+				upKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.W);
+			    downKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.S);
+			    leftKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.A);
+			    rightKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.D);
+			    spaceKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+			    iKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.I);
+
 		    	registerKeyPresses();
-		    	//ayai.game.input.keyboard.start();
+
 		    }
 
 		});
@@ -61,6 +70,7 @@ this.ayai = this.ayai || {};
 
 	};
 
+
 	function registerKeyPresses() {
 
 	    spaceKey.onDown.add(function() {
@@ -68,6 +78,11 @@ this.ayai = this.ayai || {};
 	    	ayai.gameState.sendAttack();
 
 	    });
+
+	    iKey.onDown.add(function() {
+
+	    	ayai.inventory.toggle();
+	    })
 
 		upKey.onDown.add(function() {
 			ayai.gameState.sendInputToGameState(new InputEvent("isUp"));

@@ -94,5 +94,15 @@
         "end_y" : 40,
         "toRoomId" : 1,
         "toRoomFile" : "map2.json"
+        }],
+
+ "npcs" : [{
+        "id" : 0,
+        "sprite_id" : 0,
+        "position": {
+                "x": 200,
+                "y": 200
+        }
+
         }]
 }

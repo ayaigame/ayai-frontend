@@ -7,6 +7,7 @@ this.ayai = this.ayai || {};
         this.name = "";
         this.sprite = ayai.game.add.sprite(json.position.x, json.position.y, 'guy');
 
+        //ayai.gameState.entitiesLayer.add(this.sprite);
 
         this.sprite.animations.add('facedown', [1]);
         this.sprite.animations.add('faceleft', [4]);

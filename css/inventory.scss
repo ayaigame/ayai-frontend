@@ -41,6 +41,16 @@ div#char-window {
         border: 1px solid #bbbbbb;
         width: 40px;
         height: 40px;
+        
+    }
+
+    ul.slots li:hover {
+        box-shadow: inset 0px 0px 1px 1px  white;
+    }
+
+    ul.slots li.over {
+        transition: all 0.1s linear;
+        box-shadow: 0px 0px 7px 2px aliceblue;
     }
 
    

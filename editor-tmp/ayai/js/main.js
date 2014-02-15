@@ -12,11 +12,13 @@ $(document).ready(function() {
 	$results = $(".header .results");
 
 	$loginDivs = $(".login-page .side div");
-	$modalBackground = $(".modals");
+	$modalContainer = $(".modals");
+	$modalBackground = $(".modal-background");
 	$modals = $(".modals > div");
 
 	$modalBackground.click(function() {
 		$modalBackground.hide();
+		$modalContainer.hide();
 		$modals.hide();
 	});
 
@@ -43,9 +45,10 @@ $(document).ready(function() {
 			$(".player-content").css("display", "none");
 			$(".accounts").css("display", "none");
 			$(".admin-content").css("display", "none");
-		} else if (hash == "#settings") {					
-			$modalBackground.show();
-			$(".modals .settings").show();
+		} else if (hash == "#settings") {
+			$modalBackground.show();				
+			$modalContainer.css("display","flex");
+			$(".modals .settings").css("display","block");
 		}
 
 		evt.preventDefault();

@@ -6,6 +6,20 @@ this.ayai = this.ayai || {};
         this.id = json.id;
         this.name = "";
         this.sprite = ayai.game.add.sprite(json.position.x, json.position.y, 'guy');
+        this.sprite.inputEnabled = true;
+        this.sprite.input.pixelPerfect = true;
+        this.sprite.input.useHandCursor = true;
+
+        this.sprite.events.onInputDown.add(function() {
+            
+            $("ul.unitframes li#target").css("display", "none");
+
+            Window.target = this;
+            console.log(Window.target);
+
+            $("ul.unitframes li#target").css("display", "block");
+
+        }, this);
 
         //ayai.gameState.entitiesLayer.add(this.sprite);
 
@@ -38,6 +52,7 @@ this.ayai = this.ayai || {};
     p.sprite = null;
     p.position = {x: 0, y: 0};
     p.health = {currHealth : 0, maximumHealth: 0};
+    p.Mana = {currMana : 0, maximumMana: 0}
 
     //  private properties
     //  ==================
@@ -53,13 +68,27 @@ this.ayai = this.ayai || {};
         var healthPercent = Math.floor((e.health.currHealth / e.health.maximumHealth) * 100) + "%";
         var manaPercent = Math.floor((e.Mana.currMana / e.Mana.maximumMana) * 100) + "%";
 
-        $("div#player div.health span.total").html(e.health.currHealth.toString() + "/" + e.health.maximumHealth.toString());
-        $("div#player div.health span.percent").html(healthPercent);
-        $("div#player div.health div.bar").css("width", healthPercent);
 
-        $("div#player div.mana span.total").html(e.Mana.currMana.toString() + "/" + e.Mana.maximumMana.toString());
-        $("div#player div.mana span.percent").html(manaPercent);
-        $("div#player div.mana div.bar").css("width", manaPercent);
+        $("ul.unitframes li#player span.name").html(this.id);
+
+        $("ul.unitframes li#player div.health span.total").html(e.health.currHealth.toString() + "/" + e.health.maximumHealth.toString());
+        $("ul.unitframes li#player div.health span.percent").html(healthPercent);
+        $("ul.unitframes li#player div.health div.bar").css("width", healthPercent);
+
+        $("ul.unitframes li#player div.mana span.total").html(e.Mana.currMana.toString() + "/" + e.Mana.maximumMana.toString());
+        $("ul.unitframes li#player div.mana span.percent").html(manaPercent);
+        $("ul.unitframes li#player div.mana div.bar").css("width", manaPercent);
+
+
+    }
+
+    p.targetEntity = function(e) {
+
+
+    }
+
+    p.targetVitals = function() {
+
 
     }
 
@@ -71,7 +100,31 @@ this.ayai = this.ayai || {};
     p.syncCharacter = function(e) {
         this.sprite.x = e.position.x;
         this.sprite.y = e.position.y;
+        this.health.currHealth = e.health.currHealth;
+        this.health.maximumHealth = e.health.maximumHealth;
+        this.Mana.currMana = e.Mana.currMana;
+        this.Mana.maximumMana = e.Mana.maximumMana;
         this.setAnimation(e.action);
+
+        if(Window.target != null) {
+
+            if(Window.target.id == this.id) {
+
+                var targetHealthPercent = Math.floor((Window.target.health.currHealth / Window.target.health.maximumHealth) * 100) + "%";
+                var targetManaPercent = Math.floor((Window.target.Mana.currMana / Window.target.Mana.maximumMana) * 100) + "%";
+
+                $("ul.unitframes li#target span.name").html(Window.target.id);
+
+                $("ul.unitframes li#target div.health span.total").html(Window.target.health.currHealth.toString() + "/" + Window.target.health.maximumHealth.toString());
+                $("ul.unitframes li#target div.health span.percent").html(targetHealthPercent);
+                $("ul.unitframes li#target div.health div.bar").css("width", targetHealthPercent);
+
+                $("ul.unitframes li#target div.mana span.total").html(Window.target.Mana.currMana.toString() + "/" + Window.target.Mana.maximumMana.toString());
+                $("ul.unitframes li#target div.mana span.percent").html(targetManaPercent);
+                $("ul.unitframes li#target div.mana div.bar").css("width", targetManaPercent);
+            }
+        }
+
     }
 
     p.removeFromStage = function() {

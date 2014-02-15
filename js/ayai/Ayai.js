@@ -18,9 +18,6 @@ this.ayai = this.ayai || {};
 
         ayai.connection.connect();
 
-
-
-
     };
     var p = Ayai.prototype;
     //  public properties 
@@ -82,6 +79,8 @@ this.ayai = this.ayai || {};
 
         ayai.chat = new ayai.Chat();
         ayai.inventory = new ayai.Inventory();
+        ayai.questLog = new ayai.QuestLog();
+
         ayai.inputHandler = new ayai.InputHandler();
 
         ayai.renderMap(ayai.currentTileset, ayai.currentTilemap);
@@ -100,7 +99,7 @@ this.ayai = this.ayai || {};
         ayai.map = ayai.game.add.tilemap(tilemap);
         var map = ayai.map;
 
-        console.log(map);
+        //console.log(map);
 
         var a = options == 'undefined' ? options : {};
 
@@ -109,8 +108,6 @@ this.ayai = this.ayai || {};
         var browserHeight = $(window).height();
         var mapWidth =  map.layers[0].width * ayai.TILE_WIDTH;
         var mapHeight = map.layers[0].height * ayai.TILE_HEIGHT;
-
-        console.log(mapWidth);
 
         //if the dimensions of the browser are less than the dimensions of the map, the camera gets set to the dimensions of the map.
         var width = Math.min(browserWidth, mapWidth);

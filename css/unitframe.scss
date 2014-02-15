@@ -1,6 +1,16 @@
-div.unitframe {
+ul.unitframes {
+
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 430px;
+    float: left;
+}
+
+ul.unitframes>li {
 
     float: left;
+    display: block;
     //font-family: 'Happy Monkey', sans-serif;
     //font-family: 'Alef', sans-serif;
     font-family: 'Press Start 2P', sans-serif;
@@ -59,7 +69,7 @@ div.unitframe {
     }
 }
 
-div.unitframe#player {
+ul.unitframes li#player {
     width: 400px;
     height: 130px;
     padding: 10px;
@@ -79,6 +89,29 @@ div.unitframe#player {
     }
     div.xp.frame {
         height: 5px;
+    }
+}
+
+ul.unitframes li#target {
+    width: 400px;
+    height: 100px;
+    padding: 10px;
+    display: none;
+
+    div.bars {
+        position: relative;
+        top: 5px;
+    }
+
+        div.frame {
+        border-radius: 3px;
+        border: 1px solid white;
+        position: relative;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    div.health.frame,  div.mana.frame {
+        height: 25px;
     }
 }
 

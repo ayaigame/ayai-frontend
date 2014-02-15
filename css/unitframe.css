@@ -1,32 +1,40 @@
-div.unitframe {
+ul.unitframes {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 430px;
+  float: left; }
+
+ul.unitframes > li {
   float: left;
+  display: block;
   font-family: 'Press Start 2P', sans-serif;
   font-size: 12pt;
   letter-spacing: -0.5px;
   border-radius: 5px;
   background: rgba(0, 0, 0, 0.7);
   border: 2px solid #bbbbbb; }
-  div.unitframe span {
+  ul.unitframes > li span {
     color: White; }
-  div.unitframe span.name {
+  ul.unitframes > li span.name {
     float: left; }
-  div.unitframe span.level {
+  ul.unitframes > li span.level {
     float: right; }
-  div.unitframe div.frame, div.unitframe div.bars, div.unitframe div.bar {
+  ul.unitframes > li div.frame, ul.unitframes > li div.bars, ul.unitframes > li div.bar {
     float: left; }
-  div.unitframe div.frame, div.unitframe div.bars {
+  ul.unitframes > li div.frame, ul.unitframes > li div.bars {
     width: 100%; }
-  div.unitframe div.frame span {
+  ul.unitframes > li div.frame span {
     z-index: 10;
     line-height: 25px;
     font-size: 12pt;
     text-shadow: 0px 1px 2px black;
     position: absolute; }
-  div.unitframe div.frame span.total {
+  ul.unitframes > li div.frame span.total {
     left: 10px; }
-  div.unitframe div.frame span.percent {
+  ul.unitframes > li div.frame span.percent {
     right: 10px; }
-  div.unitframe div.bar {
+  ul.unitframes > li div.bar {
     z-index: 0;
     border-radius: 3px;
     transition: all 0.5s ease-out;
@@ -34,23 +42,40 @@ div.unitframe {
     height: 100%;
     position: relative; }
 
-div.unitframe#player {
+ul.unitframes li#player {
   width: 400px;
   height: 130px;
   padding: 10px; }
-  div.unitframe#player div.bars {
+  ul.unitframes li#player div.bars {
     position: relative;
     top: 5px; }
-  div.unitframe#player div.frame {
+  ul.unitframes li#player div.frame {
     border-radius: 3px;
     border: 1px solid white;
     position: relative;
     width: 100%;
     margin-bottom: 5px; }
-  div.unitframe#player div.health.frame, div.unitframe#player div.mana.frame {
+  ul.unitframes li#player div.health.frame, ul.unitframes li#player div.mana.frame {
     height: 25px; }
-  div.unitframe#player div.xp.frame {
+  ul.unitframes li#player div.xp.frame {
     height: 5px; }
+
+ul.unitframes li#target {
+  width: 400px;
+  height: 100px;
+  padding: 10px;
+  display: none; }
+  ul.unitframes li#target div.bars {
+    position: relative;
+    top: 5px; }
+  ul.unitframes li#target div.frame {
+    border-radius: 3px;
+    border: 1px solid white;
+    position: relative;
+    width: 100%;
+    margin-bottom: 5px; }
+  ul.unitframes li#target div.health.frame, ul.unitframes li#target div.mana.frame {
+    height: 25px; }
 
 div.health.frame div.bar {
   background: -moz-linear-gradient(top, #0ce511 0%, #08a500 100%);

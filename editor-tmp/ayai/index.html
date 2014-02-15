@@ -6,10 +6,40 @@
 		<link href='//fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
 		<link href='css/main.css' rel='stylesheet' type='text/css'>
 		<style>
-
 		</style>
 	</head>
 	<body>
+
+
+		<div class="modals">
+			<div class="forgotpw">
+				<h2>password recovery</h2>
+				<div>Enter your e-mail address below and we will send you an email that will tell you how to change your password.</div>
+				<div class="password primary-input">
+					<span>email</span>
+					<input class="email-input" type="text"></input>
+				</div>
+				<span class="primary-button">
+					send
+				</span>
+			</div>
+
+
+			<div class="settings">
+				<h2>account settings</h2>
+				<div class="password primary-input">
+					<span>email</span>
+					<input class="email-input" type="text"></input>
+				</div>
+				<div class="password primary-input">
+					<span>password</span>
+					<input class="pw-input" type="password"></input>
+				</div>
+				<span class="primary-button">
+					save
+				</span>
+			</div>
+		</div>
 
 		<div class="container">
 			<div class="login-page">
@@ -27,36 +57,56 @@
 							</div>-->
 						</div>
 						<div class="side">
-							<div class="email">
+							<div class="primary-input email">
 								<span>email</span>
 								<input class="email-input" type="text"></input>
 							</div>
-							<div class="password">
+							<div class="primary-input password">
 								<span>password</span>
 								<input class="pw-input" type="password"></input>
 							</div>
-							<span class="login button">
+							<span class="primary-button login button">
 								login
 							</span>
-							<span class="register button">
+							<span class="primary-button register button">
 								register
 							</span>
 						</div>
 					</div>
 				</td></tr></table>
 			</div>
+			
+
+
+
+
 			<div class="accounts">
 				<div class="header">
-					<div class="logo"><img src="header.png"></div>
+					<div class="logo"><img src="header.png"></div>					
+					<div class="search">
+						<input></input>
+						<div class="results">
+							<div><span>Lorem</span> (item)</div>
+							<div><span>Lorem</span> (item)</div>
+							<div><span>Lorem</span> (item)</div>
+							<div><span>Lorem</span> (item)</div>
+							<div><span>Lorem</span> (item)</div>
+						</div>
+					</div>
 					<div class="menu">
 						<div class="links">
 							<a href="#game">game</a>
 							<a href="#admin">admin</a>
-							<a href="#">settings</a>
+							<a href="#settings">settings</a>
 							<a href="#logout">logout</a>
 						</div>
 					</div>
 				</div>
+				
+
+
+
+
 				<div class="content admin-content">
 					<div class="side">
 						<div class="navigation">
@@ -124,6 +174,11 @@
 						</div>
 					</div>
 				</div>
+
+
+
+
+
 				<div class="content player-content">
 					<div class="side">
 						<div class="overview">
@@ -167,6 +222,11 @@
 						</div>
 					</div>
 				</div>
+
+
+
+
+
 				<div class="footer">
 					<a href="#">about</a> &ndash;
 					<a href="#">github</a> &ndash;
@@ -178,120 +238,6 @@
 		</div>
 
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-		<script>
-			$links = $(".links a");
-			$registerBtn = $(".register.button");
-			$loginBtn = $(".login.button");
-
-			$emailInput = $(".email-input");
-			$passwordInput = $(".pw-input");
-			$charSelect = $(".selection");
-
-			$loginDivs = $(".login-page .side div");
-
-			$links.on("click", function(evt) {
-				var $this = $(this);
-				var hash = $this.attr("href");
-				location.hash = hash;
-				if(hash == "#game"){
-					$(".login-page").css("display", "none");
-					$(".admin-content").css("display", "none");
-					$(".accounts").css("display", "block");
-					$(".player-content").css("display", "block");
-				} else if (hash == "#admin") {
-					$(".login-page").css("display", "none");
-					$(".player-content").css("display", "none");
-					$(".accounts").css("display", "block");
-					$(".admin-content").css("display", "block");
-				} else if (hash == "#logout") {
-					$(".login-page").css("display", "block");
-					$(".player-content").css("display", "none");
-					$(".accounts").css("display", "none");
-					$(".admin-content").css("display", "none");
-				}
-
-				evt.preventDefault();
-			});
-
-			$loginDivs.click(function(evt) {
-				var $this = $(this);
-				$this.find("input").focus();
-			});
-
-			$loginBtn.click(function(evt){
-				evt.preventDefault();
-				
-				$(".login-page").hide();
-				$(".accounts, .player-content").show();
-				initAccount();
-		
-				/*
-				var info = {
-					email: $emailInput.val(),
-					password: $passwordInput.val()
-				}
-				var hash = makeBaseAuth(info);
-			
-				$.ajax({
-					type:"POST",
-					url: "/login",
-					beforeSend: function(xhr) {
-						xhr.setRequestHeader("Authorization", hash);
-					},
-					success: function(data) {
-						console.log(data);
-					}
-				});
-				*/
-			});
-
-			templates = {
-				characterItem: function(obj) {
-					return '' +
-						'<div class="char">' +
-						'<div class="icon"></div>' +
-						'<div class="name">' + obj.name + '</div>' +
-						'<div class="info">Level ' + obj.level + " " + obj.class + "</div>" +
-						'</div>';
-				}
-			}
-		
-			$registerBtn.click(function(evt){
-				evt.preventDefault();
-				var info = {
-					email: $emailInput.val(),
-					password: $passwordInput.val()
-				}
-				$.post("/register", info, function(data){
-					
-						var template = templates.characterItem(data);
-					
-				});
-			});
-
-			
-
-			function initAccount() {
-				$charSelect.html("");
-	
-				$.get("characters.json", function(data){
-					for(var obj in data){
-						var $template = $(templates.characterItem(data[obj])).hide();
-						$charSelect.append($template);
-						$template.fadeIn();
-					}
-				});
-			}	
-	
-			function makeBaseAuth(info) {
-			  var tok = info.email + ':' + info.password;
-			  var hash = btoa(tok);
-			  return "Basic " + hash;
-			}
-
-			function goToPage(hash) {
-
-			}
-		</script>
+		<script src="js/main.js"></script>
 	</body>
 </html>

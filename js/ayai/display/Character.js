@@ -71,6 +71,7 @@ this.ayai = this.ayai || {};
     p.syncCharacter = function(e) {
         this.sprite.x = e.position.x;
         this.sprite.y = e.position.y;
+        this.setAnimation(e.action);
     }
 
     p.removeFromStage = function() {

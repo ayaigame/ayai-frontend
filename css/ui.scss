@@ -8,3 +8,42 @@ div#interface {
 
 
 }
+
+div.ui-base {
+
+	background: rgba(0, 0, 0, 0.7);
+    border: 2px solid #bbbbbb;
+
+}
+
+div.ui-frame {
+
+    z-index: 0;
+    position: absolute;
+    right: 500px;
+    bottom: 60px;
+    transition: opacity 0.25s ease-out;
+    opacity: 0; 
+    text-align: center;
+    
+    span.title {
+        color: White;
+        text-align: center;
+    }
+}
+
+div.ui-frame.open {
+
+	opacity: 1;
+	z-index: 50;
+}
+
+@mixin ui-frame($width, $height) {
+
+
+
+	span.title {
+
+		color: White;
+	}
+} 

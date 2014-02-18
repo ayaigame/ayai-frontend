@@ -64,7 +64,7 @@
             cursor: pointer;
         }
 
-        .top {
+        .overlay.top {
             top: 0;
         }
 

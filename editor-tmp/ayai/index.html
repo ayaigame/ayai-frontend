@@ -223,9 +223,7 @@
 				
 				$(".login-page").hide();
 				$(".accounts, .player-content").show();
-				initAccount();
 		
-				/*
 				var info = {
 					email: $emailInput.val(),
 					password: $passwordInput.val()
@@ -240,9 +238,9 @@
 					},
 					success: function(data) {
 						console.log(data);
+						initAccount(data);
 					}
 				});
-				*/
 			});
 
 			templates = {
@@ -263,22 +261,31 @@
 					password: $passwordInput.val()
 				}
 				$.post("/register", info, function(data){
-					
-						var template = templates.characterItem(data);
+					console.log(data);
+					var template = templates.characterItem(data);
 					
 				});
 			});
 
 			
 
-			function initAccount() {
+			function initAccount(token) {
 				$charSelect.html("");
-	
-				$.get("characters.json", function(data){
-					for(var obj in data){
-						var $template = $(templates.characterItem(data[obj])).hide();
-						$charSelect.append($template);
-						$template.fadeIn();
+
+				console.log(token);
+				$.ajax({
+					type:"POST",
+					url: "/chars",
+					data: token,
+					success: function(data) {
+						console.log(data)
+						var json = JSON.parse(data)
+						for(var obj in json) {
+							console.log(json[obj])
+							var $template = $(templates.characterItem(json[obj])).hide();
+							$charSelect.append($template);
+							$template.fadeIn();
+						}
 					}
 				});
 			}	

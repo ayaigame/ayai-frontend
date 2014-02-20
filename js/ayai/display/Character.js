@@ -4,7 +4,8 @@ this.ayai = this.ayai || {};
         // constructor
 
         this.id = json.id;
-        this.name = "";
+        this.name = json.name;
+        this.level = json.level;
         this.sprite = ayai.game.add.sprite(json.position.x, json.position.y, 'guy');
         this.sprite.inputEnabled = true;
         this.sprite.input.pixelPerfect = true;
@@ -49,6 +50,9 @@ this.ayai = this.ayai || {};
     //  public properties 
     //  =================     
     p.id = null;
+    p.name = null;
+    p.experience = null;
+    p.level = null;
     p.sprite = null;
     p.position = {x: 0, y: 0};
     p.health = {currHealth : 0, maximumHealth: 0};
@@ -65,11 +69,15 @@ this.ayai = this.ayai || {};
     p.syncPlayer = function(e) {
         this.sprite.x = e.position.x;
         this.sprite.y = e.position.y;
+        this.name = e.name
+        this.level = e.level
+        this.experience = e.experience
         var healthPercent = Math.floor((e.health.currHealth / e.health.maximumHealth) * 100) + "%";
         var manaPercent = Math.floor((e.Mana.currMana / e.Mana.maximumMana) * 100) + "%";
 
 
-        $("ul.unitframes li#player span.name").html(this.id);
+        $("ul.unitframes li#player span.name").html(this.name);
+        $("ul.unitframes li#player span.level").html(this.level);
 
         $("ul.unitframes li#player div.health span.total").html(e.health.currHealth.toString() + "/" + e.health.maximumHealth.toString());
         $("ul.unitframes li#player div.health span.percent").html(healthPercent);
@@ -113,7 +121,8 @@ this.ayai = this.ayai || {};
                 var targetHealthPercent = Math.floor((Window.target.health.currHealth / Window.target.health.maximumHealth) * 100) + "%";
                 var targetManaPercent = Math.floor((Window.target.Mana.currMana / Window.target.Mana.maximumMana) * 100) + "%";
 
-                $("ul.unitframes li#target span.name").html(Window.target.id);
+                $("ul.unitframes li#target span.name").html(Window.target.name);
+                $("ul.unitframes li#target span.level").html(Window.target.level);
 
                 $("ul.unitframes li#target div.health span.total").html(Window.target.health.currHealth.toString() + "/" + Window.target.health.maximumHealth.toString());
                 $("ul.unitframes li#target div.health span.percent").html(targetHealthPercent);

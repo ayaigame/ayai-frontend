@@ -32,7 +32,7 @@ this.ayai = this.ayai || {};
 		$('div#char-window').toggleClass("open");
 	};
 	p.update = function(items) {
-		if (this.previousJson == "") {
+		 if (this.previousJson == "") {
 			this.previousJson = items;
 			for (var i = 0; i < items.length; i++) {
 				var slot = $("div#char-window div#inventory ul.slots").find("li")[i];

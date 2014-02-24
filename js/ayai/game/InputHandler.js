@@ -8,7 +8,7 @@ this.ayai = this.ayai || {};
 		rightKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.D);
 		spaceKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		iKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.I);
-
+        qKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.Q);
 		boundKeys.push(upKey);
 		boundKeys.push(downKey);
 		boundKeys.push(leftKey);
@@ -53,6 +53,9 @@ this.ayai = this.ayai || {};
 		iKey.onDown.add(function() {
 			ayai.inventory.toggle();
 		})
+        qKey.onDown.add(function() {
+            ayai.questLog.toggle();
+        });
 		upKey.onDown.add(function() {
 			ayai.gameState.sendInputToGameState(new InputEvent("isUp"));
 		});

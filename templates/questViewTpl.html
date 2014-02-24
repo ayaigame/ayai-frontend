@@ -1,0 +1,28 @@
+
+<!--  
+
+{
+"title":String
+"objectives": [
+   {
+       "name":String
+       "totalComplete":Integer
+       "total":Integer
+   }]
+
+-->
+
+<script id="questView-template" type="text/x-handlebars-template">
+
+  <div id="QuestTitle">
+    {{title}}
+  </div> 
+
+  <div id="QuestObjectiveList">
+    <ul>
+      {{#each objectives}}
+      <li>{{name}}</li>
+      {{/each}}
+    </ul>
+  </div>
+</script>

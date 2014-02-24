@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+    $width: 550px;
+    $height: 600px;
+    $padding: 10px;
 
     div#questlog {
 
@@ -88,3 +92,16 @@ div#questList {
         transition: opacity 0.25s ease-out;
         opacity: 1;
     }
+=======
+$width: 550px;
+$height: 600px;
+$padding: 10px;
+
+div#quest-log {
+
+    width: $width;
+    height: $height;
+    padding: 10px;
+
+}
+>>>>>>> d8582eff8780a9e29e932f5122e8505a423d3b57

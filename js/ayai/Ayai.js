@@ -3,10 +3,10 @@ this.ayai = this.ayai || {};
     var Ayai = function() {
         // constructor
         ayai.game = this;
+        ayai.gameLoaded = false;
         ayai.verboseLogger = false;
-        ayai.connection = new ayai.Connection("ws://localhost:8007");
+        ayai.connection = new ayai.Connection("ws://192.168.100.10/ws");
 
-        ayai.gameState = new ayai.GameStateInterface();
         ayai.uiElements = [];
 
         ayai.characterId = null;
@@ -17,9 +17,6 @@ this.ayai = this.ayai || {};
         ayai.TILE_HEIGHT = 32;
 
         ayai.connection.connect();
-
-
-
 
     };
     var p = Ayai.prototype;
@@ -46,6 +43,7 @@ this.ayai = this.ayai || {};
 
         console.log("Loading assets...");
         ayai.game.load.spritesheet('guy', '../assets/sprites/guy/guysheet.png', 32, 32);
+        ayai.game.load.spritesheet('npc', '../assets/sprites/npc/npcsheet.png', 32, 48);
         ayai.game.load.spritesheet('frames', '../assets/sprites/ui/framesheet.png', 128, 16);
         ayai.game.load.spritesheet('itemicons', '../assets/sprites/ui/itemicons.png', 40, 40);
         ayai.game.load.image('skillicon', '../assets/sprites/ui/skillsheet.png');
@@ -58,7 +56,8 @@ this.ayai = this.ayai || {};
 
     window.onresize = function() {
 
-        if(ayai.gameState.isLoaded) {
+        if(ayai.gameLoaded) {
+            ayai.gameLoaded = false;
             var width = $(window).width();
             var height = $(window).height();   
 
@@ -74,13 +73,14 @@ this.ayai = this.ayai || {};
 
     function create() {
 
+        ayai.gameState = new ayai.GameStateInterface();
+
         console.log("Assets loaded. Ready to PLAY!!!111");
 
-        //Tell the gamestate that we have loaded all the assets and that it can start updating from update messages
-        ayai.gameState.isLoaded = true;
-        
         ayai.chat = new ayai.Chat();
         ayai.inventory = new ayai.Inventory();
+        ayai.questLog = new ayai.QuestLog();
+
         ayai.inputHandler = new ayai.InputHandler();
         ayai.questLog = new ayai.QuestLog();
 
@@ -93,11 +93,14 @@ this.ayai = this.ayai || {};
     ayai.renderMap = function(tileset, tilemap, options){
 
         ayai.game.world.destroy();
+        ayai.gameState.clearEntities();
+        placeNpcs();
+
         var tileset = ayai.game.add.tileset(tileset);
         ayai.map = ayai.game.add.tilemap(tilemap);
         var map = ayai.map;
 
-        console.log(map);
+        //console.log(map);
 
         var a = options == 'undefined' ? options : {};
 
@@ -106,8 +109,6 @@ this.ayai = this.ayai || {};
         var browserHeight = $(window).height();
         var mapWidth =  map.layers[0].width * ayai.TILE_WIDTH;
         var mapHeight = map.layers[0].height * ayai.TILE_HEIGHT;
-
-        console.log(mapWidth);
 
         //if the dimensions of the browser are less than the dimensions of the map, the camera gets set to the dimensions of the map.
         var width = Math.min(browserWidth, mapWidth);
@@ -130,9 +131,31 @@ this.ayai = this.ayai || {};
         //Create UI Elements
         //ayai.actionBar = new ayai.ActionBar();
         //ayai.uiElements.push(ayai.actionBar);
+        
+        ayai.gameLoaded = true;
 
+    }
 
+    function placeNpcs() {
 
+        $.get(ayai.tilemap, function(val) {
+
+            var npcs = val.npcs;
+            for(var i = 0; i < npcs.length; i++) {
+
+            var npc = npcs[i];
+            var newnpc = ayai.game.add.sprite(npc.position.x, npc.position.y, 'npc');
+
+            switch(npc.sprite_id)
+            {
+                case "0":
+                        newnpc.animations.add('facedown', [0]);
+                break;
+                }
+            }
+
+            newnpc.animations.play('facedown', 1, true);
+        });
     }
 
     function update() {
@@ -171,17 +194,15 @@ this.ayai = this.ayai || {};
 
             case "map":
 
-
                 ayai.tileset2 = "/assets/tiles/" + evt.detail.msg.tilesets[0].image;
                 ayai.tilemap2 = "/assets/maps/"+ evt.detail.msg.tilemap;
 
                 ayai.game.load.tilemap('tilemap', ayai.tilemap2, null, Phaser.Tilemap.TILED_JSON); 
                 ayai.game.load.tileset('tileset', ayai.tileset2, ayai.TILE_WIDTH, ayai.TILE_HEIGHT);
                 ayai.game.load.start();
-                ayai.gameState.isLoaded = false;
+                ayai.gameLoaded = false;
                 
                 ayai.game.load.onLoadComplete.dispatch = function() {
-                    ayai.gameState.isLoaded = true;
                     ayai.currentTileset = 'tileset'
                     ayai.currentTilemap = 'tilemap';
                     ayai.renderMap(ayai.currentTileset, ayai.currentTilemap);
@@ -189,6 +210,7 @@ this.ayai = this.ayai || {};
 
 
             case "update":
+                if (ayai.gameLoaded)
                 ayai.gameState.updateEntities(evt.detail.msg);
 
                 break;

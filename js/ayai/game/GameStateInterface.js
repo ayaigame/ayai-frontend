@@ -8,6 +8,7 @@ this.ayai = this.ayai || {};
         p.isRight = false;
         p.isLeft = false;
         p.isLoaded = false;
+
     };
     var p = GameStateInterface.prototype;
     //  public properties 
@@ -21,7 +22,8 @@ this.ayai = this.ayai || {};
     p.isDown = null;
     p.isLeft = null;
     p.isRight = null;
-    p.isLoaded = false;
+    p.entitiesLayer = null;
+
     //  public methods
     //  ==============
     p.update = function(renderer) {
@@ -54,29 +56,30 @@ this.ayai = this.ayai || {};
         var message = new ayai.AttackMessage();
         var sender = new ayai.MessageSender(message);
     }
+
+
+
     p.updateEntities = function(json) {
-        if (this.isLoaded) {
-            var newEntities = json.others;
-            var player = this.entities[json.you.id];
-            player.syncPlayer(json.you);
-            ayai.inventory.update(json.you.inventory);
-            for (var index in newEntities) {
-                var characterJson = newEntities[index];
-                if (this.entities[characterJson.id] == null) {
-                    this.addCharacter(characterJson);
-                } else {
-                    var entity = this.entities[characterJson.id];
-                    entity.syncCharacter(characterJson);
-                }
+        var newEntities = json.others;
+        var player = this.entities[json.you.id];
+        player.syncPlayer(json.you);
+        ayai.inventory.update(json.you.inventory);
+        for (var index in newEntities) {
+            var characterJson = newEntities[index];
+            if (this.entities[characterJson.id] == null) {
+                this.addCharacter(characterJson);
+            } else {
+                var entity = this.entities[characterJson.id];
+                entity.syncCharacter(characterJson);
             }
-            /*  TODO: If an entity hasn't been updated in 10-20 syncs, remove it?
+        }
+        /*  TODO: If an entity hasn't been updated in 10-20 syncs, remove it?
             for(var key in this.entities) {
                 var entity = this.entities[key];
                 if(!(newEntities.contains(entity))) {
                     console.log("should remove entity "entity.id);
                 }
             }*/
-        }
     }
     p.addCharacter = function(json) {
         var newChar = new ayai.Character(json);
@@ -87,7 +90,7 @@ this.ayai = this.ayai || {};
         e.removeFromStage();
         delete this.entities[e.id.toString()];
     }
-    p.removeAll = function() {
+    p.clearEntities = function() {
         for (var i = 0; i < this.entities.length; i++) {
             this.entities[i].removeFromStage();
         }
@@ -109,28 +112,28 @@ this.ayai = this.ayai || {};
             switch (ev.key) {
                 case "isUp":
                     p.isUp = true;
-                    if(!p.isDown)
+                    if (!p.isDown)
                         Window.character.setAnimation('walkup');
                     else Window.character.setAnimation('faceup');
                     p.sendMovement();
                     break;
                 case "isLeft":
                     p.isLeft = true;
-                    if(!p.isRight)
+                    if (!p.isRight)
                         Window.character.setAnimation('walkleft');
                     else Window.character.setAnimation('faceleft');
                     p.sendMovement();
                     break;
                 case "isRight":
                     p.isRight = true;
-                    if(!p.isLeft)
+                    if (!p.isLeft)
                         Window.character.setAnimation('walkright');
                     else Window.character.setAnimation('faceright');
                     p.sendMovement();
                     break;
                 case "isDown":
                     p.isDown = true;
-                    if(!p.isUp)
+                    if (!p.isUp)
                         Window.character.setAnimation('walkdown');
                     else Window.character.setAnimation('facedown');
                     p.sendMovement();
@@ -141,7 +144,7 @@ this.ayai = this.ayai || {};
                         Window.character.setAnimation('walkright');
                     if (p.isLeft)
                         Window.character.setAnimation('walkleft');
-                    if(p.isDown)
+                    if (p.isDown)
                         Window.character.setAnimation('walkdown');
                     if (!p.isDown && !p.isRight && !p.isLeft)
                         Window.character.setAnimation('faceup');
@@ -153,7 +156,7 @@ this.ayai = this.ayai || {};
                         Window.character.setAnimation('walkup');
                     if (p.isDown)
                         Window.character.setAnimation('walkdown');
-                    if(p.isRight)
+                    if (p.isRight)
                         Window.character.setAnimation('walkright');
                     if (!p.isDown && !p.isUp && !p.isRight)
                         Window.character.setAnimation('faceleft');
@@ -165,7 +168,7 @@ this.ayai = this.ayai || {};
                         Window.character.setAnimation('walkup');
                     if (p.isDown)
                         Window.character.setAnimation('walkdown');
-                    if(p.isLeft)
+                    if (p.isLeft)
                         Window.character.setAnimation('walkleft');
                     if (!p.isDown && !p.isUp && !p.isLeft)
                         Window.character.setAnimation('faceright');
@@ -177,7 +180,7 @@ this.ayai = this.ayai || {};
                         Window.character.setAnimation('walkright');
                     if (p.isLeft)
                         Window.character.setAnimation('walkleft');
-                    if(p.isUp)
+                    if (p.isUp)
                         Window.character.setAnimation('walkup');
                     if (!p.Up && !p.isRight && !p.isLeft)
                         Window.character.setAnimation('facedown');

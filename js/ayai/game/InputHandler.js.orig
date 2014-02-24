@@ -59,6 +59,7 @@ this.ayai = this.ayai || {};
 		lKey.onDown.add(function() {
 			ayai.questLog.toggle();
 		});
+
 		upKey.onDown.add(function() {
 			ayai.gameState.sendInputToGameState(new InputEvent("isUp"));
 		});

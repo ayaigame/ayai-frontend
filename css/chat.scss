@@ -3,16 +3,17 @@ div#chat{
 	font-family: 'Alef', sans-serif;
 	color: White;
 	font-size: 10pt;
-	float: right;
 	width: 400px;
 	height: 150px;
 	background: rgba(0, 0, 0, 0.7);
 	border: 2px solid #bbbbbb;
 	border-radius: 3px;
-	position: relative;
+	position: absolute;
 	transition: 0.25s all ease-out;
 	padding: 5px;
 	overflow-y: scroll;
+	right: 0;
+	bottom: 0;
 
 }
 

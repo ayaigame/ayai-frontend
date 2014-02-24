@@ -1,89 +1,98 @@
-div#char-window {
-  background: rgba(0, 0, 0, 0.7);
-  border: 2px solid #bbbbbb;
-  z-index: 50;
-  position: absolute;
-  right: 500px;
-  bottom: 60px;
-  transition: opacity 0.25s ease-out;
-  opacity: 0;
-  text-align: center; }
-  div#char-window div#container {
-    float: left;
-    width: 550px;
-    min-height: 600px; }
-  div#char-window ul {
-    margin: 0;
+div#char-window div#container {
+  float: left;
+  width: 550px;
+  min-height: 600px; }
+div#char-window ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  height: auto; }
+  div#char-window ul li {
     padding: 0;
     list-style-type: none;
-    height: auto; }
-    div#char-window ul li {
-      padding: 0;
-      list-style-type: none;
-      margin: 5px; }
-  div#char-window ul.slots li {
-    border-radius: 3px;
-    background: rgba(0, 0, 0, 0.6);
-    border: 1px solid #bbbbbb;
-    width: 40px;
-    height: 40px; }
-  div#char-window span.title {
-    color: White;
-    text-align: center; }
-  div#char-window div#container > div {
-    float: left;
-    padding: 10px; }
-  div#char-window div#equipment {
+    margin: 5px; }
+div#char-window ul.slots li {
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid #bbbbbb;
+  width: 40px;
+  height: 40px; }
+div#char-window ul.slots li:hover {
+  box-shadow: inset 0px 0px 1px 1px  white; }
+div#char-window ul.slots li.over {
+  transition: all 0.1s linear;
+  box-shadow: 0px 0px 7px 2px aliceblue; }
+div#char-window span.title {
+  color: White;
+  text-align: center; }
+div#char-window div#container > div {
+  float: left;
+  padding: 10px; }
+div#char-window div#equipment {
+  position: relative;
+  width: 275px;
+  height: 300px;
+  background: url("../assets/sprites/guy/guy.png") no-repeat scroll center center; }
+  div#char-window div#equipment div#slots {
     position: relative;
-    width: 275px;
-    height: 300px;
-    background: url("../assets/sprites/guy/guy.png") no-repeat scroll center center; }
-    div#char-window div#equipment div#slots {
-      position: relative;
-      float: left;
-      width: 240px;
-      height: 250px;
-      left: 20px;
-      top: 17px; }
-      div#char-window div#equipment div#slots ul.slots {
-        position: absolute; }
-      div#char-window div#equipment div#slots ul.slots.top, div#char-window div#equipment div#slots ul.slots.bottom {
-        left: 50%; }
-        div#char-window div#equipment div#slots ul.slots.top li, div#char-window div#equipment div#slots ul.slots.bottom li {
-          float: left; }
-      div#char-window div#equipment div#slots ul.slots.left, div#char-window div#equipment div#slots ul.slots.right {
-        top: 25px; }
-      div#char-window div#equipment div#slots ul.slots.bottom, div#char-window div#equipment div#slots ul.slots.top {
-        left: 68px; }
-  div#char-window div#statistics {
-    border-left: 1px solid white;
-    width: 220px;
-    height: 300px; }
-  div#char-window div#inventory {
-    border-top: 1px solid white;
-    margin-top: 5px;
-    width: 530px;
-    min-height: 300px; }
-    div#char-window div#inventory ul.categories li {
-      float: left;
-      position: relative;
-      display: block; }
-      div#char-window div#inventory ul.categories li span.title {
+    float: left;
+    width: 240px;
+    height: 250px;
+    left: 20px;
+    top: 17px; }
+    div#char-window div#equipment div#slots ul.slots {
+      position: absolute; }
+    div#char-window div#equipment div#slots ul.slots.top, div#char-window div#equipment div#slots ul.slots.bottom {
+      left: 50%; }
+      div#char-window div#equipment div#slots ul.slots.top li, div#char-window div#equipment div#slots ul.slots.bottom li {
         float: left; }
-    div#char-window div#inventory ul.slots {
+    div#char-window div#equipment div#slots ul.slots.left, div#char-window div#equipment div#slots ul.slots.right {
+      top: 25px; }
+    div#char-window div#equipment div#slots ul.slots.bottom, div#char-window div#equipment div#slots ul.slots.top {
+      left: 68px; }
+div#char-window div#statistics {
+  border-left: 1px solid white;
+  width: 220px;
+  height: 300px; }
+div#char-window div#inventory {
+  border-top: 1px solid white;
+  margin-top: 5px;
+  width: 530px;
+  min-height: 300px; }
+  div#char-window div#inventory ul.categories li {
+    float: left;
+    position: relative;
+    display: block; }
+    div#char-window div#inventory ul.categories li span.title {
       float: left; }
-      div#char-window div#inventory ul.slots li {
+  div#char-window div#inventory ul.slots {
+    float: left; }
+    div#char-window div#inventory ul.slots li {
+      float: left;
+      color: White;
+      margin: 2px; }
+      div#char-window div#inventory ul.slots li div.item {
         float: left;
-        color: White;
-        margin: 2px; }
-        div#char-window div#inventory ul.slots li div.item {
-          float: left;
-          width: 40px;
-          height: 40px;
-          background: url("../assets/sprites/ui/itemicons.png") no-repeat; }
-        div#char-window div#inventory ul.slots li div.item-1 {
-          background-scroll: 0 0; }
-
-div#char-window.open {
+        width: 40px;
+        height: 40px;
+        background: url("../assets/sprites/ui/itemicons.png") no-repeat; }
+      div#char-window div#inventory ul.slots li div.item-1 {
+        background-scroll: 0 0; }
+div#char-window div.item-tooltip {
+  width: 190px;
+  height: 150px;
+  background: rgba(0, 0, 0, 0.9);
+  border: 2px solid #bbbbbb;
+  z-index: -10;
+  position: absolute;
   transition: opacity 0.25s ease-out;
+  opacity: 0;
+  padding: 5px; }
+  div#char-window div.item-tooltip span.title {
+    text-align: center;
+    color: White; }
+  div#char-window div.item-tooltip span.title.rare {
+    color: cornflowerblue; }
+div#char-window div.item-tooltip.open {
+  z-index: 100;
   opacity: 1; }

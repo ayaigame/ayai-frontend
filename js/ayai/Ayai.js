@@ -82,6 +82,7 @@ this.ayai = this.ayai || {};
         ayai.questLog = new ayai.QuestLog();
 
         ayai.inputHandler = new ayai.InputHandler();
+        ayai.questLog = new ayai.QuestLog();
 
         ayai.renderMap(ayai.currentTileset, ayai.currentTilemap);
 

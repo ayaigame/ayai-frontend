@@ -1,7 +1,6 @@
-this.ayai = this.ayai || {};
-(function() {
+define("MessageReceiver", function() {
 
-    var MessageReceiver = function(msg) {
+    function MessageReceiver(msg) {
        // constructor
        this.parseMessage(msg);
     };
@@ -29,5 +28,6 @@ this.ayai = this.ayai || {};
     //  ===============
 
 
+    return MessageReceiver;
 
-ayai.MessageReceiver = MessageReceiver; }(window));
+ });

@@ -1,6 +1,6 @@
-this.ayai = this.ayai || {};
-(function() {
-	var Inventory = function() {
+define("Inventory", function() {
+
+	function Inventory() {
 		/*$('div#char-window').draggable({
 
 			drag: function() {
@@ -63,5 +63,7 @@ this.ayai = this.ayai || {};
 			});
 		}
 	};
-	ayai.Inventory = Inventory;
-}(window));
+
+	return Inventory;
+
+});

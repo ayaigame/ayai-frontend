@@ -1,13 +1,15 @@
-this.ayai = this.ayai || {};
-(function() {
-    var StopMovementMessage = function(id) {
+define("StopMovementMessage", function() {
+
+      var p = StopMovementMessage.prototype;
+
+    function StopMovementMessage(id) {
         this.data = {
           type: "move",
           start: false,
 		  id: id
         };
     };
-    var p = StopMovementMessage.prototype;
+
 
 
    //  public properties 
@@ -23,5 +25,6 @@ this.ayai = this.ayai || {};
     //  private methods
     //  ===============
 
+    return StopMovementMessage;
 
-ayai.StopMovementMessage = StopMovementMessage; }(window));
+});

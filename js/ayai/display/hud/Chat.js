@@ -1,8 +1,6 @@
-this.ayai = this.ayai || {};
-(function() {
+define("Chat", function() {
 
-	var Chat = function() {
-
+	function Chat() {
 		p.isEditBoxOpen = false;
 		p.data = {};
 
@@ -43,4 +41,5 @@ this.ayai = this.ayai || {};
 
 	}
 
-ayai.Chat = Chat;} (window));
+	return Chat;
+});

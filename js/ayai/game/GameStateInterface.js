@@ -1,16 +1,20 @@
-this.ayai = this.ayai || {};
-(function() {
+define("GameStateInterface", ["Character", "StartMovementMessage", "StopMovementMessage", "AttackMessage"], 
+    function(Character, StartMovementMessage, StopMovementMessage, AttackMessage) {
     //  constructor
     //  ===========
-    var GameStateInterface = function() {
+    var p = GameStateInterface.prototype;
+
+    function GameStateInterface(game, connection, characterId) {
         p.isUp = false;
         p.isDown = false;
         p.isRight = false;
         p.isLeft = false;
         p.isLoaded = false;
-
+        p.game = game;
+        p.connection = connection;
+        p.characterId = characterId;
     };
-    var p = GameStateInterface.prototype;
+    
     //  public properties 
     //  =================     
     p.isUp = null;
@@ -26,11 +30,7 @@ this.ayai = this.ayai || {};
 
     //  public methods
     //  ==============
-    p.update = function(renderer) {
-        //requestAnimFrame(animate);
-        renderer.render(ayai.stage);
-        kd.tick();
-    }
+
     p.sendMovement = function() {
         var vertical = null;
         if (p.isUp && !p.isDown) {
@@ -45,17 +45,18 @@ this.ayai = this.ayai || {};
             horizontal = false;
         }
         if (vertical != null || horizontal != null) {
-            var message = new ayai.StartMovementMessage(ayai.characterId, vertical, horizontal);
-            var sender = new ayai.MessageSender(message);
+            var message = new StartMovementMessage(p.characterId, vertical, horizontal);
+            p.connection.send(message.data);
         } else {
-            var message = new ayai.StopMovementMessage(ayai.characterId);
-            var sender = new ayai.MessageSender(message);
+            var message = new StopMovementMessage(p.characterId);
+            p.connection.send(message.data);
         }
-    }
+    };
+
     p.sendAttack = function() {
-        var message = new ayai.AttackMessage();
-        var sender = new ayai.MessageSender(message);
-    }
+        var message = new AttackMessage();
+        p.connection.send(message.data);
+    };
 
 
 
@@ -63,7 +64,7 @@ this.ayai = this.ayai || {};
         var newEntities = json.others;
         var player = this.entities[json.you.id];
         player.syncPlayer(json.you);
-        ayai.inventory.update(json.you.inventory);
+        //  ayai.inventory.update(json.you.inventory);
         for (var index in newEntities) {
             var characterJson = newEntities[index];
             if (this.entities[characterJson.id] == null) {
@@ -80,28 +81,34 @@ this.ayai = this.ayai || {};
                     console.log("should remove entity "entity.id);
                 }
             }*/
-    }
+    };
+
     p.addCharacter = function(json) {
-        var newChar = new ayai.Character(json);
+        var newChar = new Character(json);
+        newChar.buildSprite(p.game);
         this.entities[json.id] = newChar;
         return newChar;
-    }
+    };
+
     p.removeCharacter = function(e) {
         e.removeFromStage();
         delete this.entities[e.id.toString()];
-    }
+    };
+
     p.clearEntities = function() {
         for (var i = 0; i < this.entities.length; i++) {
             this.entities[i].removeFromStage();
         }
         this.entities = {};
-    }
+    };
+
     p.sendInputToGameState = function(inputEvent) {
         if (Window.verboseLogger) {
             console.log("got input");
         }
         this.handleKeyEventsInputEvent(inputEvent);
-    }
+    };
+
     p.handleKeyEventsInputEvent = function(ev) {
         if (Window.verboseLogger) {
             console.log("GOT AN EVENT");
@@ -188,8 +195,9 @@ this.ayai = this.ayai || {};
                     break;
             }
         }
-    }
+    };
     //  private methods
     //  ===============
-    ayai.GameStateInterface = GameStateInterface;
-}(window));
+
+    return GameStateInterface;
+});

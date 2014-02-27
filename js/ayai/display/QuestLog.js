@@ -1,8 +1,7 @@
-this.ayai = this.ayai || {};
-(function() {
+define("QuestLog", function() {
 
-	var QuestLog = function() {
 
+		function QuestLog() {
 		/*$('div#char-window').draggable({
 
 			drag: function() {
@@ -47,4 +46,6 @@ this.ayai = this.ayai || {};
 	};
 
 
-	ayai.QuestLog = QuestLog;}(window));
+	return QuestLog;
+
+});

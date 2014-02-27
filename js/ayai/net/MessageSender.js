@@ -1,28 +1,28 @@
-this.ayai = this.ayai || {};
-(function() {
+define("MessageSender", function () {
 
-    var MessageSender = function(msg) {
-      // constructor
-      this.encodeMessage(msg);
-    };
     var p = MessageSender.prototype;
+
+
+    function MessageSender(WebSocket, msg) {
+      // constructor
+      p.encodeMessage(WebSocket, msg);
+    };
 
 
    //  public properties 
    //  =================     
-   p.message = null;
 
     //  public methods
     //  ==============
 
 
 
-    p.encodeMessage = function(msg) {
-      this.message = JSON.stringify(msg.data);
+    p.encodeMessage = function(WebSocket, msg) {
 
+      var message = JSON.stringify(msg);
       //other input checking and stuff
-      
-      ayai.WebSocket.send(this.message);
+
+      WebSocket.send(message);
       trace(this.message);
 
 
@@ -32,5 +32,6 @@ this.ayai = this.ayai || {};
     //  ===============
 
 
+    return MessageSender;
 
-ayai.MessageSender = MessageSender; }(window));
+ });

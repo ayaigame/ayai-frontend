@@ -1,6 +1,6 @@
-this.ayai = this.ayai || {};
-(function() {
-    var AttackMessage = function() {
+define("AttackMessage", function() {
+
+    function AttackMessage() {
         // constructor
         this.data = {
             type: "attack"
@@ -23,4 +23,5 @@ this.ayai = this.ayai || {};
     //  ===============
 
 
-ayai.AttackMessage = AttackMessage; }(window));
+    return AttackMessage;
+});

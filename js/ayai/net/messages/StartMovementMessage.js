@@ -1,6 +1,8 @@
-this.ayai = this.ayai || {};
-(function() {
-    var StartMovementMessage = function(id, isUp, isLeft) {
+define("StartMovementMessage", function() {
+    
+    var p = StartMovementMessage.prototype;
+
+    function StartMovementMessage(id, isUp, isLeft) {
         var direction;
 
         if(isUp == null) {
@@ -39,7 +41,7 @@ this.ayai = this.ayai || {};
           id: id
         };
     };
-    var p = StartMovementMessage.prototype;
+
 
 
    //  public properties 
@@ -56,4 +58,6 @@ this.ayai = this.ayai || {};
     //  ===============
 
 
-ayai.StartMovementMessage = StartMovementMessage; }(window));
+    return StartMovementMessage;
+
+});

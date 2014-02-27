@@ -1,45 +1,45 @@
-this.ayai = this.ayai || {};
-(function() {
+define("Connection", ["MessageSender", "MessageReceiver"], function(MessageSender, MessageReceiver) {
 
-    var Connection = function(url) {
+    var p = Connection.prototype;
+
+    function Connection(url) {
        // constructor
-       this.url = url;
+       p.url = url;
 
     };
-    var p = Connection.prototype;
 
    //  public properties 
    //  =================     
    
     p.url = null;
-   p.readQueue = [];
+    p.WebSocket = null;
 
     //  public methods
     //  ==============
 
     p.connect = function() {
-      var self = this;
-      ayai.WebSocket = new WebSocket(this.url);
-      ayai.WebSocket.onopen = function(evt){
+      console.log("connecting");
+      p.WebSocket = new WebSocket(p.url);
+      p.WebSocket.onopen = function(evt){
+
           var msg = {'type': 'init'};
-          this.send(JSON.stringify(msg));
+          p.send(msg);
 
       }
-      ayai.WebSocket.onmessage = function(evt){
-        var receiver = new ayai.MessageReceiver(evt.data);
+      p.WebSocket.onmessage = function(evt){
+        var receiver = new MessageReceiver(evt.data);
         document.dispatchEvent(receiver.createEvent());
       }
-      ayai.WebSocket.onclose = function(evt){}
-    }
+      p.WebSocket.onclose = function(evt){}
+    };
 
    p.send = function(msg) {
-      var sender = new ayai.MessageSender(msg);
-
-    }
+      var sender = new MessageSender(p.WebSocket, msg);
+    };
 
     //  private methods
     //  ===============
 
+    return Connection;
 
-
-ayai.Connection = Connection; }(window));
+});

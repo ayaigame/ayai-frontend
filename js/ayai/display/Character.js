@@ -33,6 +33,10 @@ this.ayai = this.ayai || {};
         this.sprite.animations.add('walkright', [6, 7, 8]);
         this.sprite.animations.add('walkup', [9, 10, 11]);
 
+        var style = { font: "14px Arial", fill: "#ffffff", align: "center" };
+
+        this.namePlate = ayai.game.add.text(this.sprite.x + 16, this.sprite.y - 16, this.name, style);
+
         //  And this starts the animation playing by using its key ("static")
         //  1 is the frame rate (1fps)
         //  true means it will loop when it finishes
@@ -72,9 +76,14 @@ this.ayai = this.ayai || {};
         this.name = e.name
         this.level = e.level
         this.experience = e.experience
+        this.health = e.health;
+        this.Mana = e.Mana;
         var healthPercent = Math.floor((e.health.currHealth / e.health.maximumHealth) * 100) + "%";
         var manaPercent = Math.floor((e.Mana.currMana / e.Mana.maximumMana) * 100) + "%";
 
+        this.namePlate.x = this.sprite.x;
+        this.namePlate.y = this.sprite.y - 24;
+        this.namePlate.content = this.name;
 
         $("ul.unitframes li#player span.name").html(this.name);
         $("ul.unitframes li#player span.level").html(this.level);
@@ -87,33 +96,11 @@ this.ayai = this.ayai || {};
         $("ul.unitframes li#player div.mana span.percent").html(manaPercent);
         $("ul.unitframes li#player div.mana div.bar").css("width", manaPercent);
 
+        this.targetEntity(e);
 
     }
 
     p.targetEntity = function(e) {
-
-
-    }
-
-    p.targetVitals = function() {
-
-
-    }
-
-    p.setAnimation = function(animationName) {
-        this.sprite.animations.play(animationName, 15, true);
-
-    }
-
-    p.syncCharacter = function(e) {
-        this.sprite.x = e.position.x;
-        this.sprite.y = e.position.y;
-        this.health.currHealth = e.health.currHealth;
-        this.health.maximumHealth = e.health.maximumHealth;
-        this.Mana.currMana = e.Mana.currMana;
-        this.Mana.maximumMana = e.Mana.maximumMana;
-        this.setAnimation(e.action);
-
         if(Window.target != null) {
 
             if(Window.target.id == this.id) {
@@ -133,6 +120,31 @@ this.ayai = this.ayai || {};
                 $("ul.unitframes li#target div.mana div.bar").css("width", targetManaPercent);
             }
         }
+
+    }
+
+    p.targetVitals = function() {
+
+
+    }
+
+    p.setAnimation = function(animationName) {
+        this.sprite.animations.play(animationName, 15, true);
+
+    }
+
+    p.syncCharacter = function(e) {
+        this.sprite.x = e.position.x;
+        this.sprite.y = e.position.y;
+        this.health = e.health;
+        this.Mana = e.Mana;
+        this.setAnimation(e.action);
+
+        this.namePlate.x = this.sprite.x;
+        this.namePlate.y = this.sprite.y - 24;
+        this.namePlate.content = this.name;
+
+        this.targetEntity(e);
 
     }
 

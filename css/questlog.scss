@@ -1,3 +1,7 @@
+$width: 550px;
+$height: 600px;
+$padding: 10px;
+
 
     div#questlog {
 
@@ -64,8 +68,19 @@
 
 div#questList {
     height:70%;
-    width:50%;
+    width:80%;
     clear:both;
+    color:White;
+    ul {
+        margin:0;
+        padding:10px 10px;
+    }
+    li {
+        list-style:none;
+        cursor:pointer;
+        padding: 10px 0px;
+        text-align:left;
+    }
 }
 
 

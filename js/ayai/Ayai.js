@@ -5,7 +5,7 @@ this.ayai = this.ayai || {};
         ayai.game = this;
         ayai.gameLoaded = false;
         ayai.verboseLogger = false;
-        ayai.connection = new ayai.Connection("ws://192.168.100.10/ws");
+        ayai.connection = new ayai.Connection("ws://localhost/ws");
 
         ayai.uiElements = [];
 

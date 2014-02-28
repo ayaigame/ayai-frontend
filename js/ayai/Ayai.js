@@ -7,7 +7,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
     function Ayai() {
 
         ayai.gameLoaded = false;
-        ayai.verboseLogger = true; 
+        ayai.verboseLogger = false; 
         ayai.connection = new Connection("ws://192.168.100.10/ws");
 
         ayai.TILE_WIDTH = 32;
@@ -26,50 +26,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
         document.addEventListener("msgReceived", ayai._messageReceived);
     };
 
-    ayai._messageReceived = function(evt) {
-
-        if (ayai.verboseLogger)
-            console.log(evt.detail.msg);
-
-        switch (evt.detail.msg.type) {
-            case "id":
-                console.log(evt.detail.msg);
-                console.log("connection established");
-                ayai.game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.WebGL, '', {
-                    preload: ayai.preload,
-                    create: ayai.create,
-                    update: update,
-                    render: render
-                });
-                ayai.characterId = evt.detail.msg.id;
-                ayai.startingX = evt.detail.msg.x;
-                ayai.startingY = evt.detail.msg.y;
-                ayai.tileset = "/assets/tiles/" + evt.detail.msg.tilesets[0].image;
-                ayai.tilemap = "/assets/maps/" + evt.detail.msg.tilemap;
-                ayai.currentTileset = 'tileset';
-                ayai.currentTilemap = 'tilemap';
-                break;
-
-            case "map":
-                ayai.tileset2 = "/assets/tiles/" + evt.detail.msg.tilesets[0].image;
-                ayai.tilemap2 = "/assets/maps/" + evt.detail.msg.tilemap;
-                ayai.game.load.tilemap('tilemap', ayai.tilemap2, null, Phaser.Tilemap.TILED_JSON);
-                ayai.game.load.tileset('tileset', ayai.tileset2, ayai.TILE_WIDTH, ayai.TILE_HEIGHT);
-                ayai.game.load.start();
-                ayai.gameLoaded = false;
-                ayai.game.load.onLoadComplete.dispatch = function() {
-                    ayai.currentTileset = 'tileset'
-                    ayai.currentTilemap = 'tilemap';
-                    ayai.renderMap(ayai.currentTileset, ayai.currentTilemap);
-                }
-                break;
-
-            case "update":
-                if (ayai.gameLoaded)
-                    ayai.gameState.updateEntities(evt.detail.msg);
-                break;
-        }
-    };
+    
 
     ayai.renderMap = function(tileset, tilemap, options) {
 
@@ -184,6 +141,57 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
             }
             newnpc.animations.play('facedown', 1, true);
         });
+    };
+
+    ayai._messageReceived = function(evt) {
+
+        if (ayai.verboseLogger)
+            console.log(evt.detail.msg);
+
+        switch (evt.detail.msg.type) {
+            case "id":
+                console.log(evt.detail.msg);
+                console.log("connection established");
+                ayai.game = new Phaser.Game(window.innerWidth, window.innerHeight, Phaser.WebGL, '', {
+                    preload: ayai.preload,
+                    create: ayai.create,
+                    update: update,
+                    render: render
+                });
+                ayai.characterId = evt.detail.msg.id;
+                ayai.startingX = evt.detail.msg.x;
+                ayai.startingY = evt.detail.msg.y;
+                ayai.tileset = "/assets/tiles/" + evt.detail.msg.tilesets[0].image;
+                ayai.tilemap = "/assets/maps/" + evt.detail.msg.tilemap;
+                ayai.currentTileset = 'tileset';
+                ayai.currentTilemap = 'tilemap';
+                break;
+
+            case "map":
+                ayai.tileset2 = "/assets/tiles/" + evt.detail.msg.tilesets[0].image;
+                ayai.tilemap2 = "/assets/maps/" + evt.detail.msg.tilemap;
+                ayai.game.load.tilemap('tilemap', ayai.tilemap2, null, Phaser.Tilemap.TILED_JSON);
+                ayai.game.load.tileset('tileset', ayai.tileset2, ayai.TILE_WIDTH, ayai.TILE_HEIGHT);
+                ayai.game.load.start();
+                ayai.gameLoaded = false;
+                ayai.game.load.onLoadComplete.dispatch = function() {
+                    ayai.currentTileset = 'tileset'
+                    ayai.currentTilemap = 'tilemap';
+                    ayai.renderMap(ayai.currentTileset, ayai.currentTilemap);
+                }
+                break;
+
+            case "update":
+                if (ayai.gameLoaded)
+                    ayai.gameState.updateEntities(evt.detail.msg);
+                break;
+
+            case "disconnect":
+                console.log(evt.detail.msg);
+                break;
+
+
+        }
     };
 
     console.log(ayai);

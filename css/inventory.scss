@@ -24,6 +24,7 @@ div#char-window {
     }
 
     ul.slots li {
+        cursor: pointer;
         border-radius: 3px;
         background: rgba(0, 0, 0, 0.6);
         border: 1px solid #bbbbbb;
@@ -118,7 +119,7 @@ div#char-window {
             position: relative;
             display: block;
 
-            span.title {
+            >span.title {
                 float: left;
             }
         }
@@ -136,15 +137,8 @@ div#char-window {
                     float: left;
                     width: 40px;
                     height: 40px;
-                    background: url("../assets/sprites/ui/itemicons.png")  no-repeat;
 
                 }
-
-                div.item-1 {
-
-                    background-scroll: 0 0;
-                }
-                
             }
         }
 
@@ -157,20 +151,21 @@ div#char-window {
         background: rgba(0, 0, 0, 0.9);
         border: 2px solid #bbbbbb;
         z-index: -10;
-        position: absolute;
-        transition: opacity 0.25s ease-out;
+        position: fixed;
         opacity: 0;
         padding: 5px;
 
-        span.title {
+        span {
 
-            text-align: center;
+            float: left;
             color: White;
         }
 
         span.title.rare {
             color: cornflowerblue;
         }
+
+
                     
     }
 

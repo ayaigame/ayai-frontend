@@ -124,7 +124,7 @@ define("Character", ["phaser"], function(Phaser) {
     p.targetEntity = function(e) {
         if(Window.target != null) {
 
-            if(Window.target.id == p.id) {
+            if(Window.target.id == e.id) {
 
                 var targetHealthPercent = Math.floor((Window.target.health.currHealth / Window.target.health.maximumHealth) * 100) + "%";
                 var targetManaPercent = Math.floor((Window.target.Mana.currMana / Window.target.Mana.maximumMana) * 100) + "%";

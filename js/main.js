@@ -28,6 +28,6 @@ window.onload = function() {
 	});
 
 	require(["Ayai"], function(Ayai) {
-		window.Ayai = new Ayai();
+		new Ayai();
 	});
 };

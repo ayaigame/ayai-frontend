@@ -12,6 +12,7 @@ div#char-window ul {
     list-style-type: none;
     margin: 5px; }
 div#char-window ul.slots li {
+  cursor: pointer;
   border-radius: 3px;
   background: rgba(0, 0, 0, 0.6);
   border: 1px solid #bbbbbb;
@@ -63,7 +64,7 @@ div#char-window div#inventory {
     float: left;
     position: relative;
     display: block; }
-    div#char-window div#inventory ul.categories li span.title {
+    div#char-window div#inventory ul.categories li > span.title {
       float: left; }
   div#char-window div#inventory ul.slots {
     float: left; }
@@ -74,22 +75,18 @@ div#char-window div#inventory {
       div#char-window div#inventory ul.slots li div.item {
         float: left;
         width: 40px;
-        height: 40px;
-        background: url("../assets/sprites/ui/itemicons.png") no-repeat; }
-      div#char-window div#inventory ul.slots li div.item-1 {
-        background-scroll: 0 0; }
+        height: 40px; }
 div#char-window div.item-tooltip {
   width: 190px;
   height: 150px;
   background: rgba(0, 0, 0, 0.9);
   border: 2px solid #bbbbbb;
   z-index: -10;
-  position: absolute;
-  transition: opacity 0.25s ease-out;
+  position: fixed;
   opacity: 0;
   padding: 5px; }
-  div#char-window div.item-tooltip span.title {
-    text-align: center;
+  div#char-window div.item-tooltip span {
+    float: left;
     color: White; }
   div#char-window div.item-tooltip span.title.rare {
     color: cornflowerblue; }

@@ -1,16 +1,80 @@
 define("Inventory", function() {
 
 	function Inventory() {
-		/*$('div#char-window').draggable({
 
-			drag: function() {
-			
-				$('div#char-window').width($('div#char-window div#container').width());	
-				$('div#char-window').height($('div#char-window div#container').height());	
-			}
 
-		});*/
-		$("div#equipment ul.slots li").droppable({
+		p.draggingItem = false;
+		p.isOpen = false;
+		p.previousJson = "";
+	};
+
+	var p = Inventory.prototype;
+	p.toggle = function() {
+
+		p.items = ayai.items;
+		p.equipment = ayai.equipment;
+
+		if(!p.isOpen) {
+			p.renderEquipment();
+			p.renderInventory();
+			p.registerTooltipMouseovers();
+			p.isOpen = true;
+		}
+
+		else 
+			p.isOpen = false;
+
+		$('div#char-window').toggleClass("open");
+
+	};
+
+	p.renderEquipment = function() {
+
+
+		Handlebars.registerHelper('isWeapon', function(block) {
+			if(this.itemType.type == "weapon")
+				return block.fn(this);
+		});
+
+		Handlebars.registerHelper('isArmor', function(block) {
+			if(this.itemType.type == "helmet" || this.itemType.type == "armor") // wat? armor types?
+				return block.fn(this);
+		});
+
+        var tplSource = $("#equipmentItem-template").html();
+        var template = Handlebars.compile(tplSource);
+		var weapon1 = template(p.equipment.weapon1);
+		$("li#weapon1").html(weapon1);
+
+
+
+	};
+
+
+	p.renderInventory = function() {
+
+
+		Handlebars.registerHelper('isWeapon', function(block) {
+			if(this.itemType.type == "weapon")
+				return block.fn(this);
+		});
+
+		Handlebars.registerHelper('isArmor', function(block) {
+			if(this.itemType.type == "helmet" || this.itemType.type == "armor") // wat? armor types?
+				return block.fn(this);
+		});
+
+        var tplSource = $("#inventoryItemsView-template").html();
+        var template = Handlebars.compile(tplSource);
+		var html = template(p.items);
+		$("div#items").html(html);
+
+		$("div#char-window ul.slots li div.item").draggable({
+
+				revert: 'invalid'
+		});
+
+		$("div#char-window ul.slots li").droppable({
 			drag: function(event, ui) {},
 			over: function(event, ui) {
 				$(this).addClass("over");
@@ -22,48 +86,40 @@ define("Inventory", function() {
 				$(this).removeClass("over");
 			}
 		});
-		$("div#inventory ul.slots li").droppable();
-		p.draggingItem = false;
-		p.isOpen = false;
-		p.previousJson = "";
-	};
 
-	var p = Inventory.prototype;
-	p.toggle = function() {
-		$('div#char-window').toggleClass("open");
-	};
-	
-	p.update = function(items) {
-		 if (this.previousJson == "") {
-			this.previousJson = items;
-			for (var i = 0; i < items.length; i++) {
-				var slot = $("div#char-window div#inventory ul.slots").find("li")[i];
-				$(slot).html("<div class='item item-1'></div>");
-				$("div#char-window").append("<div class='item-tooltip'><span class='title'>" + items[i].name + "</span></div>");
+	}
+
+	p.registerTooltipMouseovers = function() {
+
+		var tooltip = null;
+		$("div#char-window ul.slots li").mouseover(function(e) {
+
+			tooltip = $(this).children("div.item-tooltip");
+
+
+			if (!($("div.item").hasClass("ui-draggable-dragging"))) {
+				$(tooltip).addClass("open");
 			}
-			$("div#inventory ul.slots li div.item").draggable({
-				snap: "div#equipment ul.slots li, div#inventory ul",
-				snapMode: 'inner',
-				revert: 'invalid'
-			});
-			$("div#inventory ul.slots li div.item").mouseover(function(e) {
-				if (!($("div.item").hasClass("ui-draggable-dragging"))) {
-					$("div.item-tooltip").addClass("open");
+			
+			$(document).mousemove(function(ev) {
+				if ($(tooltip).hasClass("open")) {
+					$(tooltip).css({
+						left: ev.clientX - 215 ,
+						top: ev.clientY + 5
+					});
 				}
-				$(document).mousemove(function(ev) {
-					if ($("div.item-tooltip").hasClass("open")) {
-						$('div.item-tooltip').css({
-							left: ev.pageX - 60,
-							top: ev.pageY - 20
-						});
-					}	
-				});
-			});
-			$("div#inventory ul.slots li div.item").mouseout(function(e) {
-				$("div.item-tooltip").removeClass("open");
-				$(document).mousemove(function(ev) {});
-			});
-		}
+			});	
+		});
+
+		
+		$("div#char-window ul.slots li").mouseout(function(ev) {
+			$(tooltip).removeClass("open");
+			$(tooltip).css({
+						left: ev.clientX - 1500 ,
+						top: ev.clientY - 1500
+					});
+			$(document).mousemove(function(ev) {});
+		});
 	};
 
 	return Inventory;

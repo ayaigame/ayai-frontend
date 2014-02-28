@@ -10,7 +10,7 @@ define("QuestLog", function() {
 
 	    var p  = QuestLog.prototype;
 
-        p.questList = [{"title":"My Awesome Quest", objectives:[{"name":"Kill the Dragon lets break this with a really long line", totalComplete:0, total:1}], "story":"Smaug the dragon must be stopped. You must help bilbo on his journey to smaug and his misadventures on the way. He is an expert theif according to Gandalf so he will come im handy when we need to sneak around."}, {"title":"My Other quest", objectives:[{"name":"Kill the Rabbit lets break this with a really long line", totalComplete:0, total:1}], "story":"Smaug the rabbit must be stopped. You must help elmer fudd on his journey to smaug and his misadventures on the way. He is an expert theif according to Gandalf so he will come im handy when we need to sneak around."}];
+        
     
         
 
@@ -47,7 +47,7 @@ define("QuestLog", function() {
 
 
 	p.toggle = function() {
-        
+        p.questList = Ayai.quests;
         p.renderQuests();
        
       

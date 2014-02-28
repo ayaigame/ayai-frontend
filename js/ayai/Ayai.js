@@ -7,7 +7,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
     function Ayai() {
 
         ayai.gameLoaded = false;
-        ayai.verboseLogger = false; 
+        ayai.verboseLogger = true; 
         ayai.connection = new Connection("ws://192.168.100.10/ws");
 
         ayai.TILE_WIDTH = 32;

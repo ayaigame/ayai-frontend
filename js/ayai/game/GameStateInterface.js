@@ -64,6 +64,8 @@ define("GameStateInterface", ["Character", "StartMovementMessage", "StopMovement
         var newEntities = json.others;
         var player = this.entities[json.you.id];
         player.syncPlayer(json.you);
+        
+        Ayai.quests = json.you.quests;
         //  ayai.inventory.update(json.you.inventory);
         for (var index in newEntities) {
             var characterJson = newEntities[index];

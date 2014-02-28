@@ -32,12 +32,12 @@
       <div id="QuestObjectiveList">
         <ul>
           {{#each objectives}}
-          <li>{{name}} {{totalComplete}} / {{total}}</li>
+          <li>{{name}} {{totalCompleted}} / {{totalNeeded}}</li>
           {{/each}}
         </ul>
         <br/>
         <hr/>
-        <p class="questText">{{story}}</p>
+        <p class="questText">{{description}}</p>
       </div>
     </script>
 

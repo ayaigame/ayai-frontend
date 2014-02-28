@@ -6,26 +6,28 @@ define("Character", ["phaser"], function(Phaser) {
     function Character (json) {
         // constructor
 
-        p.id = json.id;
-        p.name = json.name
-        p.level = json.level
-        p.experience = json.experience
-        p.health = json.health;
-        p.Mana = json.Mana;
+        this.id = json.id;
+        this.name = json.name;
+        this.position = json.position;
+        this.level = json.level;
+        this.experience = json.experience;
+        this.health = json.health;
+        this.Mana = json.Mana;
+
 
     };
 
 
     //  public properties 
     //  =================     
-    p.id = null;
-    p.name = null;
-    p.experience = null;
-    p.level = null;
-    p.sprite = null;
-    p.position = {x: 0, y: 0};
-    p.health = {currHealth : 0, maximumHealth: 0};
-    p.Mana = {currMana : 0, maximumMana: 0}
+    this.id = null;
+    this.name = null;
+    this.experience = null;
+    this.level = null;
+    this.sprite = null;
+    this.position = {x: 0, y: 0};
+    this.health = {currHealth : 0, maximumHealth: 0};
+    this.Mana = {currMana : 0, maximumMana: 0}
 
     //  private properties
     //  ==================
@@ -36,12 +38,12 @@ define("Character", ["phaser"], function(Phaser) {
 
     p.buildSprite = function(game) {
 
-        p.sprite = game.add.sprite(p.position.x, p.position.y, 'guy');
-        p.sprite.inputEnabled = true;
-        p.sprite.input.pixelPerfect = true;
-        p.sprite.input.useHandCursor = true;
+        this.sprite = game.add.sprite(this.position.x, this.position.y, 'guy');
+        this.sprite.inputEnabled = true;
+        this.sprite.input.pixelPerfect = true;
+        this.sprite.input.useHandCursor = true;
 
-        p.sprite.events.onInputDown.add(function() {
+        this.sprite.events.onInputDown.add(function() {
             
             $("ul.unitframes li#target").css("display", "none");
 
@@ -52,43 +54,43 @@ define("Character", ["phaser"], function(Phaser) {
 
         }, this);
 
-        p.sprite.animations.add('facedown', [1]);
-        p.sprite.animations.add('faceleft', [4]);
-        p.sprite.animations.add('faceright', [7]);
-        p.sprite.animations.add('faceup', [10]);
-        p.sprite.animations.add('walkdown', [0, 1, 2]);
-        p.sprite.animations.add('walkleft', [3, 4, 5]);
-        p.sprite.animations.add('walkright', [6, 7, 8]);
-        p.sprite.animations.add('walkup', [9, 10, 11]);
+        this.sprite.animations.add('facedown', [1]);
+        this.sprite.animations.add('faceleft', [4]);
+        this.sprite.animations.add('faceright', [7]);
+        this.sprite.animations.add('faceup', [10]);
+        this.sprite.animations.add('walkdown', [0, 1, 2]);
+        this.sprite.animations.add('walkleft', [3, 4, 5]);
+        this.sprite.animations.add('walkright', [6, 7, 8]);
+        this.sprite.animations.add('walkup', [9, 10, 11]);
 
         var style = { font: "14px Arial", fill: "#ffffff", align: "center" };
 
-        p.namePlate =  game.add.text(p.sprite.x + 16, p.sprite.y - 16, p.name, style);
+        this.namePlate =  game.add.text(this.sprite.x + 16, this.sprite.y - 16, this.name, style);
 
-        //  And this starts the animation playing by using its key ("static")
+        //  this starts the animation playing by using its key ("facedown")
         //  1 is the frame rate (1fps)
         //  true means it will loop when it finishes
-        p.sprite.animations.play('facedown', 1, true);
+        this.sprite.animations.play('facedown', 1, true);
     }
 
 
     p.syncPlayer = function(e) {
-        p.sprite.x = e.position.x;
-        p.sprite.y = e.position.y;
-        p.name = e.name
-        p.level = e.level
-        p.experience = e.experience
-        p.health = e.health;
-        p.Mana = e.Mana;
+        this.sprite.x = e.position.x;
+        this.sprite.y = e.position.y;
+        this.name = e.name;
+        this.level = e.level;
+        this.experience = e.experience;
+        this.health = e.health;
+        this.Mana = e.Mana;
         var healthPercent = Math.floor((e.health.currHealth / e.health.maximumHealth) * 100) + "%";
         var manaPercent = Math.floor((e.Mana.currMana / e.Mana.maximumMana) * 100) + "%";
 
-        p.namePlate.x = p.sprite.x;
-        p.namePlate.y = p.sprite.y - 24;
-        p.namePlate.content = p.name;
+        this.namePlate.x = this.sprite.x;
+        this.namePlate.y = this.sprite.y - 24;
+        this.namePlate.content = this.name;
 
-        $("ul.unitframes li#player span.name").html(p.name);
-        $("ul.unitframes li#player span.level").html(p.level);
+        $("ul.unitframes li#player span.name").html(e.name);
+        $("ul.unitframes li#player span.level").html(e.level);
 
         $("ul.unitframes li#player div.health span.total").html(e.health.currHealth.toString() + "/" + e.health.maximumHealth.toString());
         $("ul.unitframes li#player div.health span.percent").html(healthPercent);
@@ -101,6 +103,23 @@ define("Character", ["phaser"], function(Phaser) {
         p.targetEntity(e);
 
     }
+
+
+    p.syncCharacter = function(e) {
+        this.sprite.x = e.position.x;
+        this.sprite.y = e.position.y;
+        this.health = e.health;
+        this.Mana = e.Mana;
+        this.setAnimation(e.action);
+
+        this.namePlate.x = this.sprite.x;
+        this.namePlate.y = this.sprite.y - 24;
+        this.namePlate.content = e.name;
+
+        this.targetEntity(e);
+
+    }
+
 
     p.targetEntity = function(e) {
         if(Window.target != null) {
@@ -131,27 +150,12 @@ define("Character", ["phaser"], function(Phaser) {
     }
 
     p.setAnimation = function(animationName) {
-        p.sprite.animations.play(animationName, 15, true);
-
-    }
-
-    p.syncCharacter = function(e) {
-        p.sprite.x = e.position.x;
-        p.sprite.y = e.position.y;
-        p.health = e.health;
-        p.Mana = e.Mana;
-        p.setAnimation(e.action);
-
-        p.namePlate.x = p.sprite.x;
-        p.namePlate.y = p.sprite.y - 24;
-        p.namePlate.content = p.name;
-
-        p.targetEntity(e);
+        this.sprite.animations.play(animationName, 15, true);
 
     }
 
     p.removeFromStage = function() {
-        ayai.stage.removeChild(p.sprite);
+        ayai.stage.removeChild(this.sprite);
     }
 
     //  private methods

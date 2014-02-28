@@ -97,6 +97,35 @@ $(document).ready(function() {
 		}
 	}
 
+	$game = $(".game-screen");
+	$gameClient = $(".game-screen .client");
+	$clientIframe = $("<iframe src='../../debug.html'></iframe>");
+	window.loadGame = function(){
+		$game.css("visibility", "visible");
+		$game.css({
+			opacity: 1,
+			top: 0
+		});
+		
+		$game.bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function() {
+			$game.unbind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd");
+			$gameClient.html($clientIframe);
+			$clientIframe.load(initGame);
+			console.log("TEEHEE");
+		});
+	}
+
+	$(".selection").on("click", ".char", loadGame);
+
+	window.initGame = function(){
+		$gameClient.css("visibility", "visible");
+		$gameClient.css({
+			opacity: 1,
+			top: 0
+		});
+		console.log("WHY");
+	}
+
 	$registerBtn.click(function(evt){
 		evt.preventDefault();
 		var info = {

@@ -36,6 +36,61 @@ body,html,.container,.login-page, table{
 	height:100%;
 }
 
+.game-screen {
+	position: absolute;
+	overflow: hidden;
+	top: -20px;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #333;
+	z-index: 50;
+	visibility: hidden;
+	opacity: 0;
+	transition: top .25s, opacity .25s;
+}
+
+.game-screen .loading, .game-screen table {
+	display:box;
+	box-pack:center;
+	box-align:center;
+	display:-webkit-box;
+	-webkit-box-pack:center;
+	-webkit-box-align:center;
+	top: 0;
+	left: 0;
+	width: 150px;
+	height: 100%;
+	margin: 0 auto;
+	color: #fff;
+	font-size: 24px;
+	font-family: "Overlock", sans-serif;
+}
+
+.game-screen td {
+	text-align: center;
+	vertical-align: middle;
+	width: 150px;
+	color: #fff;
+}
+
+.game-screen .client {
+	position: absolute;
+	visibility: hidden;
+	top: -20px;
+	opacity: 0;
+	width: 100%;
+	height: 100%;
+	transition: top .25s, opacity .25s;
+	z-index: 501;
+}
+
+.game-screen iframe {
+	width: 100%;
+	height: 100%;
+	border: 0;
+}
+
 .modals {
 	position: absolute;
 	top: 0;

@@ -2,7 +2,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
     function(Phaser, InputHandler, Connection, GameStateInterface, Inventory, Chat, QuestLog) {
     // constructor
 
-    var ayai = Ayai.prototype;
+    ayai = Ayai.prototype;
 
     function Ayai() {
 
@@ -111,6 +111,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
                 maximumHealth: 1
             }
         });
+
         ayai.game.world.setBounds(0, 0, mapWidth, mapHeight);
         ayai.game.camera.follow(Window.character.sprite, Phaser.Camera.FOLLOW_TOPDOWN);
         ayai.game.camera.setSize(width, height);
@@ -139,17 +140,17 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
         console.log("Assets loaded. Ready to PLAY!!!111");
 
         // ---- Instantiate JS logic for HTML5 UI Elements
-        //ayai.chat = new ayai.Chat();
-        //ayai.inventory = new ayai.Inventory();
-        //ayai.questLog = new ayai.QuestLog();
-        // -----------------------------------------------
-
         ayai.inventory = new Inventory();
         ayai.chat = new Chat();
         ayai.questLog = new QuestLog();
+        // -----------------------------------------------
+
+
+        //pass references to everything into the input handler for now. baaaad rob
         ayai.inputHandler = new InputHandler(ayai.game, ayai.gameState, ayai.inventory, ayai.chat, ayai.questLog);
-        console.log(ayai.inputHandler);
+
         ayai.renderMap(ayai.currentTileset, ayai.currentTilemap);
+
         music = ayai.game.add.audio('zelda');
         //music.play();
     }
@@ -167,7 +168,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
             ayai.game.height = height;
             ayai.renderMap(ayai.currentTileset, ayai.currentTilemap);
         }
-    }   
+    }
 
     function placeNpcs() {
         $.get(ayai.tilemap, function(val) {

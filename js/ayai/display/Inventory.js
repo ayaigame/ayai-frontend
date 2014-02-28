@@ -27,10 +27,12 @@ define("Inventory", function() {
 		p.isOpen = false;
 		p.previousJson = "";
 	};
+
 	var p = Inventory.prototype;
 	p.toggle = function() {
 		$('div#char-window').toggleClass("open");
 	};
+	
 	p.update = function(items) {
 		 if (this.previousJson == "") {
 			this.previousJson = items;

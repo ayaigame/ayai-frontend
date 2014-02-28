@@ -1,15 +1,21 @@
-this.ayai = this.ayai || {};
-(function() {
-	var InputHandler = function() {
-		boundKeys = [];
-		upKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.W);
-		downKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.S);
-		leftKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.A);
-		rightKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.D);
-		spaceKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-		iKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.I);
-		lKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.L);
+define("InputHandler", ["phaser", "InputEvent"], function (Phaser, InputEvent) {
+	var p = InputHandler.prototype;
 
+	function InputHandler(game, gameState, inventory, chat, questLog) {
+
+		p.game = game;
+		p.gameState = gameState;
+		p.inventory = inventory;
+		p.chat = chat;
+		p.questLog = questLog;
+		boundKeys = [];
+		upKey = p.game.input.keyboard.addKey(Phaser.Keyboard.W);
+		downKey = p.game.input.keyboard.addKey(Phaser.Keyboard.S);
+		leftKey = p.game.input.keyboard.addKey(Phaser.Keyboard.A);
+		rightKey = p.game.input.keyboard.addKey(Phaser.Keyboard.D);
+		spaceKey = p.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+		iKey = p.game.input.keyboard.addKey(Phaser.Keyboard.I);
+		lKey = p.game.input.keyboard.addKey(Phaser.Keyboard.L);
 		boundKeys.push(upKey);
 		boundKeys.push(downKey);
 		boundKeys.push(leftKey);
@@ -17,75 +23,72 @@ this.ayai = this.ayai || {};
 		boundKeys.push(spaceKey);
 		boundKeys.push(iKey);
 		boundKeys.push(lKey);
-
-		enterKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
-		
+		enterKey = p.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
 		enterKey.onDown.add(function() {
-			if (!ayai.chat.isEditBoxOpen) {
-				ayai.chat.openEditBox();
-				ayai.gameState.sendInputToGameState(new InputEvent("!isUp"));
-				ayai.gameState.sendInputToGameState(new InputEvent("!isRight"));
-				ayai.gameState.sendInputToGameState(new InputEvent("!isLeft"));
-				ayai.gameState.sendInputToGameState(new InputEvent("!isDown"));
+			if (!p.chat.isEditBoxOpen) {
+				p.chat.openEditBox();
+				p.gameState.sendInputToGameState(new InputEvent("!isUp"));
+				p.gameState.sendInputToGameState(new InputEvent("!isRight"));
+				p.gameState.sendInputToGameState(new InputEvent("!isLeft"));
+				p.gameState.sendInputToGameState(new InputEvent("!isDown"));
 				for (var i = 0; i < boundKeys.length; i++) {
-					ayai.game.input.keyboard.removeKey(boundKeys[i].keyCode);
+					p.game.input.keyboard.removeKey(boundKeys[i].keyCode);
 				}
-				ayai.game.input.keyboard.clearCaptures();
+				p.game.input.keyboard.clearCaptures();
 			} else {
-				ayai.chat.send();
-				ayai.chat.closeEditBox();
-				upKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.W);
-				downKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.S);
-				leftKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.A);
-				rightKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.D);
-				spaceKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-				iKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.I);
-				lKey = ayai.game.input.keyboard.addKey(Phaser.Keyboard.L);
-				registerKeyPresses();
+				p.chat.send();
+				p.chat.closeEditBox();
+				upKey = p.game.input.keyboard.addKey(Phaser.Keyboard.W);
+				downKey = p.game.input.keyboard.addKey(Phaser.Keyboard.S);
+				leftKey = p.game.input.keyboard.addKey(Phaser.Keyboard.A);
+				rightKey = p.game.input.keyboard.addKey(Phaser.Keyboard.D);
+				spaceKey = p.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+				iKey = p.game.input.keyboard.addKey(Phaser.Keyboard.I);
+				lKey = p.game.input.keyboard.addKey(Phaser.Keyboard.L);
+				p.registerKeyPresses();
 			}
 		});
-		registerKeyPresses();
+		p.registerKeyPresses();
 	};
-	var p = InputHandler.prototype;
-	p.update = function() {};
+	p.buildKeys = function() {};
+	p.registerKeyPresses = function() {
 
-	function registerKeyPresses() {
 		spaceKey.onDown.add(function() {
-			ayai.gameState.sendAttack();
+			p.gameState.sendAttack();
 		});
 		iKey.onDown.add(function() {
-			ayai.inventory.toggle();
+			p.inventory.toggle();
 		});
 		lKey.onDown.add(function() {
-			ayai.questLog.toggle();
+			p.questLog.toggle();
 		});
 		upKey.onDown.add(function() {
-			ayai.gameState.sendInputToGameState(new InputEvent("isUp"));
+			p.gameState.sendInputToGameState(new InputEvent("isUp"));
 		});
 		rightKey.onDown.add(function() {
-			ayai.gameState.sendInputToGameState(new InputEvent("isRight"));
+			p.gameState.sendInputToGameState(new InputEvent("isRight"));
 		});
 		leftKey.onDown.add(function() {
-			ayai.gameState.sendInputToGameState(new InputEvent("isLeft"));
+			p.gameState.sendInputToGameState(new InputEvent("isLeft"));
 		});
 		downKey.onDown.add(function() {
-			ayai.gameState.sendInputToGameState(new InputEvent("isDown"));
+			p.gameState.sendInputToGameState(new InputEvent("isDown"));
 		});
 		upKey.onUp.add(function() {
-			ayai.gameState.sendInputToGameState(new InputEvent("!isUp"));
+			p.gameState.sendInputToGameState(new InputEvent("!isUp"));
 		});
 		rightKey.onUp.add(function() {
-			ayai.gameState.sendInputToGameState(new InputEvent("!isRight"));
+			p.gameState.sendInputToGameState(new InputEvent("!isRight"));
 		});
 		leftKey.onUp.add(function() {
-			ayai.gameState.sendInputToGameState(new InputEvent("!isLeft"));
+			p.gameState.sendInputToGameState(new InputEvent("!isLeft"));
 		});
 		downKey.onUp.add(function() {
-			ayai.gameState.sendInputToGameState(new InputEvent("!isDown"));
+			p.gameState.sendInputToGameState(new InputEvent("!isDown"));
 		});
-	}
-	ayai.InputHandler = InputHandler;
-}(window));
+	};
+	return InputHandler;
+});
 /*Phaser.Keyboard.A = "A".charCodeAt(0);
 Phaser.Keyboard.B = "B".charCodeAt(0);
 Phaser.Keyboard.C = "C".charCodeAt(0);

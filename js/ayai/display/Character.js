@@ -1,12 +1,44 @@
-this.ayai = this.ayai || {};
-(function() {
-    var Character = function(json) {
+define("Character", ["phaser"], function(Phaser) {
+
+
+    var p = Character.prototype;
+
+    function Character (json) {
         // constructor
 
         this.id = json.id;
         this.name = json.name;
+        this.position = json.position;
         this.level = json.level;
-        this.sprite = ayai.game.add.sprite(json.position.x, json.position.y, 'guy');
+        this.experience = json.experience;
+        this.health = json.health;
+        this.Mana = json.Mana;
+
+
+    };
+
+
+    //  public properties 
+    //  =================     
+    this.id = null;
+    this.name = null;
+    this.experience = null;
+    this.level = null;
+    this.sprite = null;
+    this.position = {x: 0, y: 0};
+    this.health = {currHealth : 0, maximumHealth: 0};
+    this.Mana = {currMana : 0, maximumMana: 0}
+
+    //  private properties
+    //  ==================
+
+
+    //  public methods
+    //  ==============
+
+    p.buildSprite = function(game) {
+
+        this.sprite = game.add.sprite(this.position.x, this.position.y, 'guy');
         this.sprite.inputEnabled = true;
         this.sprite.input.pixelPerfect = true;
         this.sprite.input.useHandCursor = true;
@@ -22,8 +54,6 @@ this.ayai = this.ayai || {};
 
         }, this);
 
-        //ayai.gameState.entitiesLayer.add(this.sprite);
-
         this.sprite.animations.add('facedown', [1]);
         this.sprite.animations.add('faceleft', [4]);
         this.sprite.animations.add('faceright', [7]);
@@ -33,51 +63,34 @@ this.ayai = this.ayai || {};
         this.sprite.animations.add('walkright', [6, 7, 8]);
         this.sprite.animations.add('walkup', [9, 10, 11]);
 
-        //  And this starts the animation playing by using its key ("static")
+        var style = { font: "14px Arial", fill: "#ffffff", align: "center" };
+
+        this.namePlate =  game.add.text(this.sprite.x + 16, this.sprite.y - 16, this.name, style);
+
+        //  this starts the animation playing by using its key ("facedown")
         //  1 is the frame rate (1fps)
         //  true means it will loop when it finishes
         this.sprite.animations.play('facedown', 1, true);
-
-        //this.healthbar = new ayai.HealthBar();
-
-        //this.syncPlayer(json);
-
-    };
-
-    var p = Character.prototype;
-
-
-    //  public properties 
-    //  =================     
-    p.id = null;
-    p.name = null;
-    p.experience = null;
-    p.level = null;
-    p.sprite = null;
-    p.position = {x: 0, y: 0};
-    p.health = {currHealth : 0, maximumHealth: 0};
-    p.Mana = {currMana : 0, maximumMana: 0}
-
-    //  private properties
-    //  ==================
-
-
-    //  public methods
-    //  ==============
+    }
 
 
     p.syncPlayer = function(e) {
         this.sprite.x = e.position.x;
         this.sprite.y = e.position.y;
-        this.name = e.name
-        this.level = e.level
-        this.experience = e.experience
+        this.name = e.name;
+        this.level = e.level;
+        this.experience = e.experience;
+        this.health = e.health;
+        this.Mana = e.Mana;
         var healthPercent = Math.floor((e.health.currHealth / e.health.maximumHealth) * 100) + "%";
         var manaPercent = Math.floor((e.Mana.currMana / e.Mana.maximumMana) * 100) + "%";
 
+        this.namePlate.x = this.sprite.x;
+        this.namePlate.y = this.sprite.y - 24;
+        this.namePlate.content = this.name;
 
-        $("ul.unitframes li#player span.name").html(this.name);
-        $("ul.unitframes li#player span.level").html(this.level);
+        $("ul.unitframes li#player span.name").html(e.name);
+        $("ul.unitframes li#player span.level").html(e.level);
 
         $("ul.unitframes li#player div.health span.total").html(e.health.currHealth.toString() + "/" + e.health.maximumHealth.toString());
         $("ul.unitframes li#player div.health span.percent").html(healthPercent);
@@ -87,36 +100,31 @@ this.ayai = this.ayai || {};
         $("ul.unitframes li#player div.mana span.percent").html(manaPercent);
         $("ul.unitframes li#player div.mana div.bar").css("width", manaPercent);
 
+        p.targetEntity(e);
 
     }
 
-    p.targetEntity = function(e) {
-
-
-    }
-
-    p.targetVitals = function() {
-
-
-    }
-
-    p.setAnimation = function(animationName) {
-        this.sprite.animations.play(animationName, 15, true);
-
-    }
 
     p.syncCharacter = function(e) {
         this.sprite.x = e.position.x;
         this.sprite.y = e.position.y;
-        this.health.currHealth = e.health.currHealth;
-        this.health.maximumHealth = e.health.maximumHealth;
-        this.Mana.currMana = e.Mana.currMana;
-        this.Mana.maximumMana = e.Mana.maximumMana;
+        this.health = e.health;
+        this.Mana = e.Mana;
         this.setAnimation(e.action);
 
+        this.namePlate.x = this.sprite.x;
+        this.namePlate.y = this.sprite.y - 24;
+        this.namePlate.content = e.name;
+
+        this.targetEntity(e);
+
+    }
+
+
+    p.targetEntity = function(e) {
         if(Window.target != null) {
 
-            if(Window.target.id == this.id) {
+            if(Window.target.id == e.id) {
 
                 var targetHealthPercent = Math.floor((Window.target.health.currHealth / Window.target.health.maximumHealth) * 100) + "%";
                 var targetManaPercent = Math.floor((Window.target.Mana.currMana / Window.target.Mana.maximumMana) * 100) + "%";
@@ -136,6 +144,16 @@ this.ayai = this.ayai || {};
 
     }
 
+    p.targetVitals = function() {
+
+
+    }
+
+    p.setAnimation = function(animationName) {
+        this.sprite.animations.play(animationName, 15, true);
+
+    }
+
     p.removeFromStage = function() {
         ayai.stage.removeChild(this.sprite);
     }
@@ -144,5 +162,6 @@ this.ayai = this.ayai || {};
     //  ===============
 
 
+    return Character;
 
-ayai.Character = Character; }(window));
+});

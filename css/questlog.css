@@ -43,8 +43,17 @@ div#questlog {
 
 div#questList {
   height: 70%;
-  width: 50%;
-  clear: both; }
+  width: 80%;
+  clear: both;
+  color: White; }
+  div#questList ul {
+    margin: 0;
+    padding: 10px 10px; }
+  div#questList li {
+    list-style: none;
+    cursor: pointer;
+    padding: 10px 0px;
+    text-align: left; }
 
 .ActiveQuest {
   color: Yellow;

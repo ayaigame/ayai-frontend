@@ -44,8 +44,8 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
                 ayai.characterId = evt.detail.msg.id;
                 ayai.startingX = evt.detail.msg.x;
                 ayai.startingY = evt.detail.msg.y;
-                ayai.tileset = evt.detail.msg.tileset;
-                ayai.tilemap = evt.detail.msg.tilemap;
+                ayai.tileset = "/assets/tiles/" + evt.detail.msg.tilesets[0].image;
+                ayai.tilemap = "/assets/maps/" + evt.detail.msg.tilemap;
                 ayai.currentTileset = 'tileset';
                 ayai.currentTilemap = 'tilemap';
                 break;

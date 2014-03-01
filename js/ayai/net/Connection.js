@@ -8,9 +8,9 @@ define("Connection", ["MessageSender", "MessageReceiver"], function(MessageSende
 
     };
 
-   //  public properties 
-   //  =================     
-   
+   //  public properties
+   //  =================
+
     p.url = null;
     p.WebSocket = null;
 
@@ -22,7 +22,10 @@ define("Connection", ["MessageSender", "MessageReceiver"], function(MessageSende
       p.WebSocket = new WebSocket(p.url);
       p.WebSocket.onopen = function(evt){
 
-          var msg = {'type': 'init', 'name': getCookie("name"), 'token': getCookie("token")};
+          var characterName = getCookie("name");
+          if (characterName == null)
+            characterName = "Ness";
+          var msg = {'type': 'init', 'name': characterName};//, 'token': getCookie("token")};
           p.send(msg);
 
           function getCookie(name) {

@@ -22,7 +22,7 @@ define("Connection", ["MessageSender", "MessageReceiver"], function(MessageSende
       p.WebSocket = new WebSocket(p.url);
       p.WebSocket.onopen = function(evt){
 
-          var msg = {'type': 'init'};
+          var msg = {'type': 'init', 'name': 'Ness'};
           p.send(msg);
 
       }

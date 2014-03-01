@@ -4,8 +4,8 @@ $(document).ready(function() {
 	$registerBtn = $(".register.button");
 	$loginBtn = $(".login.button");
 
-	$emailInput = $(".email-input");
-	$passwordInput = $(".pw-input");
+	$emailInput = $(".login-page .email-input");
+	$passwordInput = $(".login-page .pw-input");
 	$charSelect = $(".selection");
 
 	$searchBar = $(".search input");
@@ -39,14 +39,14 @@ $(document).ready(function() {
 			$(".player-content").css("display", "none");
 			$(".accounts").css("display", "block");
 			$(".admin-content").css("display", "block");
-		} else if (hash == "#logout") {					
+		} else if (hash == "#logout") {
 			$searchBar.fadeOut();
 			$(".login-page").css("display", "block");
 			$(".player-content").css("display", "none");
 			$(".accounts").css("display", "none");
 			$(".admin-content").css("display", "none");
 		} else if (hash == "#settings") {
-			$modalBackground.show();				
+			$modalBackground.show();
 			$modalContainer.css("display","flex");
 			$(".modals .settings").css("display","block");
 		}
@@ -61,7 +61,7 @@ $(document).ready(function() {
 
 	$loginBtn.click(function(evt){
 		evt.preventDefault();
-		
+
 		var info = {
 			email: $emailInput.val(),
 			password: $passwordInput.val()
@@ -76,7 +76,7 @@ $(document).ready(function() {
 				xhr.setRequestHeader("Authorization", hash);
 			},
 			success: function(data) {
-				initAccount(hash);
+				initAccount(data);
 			}
 		});
 
@@ -102,7 +102,7 @@ $(document).ready(function() {
 			opacity: 1,
 			top: 0
 		});
-		
+
 		$game.bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function() {
 			$game.unbind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd");
 			$gameClient.html($clientIframe);
@@ -129,29 +129,31 @@ $(document).ready(function() {
 			password: $passwordInput.val()
 		}
 		$.post("/register", info, function(data){
-			
+
 				var template = templates.characterItem(data);
-			
+
 		});
 	});
 
-	function initAccount(hash) {
+	function initAccount(token) {
 		$(".login-page").hide();
 		$(".accounts, .player-content").show();
 
-		
+
 		$charSelect.html("");
 
-		$.get("/chars", {token: hash}, function(data){
-			console.log("!");
-			var chars = data.chars;
+			console.log(token);
+		$.post("/chars", token, function(data){
+			var response = JSON.parse(data);
+			console.log(response,data);
+			var chars = response;
 			for(var obj in chars){
 				var $template = $(templates.characterItem(chars[obj])).hide();
 				$charSelect.append($template);
 				$template.fadeIn();
 			}
 		});
-	}	
+	}
 
 	function makeBaseAuth(info) {
 	  var tok = info.email + ':' + info.password;
@@ -171,7 +173,7 @@ $(document).ready(function() {
 			"top": "74px",
 			"opacity": 1,
 			"pointer-events": "all"
-		});	
+		});
 	}
 
 	function fadeOutResults(){

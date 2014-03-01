@@ -58,7 +58,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
                 ayai.game.add.tilemapLayer(0, 0, width, height, tileset, map, i);
         }
 
-        Window.character = ayai.gameState.addCharacter({
+        Window.character = ayai.gameState.addPlayerCharacter ({
             id: ayai.characterId,
             position: {
                 x: ayai.startingX,
@@ -186,6 +186,10 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
                 if (ayai.gameLoaded)
                     ayai.gameState.updateEntities(evt.detail.msg);
                 break;
+
+            case "attack":
+                ayai.gameState.displayAttack(evt.detail.msg);
+                break; 
 
             case "disconnect":
                 console.log(evt.detail.msg);

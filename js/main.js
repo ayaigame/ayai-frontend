@@ -8,12 +8,14 @@ window.onload = function() {
 		paths: {
 
 			Ayai: 'ayai/Ayai',
+			Util: 'ayai/Util',
 			InputEvent: 'ayai/game/InputEvent',
 			InputHandler: 'ayai/game/InputHandler',
 			Inventory: 'ayai/display/Inventory',
 			Chat: 'ayai/display/hud/Chat',
 			QuestLog: 'ayai/display/QuestLog',
-			Character: 'ayai/display/Character',
+			Entity: 'ayai/game/Entity',
+			UnitFrame: 'ayai/display/hud/UnitFrame',
 			GameStateInterface: 'ayai/game/GameStateInterface',
 			Connection: 'ayai/net/Connection',
 			AttackMessage : 'ayai/net/messages/AttackMessage',

@@ -61,38 +61,39 @@ define("GameStateInterface", ["Entity", "UnitFrame", "StartMovementMessage", "St
 
     p.updateEntities = function(json) {
 
-        var others = json.others;
-        
-        UnitFrame.prototype.syncPlayerFrame(json.you);
+        var players = json.players;
 
-        if(Window.target != null && Window.target.id == json.you.id) {
-            UnitFrame.prototype.syncTargetFrame(json.you);
-        }
+        //ayai.quests = json.you.quests;
+        //ayai.items = json.you.inventory;
+        //ayai.equipment = json.you.equipment;
 
-        ayai.quests = json.you.quests;
-        ayai.items = json.you.inventory;
-        ayai.equipment = json.you.equipment;
+        for (var index in players) {
 
-        this.targetEntity(json.you);
+            var characterJson = players[index];
 
-        Window.character.syncEntity(json.you);
+            if(characterJson.id == Window.character.id) {
+                UnitFrame.prototype.syncPlayerFrame(characterJson);
+            }
 
-        for (var index in others) {
-
-            var characterJson = others[index];
             if(Window.target != null && Window.target.id == characterJson.id) {
                 UnitFrame.prototype.syncTargetFrame(characterJson);
             }
             
             if (this.entities[characterJson.id] == null) {
+
                 //new entity
                 this.addPlayerCharacter(characterJson);
             } 
 
             else {
+
                 //update an existing entity
                 var entity = this.entities[characterJson.id];
                 entity.syncEntity(characterJson);
+
+                if(characterJson.id != Window.character.id) {
+                    entity.setAnimation(characterJson.action);
+                }
             }
         }
 
@@ -136,17 +137,6 @@ define("GameStateInterface", ["Entity", "UnitFrame", "StartMovementMessage", "St
         this.entities = {};
     };
 
-
-    p.targetEntity = function(e) {
-
-        if(Window.target != null && Window.target.id == e.id) {
-
-
-               
-            
-        }
-
-    };
 
   
     p.sendInputToGameState = function(inputEvent) {

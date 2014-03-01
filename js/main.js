@@ -8,6 +8,7 @@ window.onload = function() {
 		paths: {
 
 			Ayai: 'ayai/Ayai',
+			Util: 'ayai/Util',
 			InputEvent: 'ayai/game/InputEvent',
 			InputHandler: 'ayai/game/InputHandler',
 			Inventory: 'ayai/display/Inventory',

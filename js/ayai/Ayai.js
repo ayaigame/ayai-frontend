@@ -186,6 +186,10 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
                     ayai.gameState.updateEntities(evt.detail.msg);
                 break;
 
+            case "attack":
+                ayai.gameState.displayAttack(evt.detail.msg);
+                break; 
+
             case "disconnect":
                 console.log(evt.detail.msg);
                 break;

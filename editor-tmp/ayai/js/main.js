@@ -22,7 +22,6 @@ $(document).ready(function() {
 		$modals.hide();
 	});
 
-
 	$links.on("click", function(evt) {
 		var $this = $(this);
 		var hash = $this.attr("href");
@@ -85,7 +84,7 @@ $(document).ready(function() {
 	templates = {
 		characterItem: function(obj) {
 			return '' +
-				'<div class="char">' +
+				'<div class="char" data-name="' + obj.name + '"">' +
 				'<div class="icon"></div>' +
 				'<div class="name">' + obj.name + '</div>' +
 				'<div class="info">Level ' + obj.level + " " + obj.class + "</div>" +
@@ -96,7 +95,9 @@ $(document).ready(function() {
 	$game = $(".game-screen");
 	$gameClient = $(".game-screen .client");
 	$clientIframe = $("<iframe src='../../debug.html'></iframe>");
-	window.loadGame = function(){
+	window.loadGame = function(evt){
+		setCookie("name", $(this).data("name"), 60*60);
+
 		$game.css("visibility", "visible");
 		$game.css({
 			opacity: 1,
@@ -114,6 +115,7 @@ $(document).ready(function() {
 	$(".selection").on("click", ".char", loadGame);
 
 	window.initGame = function(){
+		$clientIframe[0].contentWindow.focus();
 		$gameClient.css("visibility", "visible");
 		$gameClient.css({
 			opacity: 1,
@@ -139,6 +141,7 @@ $(document).ready(function() {
 		$(".login-page").hide();
 		$(".accounts, .player-content").show();
 
+		setCookie("token",token,60*60);
 
 		$charSelect.html("");
 
@@ -174,6 +177,21 @@ $(document).ready(function() {
 			"opacity": 1,
 			"pointer-events": "all"
 		});
+	}
+
+	window.setCookie = function(key, value, expires) {
+		document.cookie = key + "=" + value + ";path=/;max-age=" + expires;
+	}
+
+	window.getCookie = function(name) {
+		var nameEQ = name + "=";
+		var ca = document.cookie.split(';');
+		for(var i=0;i < ca.length;i++) {
+			var c = ca[i];
+			while (c.charAt(0)==' ') c = c.substring(1,c.length);
+			if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+		}
+		return null;
 	}
 
 	function fadeOutResults(){

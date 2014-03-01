@@ -57,7 +57,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
                 ayai.game.add.tilemapLayer(0, 0, width, height, tileset, map, i);
         }
 
-        Window.character = ayai.gameState.addCharacter({
+        Window.character = ayai.gameState.addPlayerCharacter ({
             id: ayai.characterId,
             position: {
                 x: ayai.startingX,

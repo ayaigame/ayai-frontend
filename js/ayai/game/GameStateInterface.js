@@ -1,5 +1,5 @@
-define("GameStateInterface", ["Character", "StartMovementMessage", "StopMovementMessage", "AttackMessage"], 
-    function(Character, StartMovementMessage, StopMovementMessage, AttackMessage) {
+define("GameStateInterface", ["Entity", "UnitFrame", "StartMovementMessage", "StopMovementMessage", "AttackMessage"], 
+    function(Entity, UnitFrame, StartMovementMessage, StopMovementMessage, AttackMessage) {
     //  constructor
     //  ===========
     var p = GameStateInterface.prototype;
@@ -60,23 +60,43 @@ define("GameStateInterface", ["Character", "StartMovementMessage", "StopMovement
 
 
     p.updateEntities = function(json) {
-        var newEntities = json.others;
+
+        var others = json.others;
         
+        UnitFrame.prototype.syncPlayerFrame(json.you);
+
+        if(Window.target != null && Window.target.id == json.you.id) {
+            UnitFrame.prototype.syncTargetFrame(json.you);
+        }
+
         ayai.quests = json.you.quests;
         ayai.items = json.you.inventory;
         ayai.equipment = json.you.equipment;
-        
-        Window.character.syncPlayer(json.you);
 
-        for (var index in newEntities) {
-            var characterJson = newEntities[index];
+        this.targetEntity(json.you);
+
+        Window.character.syncEntity(json.you);
+
+        for (var index in others) {
+
+            var characterJson = others[index];
+            if(Window.target != null && Window.target.id == characterJson.id) {
+                UnitFrame.prototype.syncTargetFrame(characterJson);
+            }
+            
             if (this.entities[characterJson.id] == null) {
-                this.addCharacter(characterJson);
-            } else {
+                //new entity
+                this.addPlayerCharacter(characterJson);
+            } 
+
+            else {
+                //update an existing entity
                 var entity = this.entities[characterJson.id];
-                entity.syncCharacter(characterJson);
+                entity.syncEntity(characterJson);
             }
         }
+
+
         /*  TODO: If an entity hasn't been updated in 10-20 syncs, remove it?
             for(var key in this.entities) {
                 var entity = this.entities[key];
@@ -86,13 +106,23 @@ define("GameStateInterface", ["Character", "StartMovementMessage", "StopMovement
             }*/
     };
 
-    p.addCharacter = function(json) {
-        console.log("adding " + json.id);
-        var newChar = new Character(json);
-        newChar.buildSprite(p.game);
+    p.addPlayerCharacter = function(json) {
+
+        console.log("adding player character" + json.id);
+        var newChar = new Entity(json);
+        newChar.buildSprite(p.game, 'guy');
         this.entities[json.id] = newChar;
         return newChar;
     };
+
+    p.addNonPlayerCharacter = function(json) {
+
+        console.log("adding player character" + json.id);
+        var newChar = new Entity(json);
+        newChar.buildSprite(p.game, '');
+        this.entities[json.id] = newChar;
+        return newChar;
+    }
 
     p.removeCharacter = function(e) {
         e.removeFromStage();
@@ -106,6 +136,19 @@ define("GameStateInterface", ["Character", "StartMovementMessage", "StopMovement
         this.entities = {};
     };
 
+
+    p.targetEntity = function(e) {
+
+        if(Window.target != null && Window.target.id == e.id) {
+
+
+               
+            
+        }
+
+    };
+
+  
     p.sendInputToGameState = function(inputEvent) {
         if (Window.verboseLogger) {
             console.log("got input");

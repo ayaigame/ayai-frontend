@@ -62,16 +62,12 @@ $(document).ready(function() {
 	$loginBtn.click(function(evt){
 		evt.preventDefault();
 		
-		$(".login-page").hide();
-		$(".accounts, .player-content").show();
-		initAccount();
-
-		/*
 		var info = {
 			email: $emailInput.val(),
 			password: $passwordInput.val()
 		}
 		var hash = makeBaseAuth(info);
+
 
 		$.ajax({
 			type:"POST",
@@ -80,10 +76,10 @@ $(document).ready(function() {
 				xhr.setRequestHeader("Authorization", hash);
 			},
 			success: function(data) {
-				console.log(data);
+				initAccount(hash);
 			}
 		});
-		*/
+
 	});
 
 	templates = {
@@ -139,11 +135,15 @@ $(document).ready(function() {
 		});
 	});
 
-	function initAccount() {
+	function initAccount(hash) {
+		$(".login-page").hide();
+		$(".accounts, .player-content").show();
+
+		
 		$charSelect.html("");
 
-		$.get("characters.json", function(data){
-			console.log(data);
+		$.get("/chars", {token: hash}, function(data){
+			console.log("!");
 			var chars = data.chars;
 			for(var obj in chars){
 				var $template = $(templates.characterItem(chars[obj])).hide();

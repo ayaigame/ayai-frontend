@@ -24,6 +24,9 @@ define("Entity", ["phaser"], function(Phaser) {
     this.position = {x: 0, y: 0};
     this.health = {currHealth : 0, maximumHealth: 0};
     this.Mana = {currMana : 0, maximumMana: 0}
+    this.damages = [];
+
+    p._startDamagePos = {x: 0, y: 0};
 
 
 	p.buildSprite = function(game, spriteName) {
@@ -57,13 +60,28 @@ define("Entity", ["phaser"], function(Phaser) {
 
         this.namePlate =  game.add.text(this.sprite.x + 16, this.sprite.y - 16, this.name, style);
 
+        this.healthBar = game.add.sprite(this.sprite.x - 8, this.sprite.y - 32, 'healthframe');
+        this.healthBar.animations.add('bar', [0]);
+        this.healthBar.animations.play('bar', 1, true);
+
+        this.healthFrame = game.add.sprite(this.sprite.x - 8, this.sprite.y - 32, 'healthframe');
+        this.healthFrame.animations.add('frame', [1]);
+        this.healthFrame.animations.play('frame', 1, true);
+
         //  this starts the animation playing by using its key ("facedown")
         //  1 is the frame rate (1fps)
         //  true means it will loop when it finishes
         this.sprite.animations.play('facedown', 1, true);
+
+
+        //.to( {props}, duration, easing, autostart, delay, repeats, yoyo)
+		//game.add.tween(this.healthBar).to({ alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
+		//game.add.tween(this.healthFrame).to({ alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 0, 1000, true);
+
     };
 
      p.syncEntity = function(e) {
+
         this.sprite.x = e.position.x;
         this.sprite.y = e.position.y;
         this.name = e.name;
@@ -75,12 +93,63 @@ define("Entity", ["phaser"], function(Phaser) {
         var manaPercent = Math.floor((e.Mana.currMana / e.Mana.maximumMana) * 100) + "%";
 
         this.namePlate.x = this.sprite.x;
-        this.namePlate.y = this.sprite.y - 24;
+        this.namePlate.y = this.sprite.y - 18;
         this.namePlate.content = this.name;
+
+        this.healthBar.x = this.sprite.x - 8;
+        this.healthBar.y = this.sprite.y - 32;
+
+        this.healthFrame.x = this.sprite.x - 8;
+        this.healthFrame.y = this.sprite.y - 32;
+
+        for(var i = 0; i < damages.length; i++) {
+
+        	for( var digit = 0; digit < damages[i].digits.length; digit++)
+        	{
+        		damages[i].digits[digit].x = (this.sprite.x + 16) + (digit * 13);
+        		damages[i].digitOutlines[digit].x = (this.sprite.x + 17) + (digit * 13);
+        	}
+        }
+
 
     };
 
 
+    p.displayDamage = function() {
+
+    	var x = Math.floor(Math.random() * 300) + 50;
+        var style = { font: "26px Arial", fill: "#ff0000", align: "center" };
+        var styleOutline = { font: "26px Arial", fill: "#000000", align: "center" };
+      
+        var digits = (x.toString().split(""));
+        var digitTexts = [];
+        var digitTextOutlines = [];
+
+        for(var i = 0; i < digits.length; i++) {
+
+        	this._startDamagePos.x = this.sprite.x;
+        	this._startDamagePos.y = this.sprite.y;
+        	var digitTextOutline = ayai.game.add.text((this.sprite.x + 17) + (i * 13), this.sprite.y - 15, digits[i], styleOutline);
+        	var digitText = ayai.game.add.text((this.sprite.x + 16) + (i * 13), this.sprite.y - 16, digits[i], style);
+
+        	digitTexts.push(digitText);
+        	digitTextOutlines.push(digitTextOutline);
+        	ayai.game.add.tween(digitText)
+		    	.to({ y: this.sprite.y + 20 }, 750, Phaser.Easing.Bounce.Out, true, (i * 100))
+		    	.to({ alpha: 0}, 1000, Phaser.Easing.Linear.None, true, (i * 100))
+		    	.start();
+
+		    ayai.game.add.tween(digitTextOutline)
+		    	.to({ y: this.sprite.y + 21 }, 750, Phaser.Easing.Bounce.Out, true, (i * 100))
+		    	.to({ alpha: 0}, 1000, Phaser.Easing.Linear.None, true, (i * 100))
+		    	.start();
+        }
+
+        damages.push({ digits: digitTexts, digitOutlines: digitTextOutlines});
+ 		
+
+		
+    }
 
     p.setAnimation = function(animationName) {
         this.sprite.animations.play(animationName, 15, true);

@@ -9,6 +9,7 @@ define("InputHandler", ["phaser", "InputEvent"], function (Phaser, InputEvent) {
 		p.chat = chat;
 		p.questLog = questLog;
 		boundKeys = [];
+
 		upKey = p.game.input.keyboard.addKey(Phaser.Keyboard.W);
 		downKey = p.game.input.keyboard.addKey(Phaser.Keyboard.S);
 		leftKey = p.game.input.keyboard.addKey(Phaser.Keyboard.A);
@@ -16,6 +17,8 @@ define("InputHandler", ["phaser", "InputEvent"], function (Phaser, InputEvent) {
 		spaceKey = p.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		iKey = p.game.input.keyboard.addKey(Phaser.Keyboard.I);
 		lKey = p.game.input.keyboard.addKey(Phaser.Keyboard.L);
+		gKey = p.game.input.keyboard.addKey(Phaser.Keyboard.G);
+
 		boundKeys.push(upKey);
 		boundKeys.push(downKey);
 		boundKeys.push(leftKey);
@@ -23,8 +26,12 @@ define("InputHandler", ["phaser", "InputEvent"], function (Phaser, InputEvent) {
 		boundKeys.push(spaceKey);
 		boundKeys.push(iKey);
 		boundKeys.push(lKey);
+		boundKeys.push(gKey);
+
 		enterKey = p.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+
 		enterKey.onDown.add(function() {
+
 			if (!p.chat.isEditBoxOpen) {
 				p.chat.openEditBox();
 				p.gameState.sendInputToGameState(new InputEvent("!isUp"));
@@ -35,7 +42,9 @@ define("InputHandler", ["phaser", "InputEvent"], function (Phaser, InputEvent) {
 					p.game.input.keyboard.removeKey(boundKeys[i].keyCode);
 				}
 				p.game.input.keyboard.clearCaptures();
-			} else {
+			} 
+
+			else {
 				p.chat.send();
 				p.chat.closeEditBox();
 				upKey = p.game.input.keyboard.addKey(Phaser.Keyboard.W);
@@ -45,12 +54,13 @@ define("InputHandler", ["phaser", "InputEvent"], function (Phaser, InputEvent) {
 				spaceKey = p.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 				iKey = p.game.input.keyboard.addKey(Phaser.Keyboard.I);
 				lKey = p.game.input.keyboard.addKey(Phaser.Keyboard.L);
+				gKey = p.game.input.keyboard.addKey(Phaser.Keyboard.G);
 				p.registerKeyPresses();
 			}
 		});
 		p.registerKeyPresses();
 	};
-	p.buildKeys = function() {};
+
 	p.registerKeyPresses = function() {
 
 		spaceKey.onDown.add(function() {
@@ -61,6 +71,9 @@ define("InputHandler", ["phaser", "InputEvent"], function (Phaser, InputEvent) {
 		});
 		lKey.onDown.add(function() {
 			p.questLog.toggle();
+		});
+		gKey.onDown.add(function() {
+			Window.character.displayDamage();
 		});
 		upKey.onDown.add(function() {
 			p.gameState.sendInputToGameState(new InputEvent("isUp"));

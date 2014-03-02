@@ -81,7 +81,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
         console.log("Loading assets...");
         ayai.game.load.spritesheet('guy', '../assets/sprites/guy/guysheet.png', 32, 32);
         ayai.game.load.spritesheet('npc', '../assets/sprites/npc/npcsheet.png', 32, 48);
-        ayai.game.load.spritesheet('frames', '../assets/sprites/ui/framesheet.png', 128, 16);
+        ayai.game.load.spritesheet('healthframe', '../assets/sprites/ui/healthframe.png', 48, 13);
         ayai.game.load.spritesheet('itemicons', '../assets/sprites/ui/itemicons.png', 40, 40);
         ayai.game.load.image('skillicon', '../assets/sprites/ui/skillsheet.png');
         ayai.game.load.tilemap('tilemap', ayai.tilemap, null, Phaser.Tilemap.TILED_JSON);

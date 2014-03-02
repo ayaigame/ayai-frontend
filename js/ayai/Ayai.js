@@ -1,3 +1,4 @@
+
 define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "Inventory", "Chat", "QuestLog"], 
     function(Phaser, InputHandler, Connection, GameStateInterface, Inventory, Chat, QuestLog) {
     // constructor

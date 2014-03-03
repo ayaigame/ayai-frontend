@@ -188,7 +188,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
                 break;
 
             case "attack":
-                ayai.gameState.displayAttack(evt.detail.msg);
+                //ayai.gameState.displayAttack(evt.detail.msg);
                 break; 
 
             case "disconnect":

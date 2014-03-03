@@ -1,5 +1,5 @@
-define("GameStateInterface", ["Entity", "UnitFrame", "StartMovementMessage", "StopMovementMessage", "AttackMessage"], 
-    function(Entity, UnitFrame, StartMovementMessage, StopMovementMessage, AttackMessage) {
+define("GameStateInterface", ["Entity", "UnitFrame", "EquipMessage", "StartMovementMessage", "StopMovementMessage", "AttackMessage"], 
+    function(Entity, UnitFrame, EquipMessage, StartMovementMessage, StopMovementMessage, AttackMessage) {
     //  constructor
     //  ===========
     var p = GameStateInterface.prototype;
@@ -56,6 +56,8 @@ define("GameStateInterface", ["Entity", "UnitFrame", "StartMovementMessage", "St
     p.sendAttack = function() {
         var message = new AttackMessage();
         p.connection.send(message.data);
+        var equip = new EquipMessage();
+        p.connection.send(equip.data);
     };
 
 

@@ -22,7 +22,7 @@ window.onload = function() {
 			UnequipMessage: 'ayai/net/messages/UnequipMessage',
 			EquipMessage: 'ayai/net/messages/EquipMessage',
 			AttackMessage: 'ayai/net/messages/AttackMessage',
-      ChatMessage: 'ayai/net/messages/ChatMessage',
+      		ChatMessage: 'ayai/net/messages/ChatMessage',
 			StartMovementMessage: 'ayai/net/messages/StartMovementMessage',
 			StopMovementMessage: 'ayai/net/messages/StopMovementMessage',
 			MessageSender: 'ayai/net/MessageSender',

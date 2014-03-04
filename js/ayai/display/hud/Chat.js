@@ -1,6 +1,8 @@
-define("Chat", function() {
+define("Chat", ["ChatMessage"],  function(ChatMessage) {
 
-	function Chat() {
+	function Chat(connection, characterId) {
+    p.connection = connection;
+    p.characterId = characterId
 		p.isEditBoxOpen = false;
 		p.data = {};
 
@@ -35,8 +37,12 @@ define("Chat", function() {
 		var editbox = $("#editbox input");
 
 		if(editbox.val().length != 0) {
-			$("#chat").append("<span class='character'>Character: </span>");
-			$("#chat").append("<span class='msg'>" + editbox.val() + "<br/></span>");
+			//$("#chat").append("<span class='character'>Character: </span>");
+			//$("#chat").append("<span class='msg'>" + editbox.val() + "<br/></span>");
+      var message = new ChatMessage(editbox.val(), "tim");
+      console.log("Sending: " + message.data);
+      p.connection.send(message.data);
+      editbox.val("");
 		}
 
 	}

@@ -99,7 +99,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
 
         // ---- Instantiate JS logic for HTML5 UI Elements
         ayai.inventory = new Inventory();
-        ayai.chat = new Chat();
+        ayai.chat = new Chat(ayai.connection, ayai.characterId);
         ayai.questLog = new QuestLog();
         // -----------------------------------------------
 
@@ -190,6 +190,11 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
             case "attack":
                 //ayai.gameState.displayAttack(evt.detail.msg);
                 break; 
+
+            case "chat":
+              $("#chat").append("<span class='character'>" + evt.detail.msg.sender + ": </span>");
+			        $("#chat").append("<span class='msg'>" + evt.detail.msg.message + "</span><br />");
+              break;
 
             case "disconnect":
                 console.log(evt.detail.msg);

@@ -1,14 +1,13 @@
-define("EquipMessage", function() {
+define("DropItemMessage", function() {
 
-    function EquipMessage(slot, equipmentType) {
+    function DropItemMessage(slot) {
         // constructor
         this.data = {
-            type: "equip",
-            slot: slot,
-            equipmentType: equipmentType
+            type: "dropitem",
+            slot: slot
         };
     };
-    var p = EquipMessage.prototype;
+    var p = DropItemMessage.prototype;
 
 
    //  public properties 
@@ -25,5 +24,5 @@ define("EquipMessage", function() {
     //  ===============
 
 
-    return EquipMessage;
+    return DropItemMessage;
 });

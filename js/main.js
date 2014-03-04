@@ -18,6 +18,8 @@ window.onload = function() {
 			UnitFrame: 'ayai/display/hud/UnitFrame',
 			GameStateInterface: 'ayai/game/GameStateInterface',
 			Connection: 'ayai/net/Connection',
+			DropItemMessage: 'ayai/net/messages/DropItemMessage',
+			UnequipMessage: 'ayai/net/messages/UnequipMessage',
 			EquipMessage: 'ayai/net/messages/EquipMessage',
 			AttackMessage : 'ayai/net/messages/AttackMessage',
 			StartMovementMessage: 'ayai/net/messages/StartMovementMessage',

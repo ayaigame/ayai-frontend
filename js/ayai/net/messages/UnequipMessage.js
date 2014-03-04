@@ -1,14 +1,13 @@
-define("EquipMessage", function() {
+define("UnequipMessage", function() {
 
-    function EquipMessage(slot, equipmentType) {
+    function UnequipMessage(equipmentType) {
         // constructor
         this.data = {
-            type: "equip",
-            slot: slot,
+            type: "unequip",
             equipmentType: equipmentType
         };
     };
-    var p = EquipMessage.prototype;
+    var p = UnequipMessage.prototype;
 
 
    //  public properties 
@@ -25,5 +24,5 @@ define("EquipMessage", function() {
     //  ===============
 
 
-    return EquipMessage;
+    return UnequipMessage;
 });

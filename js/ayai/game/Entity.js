@@ -11,6 +11,7 @@ define("Entity", ["phaser"], function(Phaser) {
         this.experience = json.experience;
         this.health = json.health;
         this.Mana = json.Mana;
+        this._startDamagePos = {x: 0, y: 0};
 
 	};
 
@@ -26,7 +27,7 @@ define("Entity", ["phaser"], function(Phaser) {
     this.Mana = {currMana : 0, maximumMana: 0}
     this.damages = [];
 
-    p._startDamagePos = {x: 0, y: 0};
+    this._startDamagePos = {x: 0, y: 0};
 
 
 	p.buildSprite = function(game, spriteName) {
@@ -106,8 +107,13 @@ define("Entity", ["phaser"], function(Phaser) {
 
         	for( var digit = 0; digit < damages[i].digits.length; digit++)
         	{
-        		damages[i].digits[digit].x = (this.sprite.x + 16) + (digit * 13);
-        		damages[i].digitOutlines[digit].x = (this.sprite.x + 17) + (digit * 13);
+
+                damages[i].digitOutlines[digit].x = (this.sprite.x + 34) + (digit * 15);
+                damages[i].digitOutlines[digit].y = (this.sprite.y + 2); 
+
+        		damages[i].digits[digit].x = (this.sprite.x + 32) + (digit * 15);
+                damages[i].digits[digit].y = (this.sprite.y);
+      
         	}
         }
 
@@ -118,10 +124,11 @@ define("Entity", ["phaser"], function(Phaser) {
     p.displayDamage = function() {
 
     	var x = Math.floor(Math.random() * 300) + 50;
-        var style = { font: "26px Arial", fill: "#ff0000", align: "center" };
-        var styleOutline = { font: "26px Arial", fill: "#000000", align: "center" };
+        var style = { font: "30px Arial", fill: "#ff0000", align: "center" };
+        var styleOutline = { font: "30px Arial", fill: "#000000", align: "center" };
       
-        var digits = (x.toString().split(""));
+        var digits =  x.toString().split("");
+        digits.unshift("-");
         var digitTexts = [];
         var digitTextOutlines = [];
 
@@ -129,19 +136,21 @@ define("Entity", ["phaser"], function(Phaser) {
 
         	this._startDamagePos.x = this.sprite.x;
         	this._startDamagePos.y = this.sprite.y;
-        	var digitTextOutline = ayai.game.add.text((this.sprite.x + 17) + (i * 13), this.sprite.y - 15, digits[i], styleOutline);
-        	var digitText = ayai.game.add.text((this.sprite.x + 16) + (i * 13), this.sprite.y - 16, digits[i], style);
+
+            var digitTextOutline = ayai.game.add.text((this.sprite.x + 34) + (i * 15), this.sprite.y + 2,  digits[i], styleOutline);
+        	var digitText = ayai.game.add.text((this.sprite.x + 32) + (i * 15), this.sprite.y, digits[i], style);
+
 
         	digitTexts.push(digitText);
         	digitTextOutlines.push(digitTextOutline);
         	ayai.game.add.tween(digitText)
-		    	.to({ y: this.sprite.y + 20 }, 750, Phaser.Easing.Bounce.Out, true, (i * 100))
-		    	.to({ alpha: 0}, 1000, Phaser.Easing.Linear.None, true, (i * 100))
+		    	//.to({ y: this.sprite.y + 20 }, 750, Phaser.Easing.Bounce.Out, true, (i * 100))
+		    	.to({ alpha: 0}, 1000, Phaser.Easing.Linear.None, true, 750 + (i * 100))
 		    	.start();
 
 		    ayai.game.add.tween(digitTextOutline)
-		    	.to({ y: this.sprite.y + 21 }, 750, Phaser.Easing.Bounce.Out, true, (i * 100))
-		    	.to({ alpha: 0}, 1000, Phaser.Easing.Linear.None, true, (i * 100))
+		    	//.to({ y: this.sprite.y + 21 }, 750, Phaser.Easing.Bounce.Out, true, (i * 100))
+		    	.to({ alpha: 0}, 1000, Phaser.Easing.Linear.None, true, 750 + (i * 100))
 		    	.start();
         }
 

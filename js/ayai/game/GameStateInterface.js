@@ -1,5 +1,5 @@
-define("GameStateInterface", ["Entity", "UnitFrame", "EquipMessage", "StartMovementMessage", "StopMovementMessage", "AttackMessage"], 
-    function(Entity, UnitFrame, EquipMessage, StartMovementMessage, StopMovementMessage, AttackMessage) {
+define("GameStateInterface", ["Entity", "UnitFrame", "StartMovementMessage", "StopMovementMessage", "AttackMessage", "EquipMessage", "UnequipMessage", "DropItemMessage"], 
+    function(Entity, UnitFrame, StartMovementMessage, StopMovementMessage, AttackMessage, EquipMessage, UnequipMessage, DropItemMessage) {
     //  constructor
     //  ===========
     var p = GameStateInterface.prototype;
@@ -56,8 +56,21 @@ define("GameStateInterface", ["Entity", "UnitFrame", "EquipMessage", "StartMovem
     p.sendAttack = function() {
         var message = new AttackMessage();
         p.connection.send(message.data);
-        var equip = new EquipMessage();
-        p.connection.send(equip.data);
+    };
+
+    p.sendEquip = function(slot, equipmentType) {
+        var message = new EquipMessage(slot, equipmentType);
+        p.connection.send(message.data);
+    };
+
+    p.sendUnequip = function(equipmentType) {
+        var message = new UnequipMessage(equipmentType);
+        p.connection.send(message.data);
+    };
+
+    p.sendDropItem = function(slot) {
+        var message = new DropItemMessage(slot);
+        p.connection.send(message.data);
     };
 
 
@@ -65,9 +78,9 @@ define("GameStateInterface", ["Entity", "UnitFrame", "EquipMessage", "StartMovem
 
         var players = json.players;
 
-        //ayai.quests = json.you.quests;
-        //ayai.items = json.you.inventory;
-        //ayai.equipment = json.you.equipment;
+        ayai.quests = json.models.quests;
+        ayai.items = json.models.inventory;
+        ayai.equipment = json.models.equipment;
 
         for (var index in players) {
 

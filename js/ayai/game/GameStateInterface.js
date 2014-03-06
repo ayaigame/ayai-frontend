@@ -1,4 +1,4 @@
-define("GameStateInterface", ["Entity", "UnitFrame", "StartMovementMessage", "StopMovementMessage", "AttackMessage", "EquipMessage", "UnequipMessage", "DropItemMessage"], 
+define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "StopMovementMessage", "AttackMessage", "EquipMessage", "UnequipMessage", "DropItemMessage"], 
     function(Entity, UnitFrame, StartMovementMessage, StopMovementMessage, AttackMessage, EquipMessage, UnequipMessage, DropItemMessage) {
     //  constructor
     //  ===========
@@ -79,8 +79,7 @@ define("GameStateInterface", ["Entity", "UnitFrame", "StartMovementMessage", "St
         var players = json.players;
 
         ayai.quests = json.models.quests;
-        ayai.items = json.models.inventory;
-        ayai.equipment = json.models.equipment;
+        ayai.inventory.sync(json.models.inventory, json.models.equipment);
 
         for (var index in players) {
 

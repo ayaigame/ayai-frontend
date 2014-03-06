@@ -27,7 +27,7 @@ window.onload = function() {
 			StopMovementMessage: 'ayai/net/messages/StopMovementMessage',
 			MessageSender: 'ayai/net/MessageSender',
 			MessageReceiver: 'ayai/net/MessageReceiver',
-			phaser: 'lib/phaser',
+			phaser: 'lib/phaser'
 
 		},
 		urlArgs: "bust=" +  (new Date()).getTime()

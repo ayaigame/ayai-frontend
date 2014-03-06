@@ -29,7 +29,13 @@ define("Chat", ["ChatMessage"],  function(ChatMessage) {
 
 		editbox.val("");
 		editbox.blur();
-		$("#chat").scrollTop(99999);
+	}
+
+	p.displayMessage = function(msg) {
+
+		$("#chat-pane").append("<span class='character'>" + msg.sender + ": </span>");
+		$("#chat-pane").append("<span class='msg'>" + msg.message + "</span><br />");
+        $("#chat-pane").scrollTop(99999);
 	}
 
 	p.send = function() {
@@ -37,12 +43,10 @@ define("Chat", ["ChatMessage"],  function(ChatMessage) {
 		var editbox = $("#editbox input");
 
 		if(editbox.val().length != 0) {
-			//$("#chat").append("<span class='character'>Character: </span>");
-			//$("#chat").append("<span class='msg'>" + editbox.val() + "<br/></span>");
-      var message = new ChatMessage(editbox.val(), "tim");
-      console.log("Sending: " + message.data);
-      p.connection.send(message.data);
-      editbox.val("");
+		      var message = new ChatMessage(editbox.val(), "tim");
+		      console.log("Sending: " + message.data);
+		      p.connection.send(message.data);
+		      editbox.val("");
 		}
 
 	}

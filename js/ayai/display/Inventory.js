@@ -7,9 +7,10 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 		p.previousJson = "";
 		p.itemBeingDragged = null;
 		p.unequippingItemType = "";
+		p.flagged = false;
 
 		Handlebars.registerHelper('isWeapon', function(block) {
-			if(this.itemType.type == "weapon")
+			if(this.itemType.type == "weapon1" || this.itemType.type == "weapon2")
 				return block.fn(this);
 		});
 
@@ -23,23 +24,37 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 	var p = Inventory.prototype;
 	p.toggle = function() {
 
-		p.items = ayai.items;
-		p.equipment = ayai.equipment;
+		p.isOpen = !(p.isOpen);
+		$('div#char-window').toggleClass("open");
 
-		if(!p.isOpen) {
+		if(p.isOpen) {
+			p.renderWindow();
+			
+		}
+
+	};
+
+	p.sync = function(inventory, equipment) {
+
+		p.items = inventory;
+		p.equipment = equipment;
+
+		if(p.flagged) {
+			console.log("rerendering");
+			console.log(p.items);
+			p.renderWindow();
+			p.flagged = false;
+		}
+	}
+
+	p.renderWindow = function() {
+
 			p.renderEquipment();
 			p.renderInventory();
 			p.registerTooltipMouseovers();
 			p.registerDraggables();
-			p.isOpen = true;
-		}
 
-		else 
-			p.isOpen = false;
-
-		$('div#char-window').toggleClass("open");
-
-	};
+	}
 
 	p.renderEquipment = function() {
 
@@ -57,6 +72,7 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 
 	p.renderInventory = function() {
 
+		$("div#items").html("");
         var tplSource = $("#inventoryItemsView-template").html();
         var template = Handlebars.compile(tplSource);
 		var html = template(p.items);
@@ -130,8 +146,9 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 				GameStateInterface.prototype.sendEquip(p.draggedItemIndex, itemType);
 
 				p.unequippingItemType = "";
-			
-				p.registerDraggables();
+				p.flagged = true;
+				p.oldItems = p.items.clone();
+
 			}
 		});
 
@@ -160,17 +177,17 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 					GameStateInterface.prototype.sendUnequip(p.unequippingItemType);
 				}
 
+				console.log(this);
 				if($(this).parent().parent().attr("id") == "trash") {
-
 
 					console.log("trashing " + p.draggedItemIndex);
 					GameStateInterface.prototype.sendDropItem(p.draggedItemIndex);
 				}
 
 				p.unequippingItemType = "";
-			
+				p.flagged = true;
+				p.oldItems = p.items.clone();
 
-				p.registerDraggables();
 			}
 		});
 
@@ -188,6 +205,10 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 			if (!($("div.item").hasClass("ui-draggable-dragging"))) {
 				$(tooltip).addClass("open");
 			}
+			$(tooltip).css({
+						left: e.clientX - 215 ,
+						top: e.clientY + 5
+					});
 			
 			$(document).mousemove(function(ev) {
 				if ($(tooltip).hasClass("open")) {

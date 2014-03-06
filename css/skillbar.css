@@ -2,8 +2,8 @@ ul#skills {
   list-style-type: none;
   margin: 0;
   position: fixed;
-  left: 38%;
-  bottom: 5px; }
+  bottom: 5px;
+  padding: 0; }
   ul#skills li {
     position: relative;
     border-radius: 5px;

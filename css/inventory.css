@@ -27,7 +27,8 @@ div#char-window ul.slots li:hover {
   box-shadow: inset 0px 0px 1px 1px  white; }
 div#char-window ul.slots li.over {
   transition: all 0.1s linear;
-  box-shadow: 0px 0px 7px 2px aliceblue; }
+  box-shadow: 0px 0px 7px 2px aliceblue;
+  z-index: 0; }
 div#char-window span.title {
   color: White;
   text-align: center; }
@@ -94,11 +95,11 @@ div#char-window div.item-tooltip {
   position: fixed;
   opacity: 0;
   padding: 5px; }
-  div#char-window div.item-tooltip span {
-    float: left;
-    color: White; }
-  div#char-window div.item-tooltip span.title.rare {
+  div#char-window div.item-tooltip span.item-title.rare {
     color: cornflowerblue; }
+  div#char-window div.item-tooltip span {
+    color: White;
+    float: left; }
 div#char-window div.item-tooltip.open {
   z-index: 100;
   opacity: 1; }

@@ -169,16 +169,14 @@ div#char-window {
         opacity: 0;
         padding: 5px;
 
-        span.item-title {
-
-            float: left;
-            color: White;
-        }
-
         span.item-title.rare {
             color: cornflowerblue;
         }
 
+        span {
+            color: White;
+            float: left;
+        }
 
                     
     }

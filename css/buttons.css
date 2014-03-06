@@ -1,5 +1,29 @@
+div#interface {
+  position: fixed;
+  bottom: 5px;
+  width: 100%; }
+
+div.ui-base {
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid #bbbbbb; }
+
+div.ui-frame {
+  z-index: 0;
+  position: absolute;
+  right: 500px;
+  bottom: 60px;
+  transition: opacity 0.25s ease-out;
+  opacity: 0;
+  text-align: center; }
+  div.ui-frame span.title {
+    color: White;
+    text-align: center; }
+
+div.ui-frame.open {
+  opacity: 1;
+  z-index: 50; }
+
 ul#buttons {
-  float: left;
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -16,3 +40,11 @@ ul#buttons {
     padding: 0;
     border-radius: 50%;
     border: 1px solid #bbbbbb; }
+    @media (min-width: 300px) and (max-width: 1400px) {
+      ul#buttons li {
+        float: none;
+        margin-bottom: 5px; } }
+  @media (min-width: 300px) and (max-width: 1400px) {
+    ul#buttons {
+      right: 0;
+      bottom: 200px; } }

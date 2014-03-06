@@ -1,6 +1,10 @@
+@import 'ui';
+
+
+
+
 ul#buttons {
 
-	float: left;
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
@@ -21,6 +25,12 @@ ul#buttons {
 		border-radius: 50%;
 		border: 1px solid #bbbbbb;
 
+		@include medium() {float: none; margin-bottom: 5px}
+
+
 	}
 
+	@include medium() { right: 0; bottom: 200px; }
+
 }
+

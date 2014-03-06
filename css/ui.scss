@@ -1,11 +1,10 @@
+$break-medium: 1300;
+
 div#interface {
 
 	position: fixed;
 	bottom: 5px;
-	left: 5px;
-	right: 5px;
-	width: 99%;
-
+	width: 100%;
 
 }
 
@@ -40,10 +39,17 @@ div.ui-frame.open {
 
 @mixin ui-frame($width, $height) {
 
-
-
 	span.title {
 
 		color: White;
 	}
-} 
+}
+
+@mixin medium() {
+
+    @media (min-width: 300px) and (max-width: 1400px) 
+    {
+        @content;
+    }
+
+}

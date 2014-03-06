@@ -101,6 +101,10 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
         ayai.inventory = new Inventory();
         ayai.chat = new Chat(ayai.connection, ayai.characterId);
         ayai.questLog = new QuestLog();
+
+
+        $("ul#skills").css("left", (($("div#chat").position().left + $("ul.unitframes").width())/2) - $("ul#skills").width() / 2);
+
         // -----------------------------------------------
 
 
@@ -116,6 +120,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
     window.onresize = function() {
         //Since the window can be resized before the game is loaded,
         //check if it is actually done loading. Otherwise, very crash :(
+
         if (ayai.gameLoaded) {
             ayai.gameLoaded = false;
             var width = $(window).width();
@@ -126,6 +131,11 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
             ayai.game.height = height;
             ayai.renderMap(ayai.currentTileset, ayai.currentTilemap);
         }
+
+
+        $("ul#skills").css("left", (($("div#chat").position().left + $("ul.unitframes").width())/2) - $("ul#skills").width() / 2);
+
+
     }
 
     function placeNpcs() {
@@ -192,9 +202,8 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
                 break; 
 
             case "chat":
-              $("#chat").append("<span class='character'>" + evt.detail.msg.sender + ": </span>");
-			        $("#chat").append("<span class='msg'>" + evt.detail.msg.message + "</span><br />");
-              break;
+                ayai.chat.displayMessage(evt.detail.msg);
+                break;
 
             case "disconnect":
                 console.log(evt.detail.msg);

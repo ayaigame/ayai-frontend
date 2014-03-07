@@ -17,6 +17,7 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
     
     //  public properties 
     //  =================     
+
     p.isUp = null;
     p.isDown = null;
     p.isRight = null;
@@ -54,6 +55,24 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
     };
 
     p.sendAttack = function() {
+
+        var attackAnim;
+        switch (Window.character.facing)
+        {
+            case Entity.prototype.FACING.UP:
+                attackAnim = "attackup";
+                break;
+            case Entity.prototype.FACING.RIGHT:
+                attackanim = "attackright";
+                break;
+            case Entity.prototype.FACING.LEFT:
+                attackanim = "attackleft";
+                break;
+            case Entity.prototype.FACING.DOWN:
+                attackanim = "attackdown";
+                break;
+        }
+        Window.character.setAnimation(attackanim, false);
         var message = new AttackMessage();
         p.connection.send(message.data);
     };

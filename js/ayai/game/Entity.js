@@ -12,6 +12,7 @@ define("Entity", ["phaser"], function(Phaser) {
         this.health = json.health;
         this.Mana = json.Mana;
         this._startDamagePos = {x: 0, y: 0};
+        this.facing = p.FACING.DOWN;
 
 	};
 
@@ -26,6 +27,14 @@ define("Entity", ["phaser"], function(Phaser) {
     this.health = {currHealth : 0, maximumHealth: 0};
     this.Mana = {currMana : 0, maximumMana: 0}
     this.damages = [];
+    this.facing = null;
+    p.FACING = {
+        UP: 0,
+        RIGHT: 1,
+        DOWN: 2,
+        LEFT: 3 
+    };
+
 
     this._startDamagePos = {x: 0, y: 0};
 
@@ -56,6 +65,12 @@ define("Entity", ["phaser"], function(Phaser) {
         this.sprite.animations.add('walkleft', [3, 4, 5]);
         this.sprite.animations.add('walkright', [6, 7, 8]);
         this.sprite.animations.add('walkup', [9, 10, 11]);
+
+        this.sprite.animations.add('attackdown', [12, 13, 14, 15]);
+        this.sprite.animations.add('attackleft', [18, 19, 20, 21]);
+        this.sprite.animations.add('attackright', [24, 25, 26, 27]);
+        this.sprite.animations.add('attackup', [30, 31, 32, 33]);
+
 
         var style = { font: "14px Arial", fill: "#ffffff", align: "center" };
 
@@ -160,9 +175,10 @@ define("Entity", ["phaser"], function(Phaser) {
 		
     }
 
-    p.setAnimation = function(animationName) {
-        this.sprite.animations.play(animationName, 15, true);
+    p.setAnimation = function(animationName, loop) {
 
+        var a = loop == undefined ? true : loop;
+        this.sprite.animations.play(animationName, 15, a);
     }
 
 

@@ -4,10 +4,10 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 
 
 		p.isOpen = false;
-		p.previousJson = "";
 		p.itemBeingDragged = null;
 		p.unequippingItemType = "";
 		p.flagged = false;
+		p.oldItems = [];
 
 		Handlebars.registerHelper('isWeapon', function(block) {
 			if(this.itemType.type == "weapon1" || this.itemType.type == "weapon2")
@@ -40,10 +40,13 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 		p.equipment = equipment;
 
 		if(p.flagged) {
-			console.log("rerendering");
-			console.log(p.items);
-			p.renderWindow();
-			p.flagged = false;
+
+			if(p.oldItems.length != p.items.length) {
+				console.log("rerendering");
+				console.log(p.items);
+				p.renderWindow();
+				p.flagged = false;
+			}
 		}
 	}
 
@@ -143,11 +146,19 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 				if(itemType == "weapon")
 					itemType = "weapon1";
 
+
+				p.oldItems = [];
+				for(var i = 0; i < p.items.length; i++)
+				{
+					p.oldItems.push(p.items[i].name);
+				}
+
 				GameStateInterface.prototype.sendEquip(p.draggedItemIndex, itemType);
 
 				p.unequippingItemType = "";
 				p.flagged = true;
-				p.oldItems = p.items.clone();
+
+
 
 			}
 		});
@@ -172,21 +183,26 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 
 				$(this).removeClass("over");
 
+				p.oldItems = [];
+				for(var i = 0; i < p.items.length; i++)
+				{
+					p.oldItems.push(p.items[i].name);
+				}
+
 				if(p.unequippingItemType != "") {
 					console.log("unequipping " + p.unequippingItemType);
 					GameStateInterface.prototype.sendUnequip(p.unequippingItemType);
 				}
 
-				console.log(this);
 				if($(this).parent().parent().attr("id") == "trash") {
 
 					console.log("trashing " + p.draggedItemIndex);
 					GameStateInterface.prototype.sendDropItem(p.draggedItemIndex);
 				}
 
+
 				p.unequippingItemType = "";
 				p.flagged = true;
-				p.oldItems = p.items.clone();
 
 			}
 		});

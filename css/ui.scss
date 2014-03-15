@@ -8,6 +8,7 @@ div#interface {
 
 }
 
+
 div.ui-base {
 
 	background: rgba(0, 0, 0, 0.7);
@@ -15,15 +16,15 @@ div.ui-base {
 
 }
 
-div.ui-frame {
+div.ui-modal {
 
     z-index: 0;
     position: absolute;
-    right: 500px;
-    bottom: 60px;
+    top: 30px;
     transition: opacity 0.25s ease-out;
     opacity: 0; 
     text-align: center;
+    z-index: -100 !important;
     
     span.title {
         color: White;
@@ -31,10 +32,10 @@ div.ui-frame {
     }
 }
 
-div.ui-frame.open {
+div.ui-modal.open {
 
 	opacity: 1;
-	z-index: 50;
+	z-index: 100 !important;
 }
 
 @mixin ui-frame($width, $height) {

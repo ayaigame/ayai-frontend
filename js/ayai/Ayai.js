@@ -84,10 +84,12 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
         ayai.game.load.spritesheet('npc', '../assets/sprites/npc/npcsheet.png', 32, 48);
         ayai.game.load.spritesheet('healthframe', '../assets/sprites/ui/healthframe.png', 48, 13);
         ayai.game.load.spritesheet('itemicons', '../assets/sprites/ui/itemicons.png', 40, 40);
+        ayai.game.load.spritesheet('sword', '../assets/sprites/weapons/swordsheet.png', 18, 18)
         ayai.game.load.image('skillicon', '../assets/sprites/ui/skillsheet.png');
         ayai.game.load.tilemap('tilemap', ayai.tilemap, null, Phaser.Tilemap.TILED_JSON);
         ayai.game.load.tileset('tileset', ayai.tileset, ayai.TILE_WIDTH, ayai.TILE_HEIGHT);
-        ayai.game.load.audio('zelda', ['../assets/audio/overworld.mp3']);
+        ayai.game.load.audio('zelda', ['../assets/audio/music/overworld.mp3']);
+        ayai.game.load.audio('sword', ['../assets/audio/sfx/sword.mp3']);
     };
 
 
@@ -105,7 +107,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
 
 
         $("ul#skills").css("left", (($("div#chat").position().left + $("ul.unitframes").width())/2) - $("ul#skills").width() / 2);
-
+        $("div.ui-modal").css("left", (($("div#chat").position().left + $("ul.unitframes").width())/2) - $("div#char-window").width() / 2);
         // -----------------------------------------------
 
 
@@ -114,8 +116,9 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
 
         ayai.renderMap(ayai.currentTileset, ayai.currentTilemap);
 
-        music = ayai.game.add.audio('zelda');
-        //music.play();
+        ayai.music = {zelda: ayai.game.add.audio('zelda')};
+        ayai.sfx = {sword: ayai.game.add.audio('sword')};
+
     }
     
     window.onresize = function() {
@@ -134,6 +137,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
         }
 
 
+        $("div.ui-modal").css("left", (($("div#chat").position().left + $("ul.unitframes").width())/2) - $("div#char-window").width() / 2);
         $("ul#skills").css("left", (($("div#chat").position().left + $("ul.unitframes").width())/2) - $("ul#skills").width() / 2);
 
 
@@ -187,7 +191,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
                 ayai.game.load.start();
                 ayai.gameLoaded = false;
                 ayai.game.load.onLoadComplete.dispatch = function() {
-                    ayai.currentTileset = 'tileset'
+                    ayai.currentTileset = 'tileset';
                     ayai.currentTilemap = 'tilemap';
                     ayai.renderMap(ayai.currentTileset, ayai.currentTilemap);
                 }
@@ -202,7 +206,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
                 p.acceptQuest.show(evt.detail.msg);
 
             case "attack":
-                //ayai.gameState.displayAttack(evt.detail.msg);
+                ayai.gameState.displayAttack(evt.detail.msg);
                 break; 
 
             case "chat":

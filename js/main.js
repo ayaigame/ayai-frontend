@@ -14,6 +14,7 @@ window.onload = function() {
 			Inventory: 'ayai/display/Inventory',
 			Chat: 'ayai/display/hud/Chat',
 			QuestLog: 'ayai/display/QuestLog',
+			AcceptQuest: 'ayai/display/AcceptQuest',
 			Entity: 'ayai/game/Entity',
 			UnitFrame: 'ayai/display/hud/UnitFrame',
 			GameStateInterface: 'ayai/game/GameStateInterface',

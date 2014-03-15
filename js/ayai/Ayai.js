@@ -1,6 +1,6 @@
 
-define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "Inventory", "Chat", "QuestLog"], 
-    function(Phaser, InputHandler, Connection, GameStateInterface, Inventory, Chat, QuestLog) {
+define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "Inventory", "Chat", "QuestLog", "AcceptQuest"], 
+    function(Phaser, InputHandler, Connection, GameStateInterface, Inventory, Chat, QuestLog, AcceptQuest) {
     // constructor
 
     ayai = Ayai.prototype;
@@ -95,12 +95,13 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
 
         ayai.gameState = new GameStateInterface(ayai.game, ayai.connection, ayai.characterId);
 
-        console.log("Assets loaded. Ready to PLAY!!!111");
+        console.log("Assets loaded. Ready to PLAY!!!");
 
         // ---- Instantiate JS logic for HTML5 UI Elements
         ayai.inventory = new Inventory();
         ayai.chat = new Chat(ayai.connection, ayai.characterId);
         ayai.questLog = new QuestLog();
+        ayai.acceptQuest = new AcceptQuest(); 
 
 
         $("ul#skills").css("left", (($("div#chat").position().left + $("ul.unitframes").width())/2) - $("ul#skills").width() / 2);
@@ -109,7 +110,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
 
 
         //pass references to everything into the input handler for now. baaaad rob
-        ayai.inputHandler = new InputHandler(ayai.game, ayai.gameState, ayai.inventory, ayai.chat, ayai.questLog);
+        ayai.inputHandler = new InputHandler(ayai.game, ayai.gameState, ayai.inventory, ayai.chat, ayai.questLog, ayai.acceptQuest);
 
         ayai.renderMap(ayai.currentTileset, ayai.currentTilemap);
 
@@ -196,6 +197,9 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
                 if (ayai.gameLoaded)
                     ayai.gameState.updateEntities(evt.detail.msg);
                 break;
+
+            case "quest":
+                p.acceptQuest.show(evt.detail.msg);
 
             case "attack":
                 //ayai.gameState.displayAttack(evt.detail.msg);

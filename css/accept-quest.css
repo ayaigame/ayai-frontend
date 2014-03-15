@@ -1,0 +1,26 @@
+div#accept-quest {
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid #bbbbbb;
+  position: absolute;
+  right: 500px;
+  bottom: 300px;
+  transition: opacity 0.25s ease-out;
+  opacity: 0;
+  text-align: center;
+  width: 550px;
+  height: 300px;
+  color: white; }
+  div#accept-quest div.ActiveLabel {
+    float: left;
+    margin: 5px; }
+  div#accept-quest div.CompleteLabel {
+    float: right;
+    margin: 5px; }
+  div#accept-quest div#QuestObjectiveList {
+    text-align: left; }
+  div#accept-quest p.questText {
+    margin-left: 15px; }
+
+div#accept-quest.open {
+  transition: opacity 0.25s ease-out;
+  opacity: 1; }

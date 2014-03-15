@@ -1,7 +1,6 @@
 div#questlog {
   background: rgba(0, 0, 0, 0.7);
   border: 2px solid #bbbbbb;
-  z-index: 50;
   position: absolute;
   right: 500px;
   bottom: 60px;
@@ -66,3 +65,6 @@ div#questList {
 div#questlog.open {
   transition: opacity 0.25s ease-out;
   opacity: 1; }
+
+.open {
+  z-index: 1000; }

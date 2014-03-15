@@ -1,0 +1,16 @@
+div#graphics-settings {
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid #bbbbbb;
+  z-index: 50;
+  position: absolute;
+  right: 500px;
+  bottom: 600px;
+  transition: opacity 0.25s ease-out;
+  opacity: 0;
+  text-align: center;
+  width: 300;
+  height: 500; }
+
+div#graphics-settings.open {
+  opacity: 1;
+  transition: opacity 0.25s ease-out; }

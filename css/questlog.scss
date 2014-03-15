@@ -7,7 +7,6 @@ $padding: 10px;
 
     	background: rgba(0, 0, 0, 0.7);
         border: 2px solid #bbbbbb;
-        z-index: 50;
         position: absolute;
         right: 500px;
         bottom: 60px;
@@ -16,6 +15,7 @@ $padding: 10px;
         text-align: center;
         width:$width;
         height:$height;
+
 
 
         div#header {
@@ -84,9 +84,6 @@ div#questList {
 }
 
 
-    div#questTitle {
-        
-    }
 
     .ActiveQuest {
         color:Yellow;
@@ -103,3 +100,7 @@ div#questList {
         transition: opacity 0.25s ease-out;
         opacity: 1;
     }
+
+.open {
+    z-index:1000;
+}

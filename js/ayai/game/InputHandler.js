@@ -1,13 +1,14 @@
 define("InputHandler", ["phaser", "InputEvent"], function (Phaser, InputEvent) {
 	var p = InputHandler.prototype;
 
-	function InputHandler(game, gameState, inventory, chat, questLog) {
+	function InputHandler(game, gameState, inventory, chat, questLog, acceptQuest) {
 
 		p.game = game;
 		p.gameState = gameState;
 		p.inventory = inventory;
 		p.chat = chat;
 		p.questLog = questLog;
+		p.acceptQuest = acceptQuest;
 		boundKeys = [];
 
 		upKey = p.game.input.keyboard.addKey(Phaser.Keyboard.W);
@@ -18,6 +19,7 @@ define("InputHandler", ["phaser", "InputEvent"], function (Phaser, InputEvent) {
 		iKey = p.game.input.keyboard.addKey(Phaser.Keyboard.I);
 		lKey = p.game.input.keyboard.addKey(Phaser.Keyboard.L);
 		gKey = p.game.input.keyboard.addKey(Phaser.Keyboard.G);
+		tKey = p.game.input.keyboard.addKey(Phaser.Keyboard.T);
 
 		boundKeys.push(upKey);
 		boundKeys.push(downKey);
@@ -27,6 +29,7 @@ define("InputHandler", ["phaser", "InputEvent"], function (Phaser, InputEvent) {
 		boundKeys.push(iKey);
 		boundKeys.push(lKey);
 		boundKeys.push(gKey);
+		boundKeys.push(tKey);
 
 		enterKey = p.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
 
@@ -72,6 +75,11 @@ define("InputHandler", ["phaser", "InputEvent"], function (Phaser, InputEvent) {
 		lKey.onDown.add(function() {
 			p.questLog.toggle();
 		});
+		tKey.onDown.add(function() {
+			var quest = {title:"Test Quest", description:"You must kill troublesome boars in the forest",
+						objectives:[{name:"Kill Boars", totalCompleted:1, totalNeeded:1000}]};
+			p.acceptQuest.show(quest);
+		})
 		gKey.onDown.add(function() {
 			Window.character.displayDamage();
 		});

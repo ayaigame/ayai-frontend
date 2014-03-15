@@ -46,9 +46,11 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
             horizontal = false;
         }
         if (vertical != null || horizontal != null) {
+            Window.character.state = Entity.prototype.STATE.WALKING;
             var message = new StartMovementMessage(p.characterId, vertical, horizontal);
             p.connection.send(message.data);
         } else {
+            Window.character.state = Entity.prototype.STATE.IDLE;
             var message = new StopMovementMessage(p.characterId);
             p.connection.send(message.data);
         }
@@ -63,16 +65,16 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
                 attackAnim = "attackup";
                 break;
             case Entity.prototype.FACING.RIGHT:
-                attackanim = "attackright";
+                attackAnim = "attackright";
                 break;
             case Entity.prototype.FACING.LEFT:
-                attackanim = "attackleft";
+                attackAnim = "attackleft";
                 break;
             case Entity.prototype.FACING.DOWN:
-                attackanim = "attackdown";
+                attackAnim = "attackdown";
                 break;
         }
-        Window.character.setAnimation(attackanim, false);
+        Window.character.setAnimation(attackAnim, 8, false);
         var message = new AttackMessage();
         p.connection.send(message.data);
     };
@@ -92,6 +94,13 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
         p.connection.send(message.data);
     };
 
+    p.displayAttack = function(json) {
+
+        var initiator = json.initator;
+        var victim = json.victim;
+
+        this.entities[victim].displayDamage(json.damage);
+    }
 
     p.updateEntities = function(json) {
 
@@ -151,7 +160,7 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
 
     p.addNonPlayerCharacter = function(json) {
 
-        console.log("adding player character" + json.id);
+        console.log("adding non-player character" + json.id);
         var newChar = new Entity(json);
         newChar.buildSprite(p.game, '');
         this.entities[json.id] = newChar;
@@ -189,29 +198,37 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
             switch (ev.key) {
                 case "isUp":
                     p.isUp = true;
-                    if (!p.isDown)
+                    if (!p.isDown) {
                         Window.character.setAnimation('walkup');
+                        Window.character.facing = Entity.prototype.FACING.UP;
+                    }
                     else Window.character.setAnimation('faceup');
                     p.sendMovement();
                     break;
                 case "isLeft":
                     p.isLeft = true;
-                    if (!p.isRight)
+                    if (!p.isRight) {
                         Window.character.setAnimation('walkleft');
+                        Window.character.facing = Entity.prototype.FACING.LEFT;
+                    }
                     else Window.character.setAnimation('faceleft');
                     p.sendMovement();
                     break;
                 case "isRight":
                     p.isRight = true;
-                    if (!p.isLeft)
+                    if (!p.isLeft) {
                         Window.character.setAnimation('walkright');
+                        Window.character.facing = Entity.prototype.FACING.RIGHT;
+                    }
                     else Window.character.setAnimation('faceright');
                     p.sendMovement();
                     break;
                 case "isDown":
                     p.isDown = true;
-                    if (!p.isUp)
+                    if (!p.isUp) {
                         Window.character.setAnimation('walkdown');
+                        Window.character.facing = Entity.prototype.FACING.DOWN;
+                    }
                     else Window.character.setAnimation('facedown');
                     p.sendMovement();
                     break;
@@ -223,8 +240,10 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
                         Window.character.setAnimation('walkleft');
                     if (p.isDown)
                         Window.character.setAnimation('walkdown');
-                    if (!p.isDown && !p.isRight && !p.isLeft)
+                    if (!p.isDown && !p.isRight && !p.isLeft) {
                         Window.character.setAnimation('faceup');
+                        Window.character.facing = Entity.prototype.FACING.UP;
+                    }
                     p.sendMovement();
                     break;
                 case "!isLeft":
@@ -235,8 +254,10 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
                         Window.character.setAnimation('walkdown');
                     if (p.isRight)
                         Window.character.setAnimation('walkright');
-                    if (!p.isDown && !p.isUp && !p.isRight)
+                    if (!p.isDown && !p.isUp && !p.isRight) {
                         Window.character.setAnimation('faceleft');
+                        Window.character.facing = Entity.prototype.FACING.LEFT;
+                    }
                     p.sendMovement();
                     break;
                 case "!isRight":
@@ -247,8 +268,10 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
                         Window.character.setAnimation('walkdown');
                     if (p.isLeft)
                         Window.character.setAnimation('walkleft');
-                    if (!p.isDown && !p.isUp && !p.isLeft)
+                    if (!p.isDown && !p.isUp && !p.isLeft) {
                         Window.character.setAnimation('faceright');
+                        Window.character.facing = Entity.prototype.FACING.RIGHT;
+                    }
                     p.sendMovement();
                     break;
                 case "!isDown":
@@ -259,8 +282,10 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
                         Window.character.setAnimation('walkleft');
                     if (p.isUp)
                         Window.character.setAnimation('walkup');
-                    if (!p.Up && !p.isRight && !p.isLeft)
+                    if (!p.Up && !p.isRight && !p.isLeft) {
                         Window.character.setAnimation('facedown');
+                        Window.character.facing = Entity.prototype.FACING.DOWN;
+                    }
                     p.sendMovement();
                     break;
             }

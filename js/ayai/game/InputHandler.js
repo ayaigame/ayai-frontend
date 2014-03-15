@@ -67,6 +67,8 @@ define("InputHandler", ["phaser", "InputEvent"], function (Phaser, InputEvent) {
 	p.registerKeyPresses = function() {
 
 		spaceKey.onDown.add(function() {
+
+			ayai.sfx.sword.play();
 			p.gameState.sendAttack();
 		});
 		iKey.onDown.add(function() {

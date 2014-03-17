@@ -149,15 +149,27 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
             for (var i = 0; i < npcs.length; i++) {
                 var npc = npcs[i];
                 var newnpc = ayai.game.add.sprite(npc.position.x, npc.position.y, 'npc');
+                newnpc.inputEnabled = true;
+                console.log(newnpc);
+                newnpc.events.onInputDown.add(function() {
+                    console.log("clicked the npc");
+                    ayai.gameState.sendNPCInteractionMessage(npc.sprite_id);
+                });
+
+
                 switch (npc.sprite_id) {
                     case "0":
                         newnpc.animations.add('facedown', [0]);
                         break;
                 }
+
+
             }
             newnpc.animations.play('facedown', 1, true);
         });
     };
+
+
 
     ayai._messageReceived = function(evt) {
 

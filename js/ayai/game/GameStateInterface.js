@@ -1,5 +1,5 @@
-define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "StopMovementMessage", "AttackMessage", "EquipMessage", "UnequipMessage", "DropItemMessage"], 
-    function(Entity, UnitFrame, StartMovementMessage, StopMovementMessage, AttackMessage, EquipMessage, UnequipMessage, DropItemMessage) {
+define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "StopMovementMessage", "AttackMessage", "EquipMessage", "UnequipMessage", "DropItemMessage", "InteractMessage"], 
+    function(Entity, UnitFrame, StartMovementMessage, StopMovementMessage, AttackMessage, EquipMessage, UnequipMessage, DropItemMessage, InteractMessage) {
     //  constructor
     //  ===========
     var p = GameStateInterface.prototype;
@@ -100,7 +100,12 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
         var victim = json.victim;
 
         this.entities[victim].displayDamage(json.damage);
-    }
+    };
+
+    p.sendNPCInteractionMessage = function(npcId) {
+        var message = new InteractMessage(npcId);
+        p.connection.send(message.data);
+    };
 
     p.updateEntities = function(json) {
 

@@ -27,6 +27,6 @@ $(document).ready(function() {
 
 		else
 			ayai.verboseLogger = false;
-	})
+  });
 
 });

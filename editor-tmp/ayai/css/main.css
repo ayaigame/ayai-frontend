@@ -128,6 +128,92 @@ body,html,.container,.login-page, table{
 	margin: 10px 0;
 }
 
+.modals .create div {
+	margin: 0;
+}
+
+.modals .create .list {
+	float: left;
+	width: 20%;
+	border-radius: 8px;
+	border-top-left-radius: 0;
+	border: 1px solid #ccc;
+	overflow: hidden;
+	margin-bottom: 30px;
+}
+
+.modals .create .list div {
+	padding: 8px;
+	transition: background .5s;
+	cursor: pointer;
+	background: rgba(230,230,230,0);
+}
+
+.modals .create .list div:hover {
+	background: rgba(230,230,230,1);
+}
+
+.modals .create .info {
+	float:left;
+	width: 80%;
+	display:none;
+}
+
+.modals .create .stats {
+	float: left;
+	width: 25%;
+	margin-bottom: 30px;
+	padding-left: 30px;
+}
+
+.modals .create .description {
+	position: relative;
+	float:left;
+	width: 75%;
+	margin-bottom: 10px;
+	font-style: italic;
+	padding: 0 25px;
+	text-align: justify;
+}
+
+.modals .create .description:before {
+	content: '\201C';
+	display: block;
+	position: absolute;
+	top: -5px;
+	left: 0px;
+	font-size: 30px;
+	font-family: serif;
+}
+
+.modals .create .description:after {
+	content: '\201E';
+	display: block;
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	font-size: 30px;
+	font-family: serif;
+}
+
+.modals .create .info span {
+	font-style: bold;
+}
+
+.modals .create .stats div {
+	margin-bottom: 5px;
+}
+
+.modals .create .title {
+	clear: both;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+.modals .create .form .name {
+	margin-bottom: 10px;
+}
+
 .container { 
 	width: 80%;
 	margin: 20px auto 0 auto;
@@ -193,6 +279,9 @@ body,html,.container,.login-page, table{
 	font-weight: 700;
 }
 
+
+
+
 .menu { 
 	line-height: 100px;
 	float: right;
@@ -212,6 +301,18 @@ h2 {
 	font-family: "Overlock";
 	margin: 0 0 15px 0;
 	padding: 0;
+}
+
+.main h2 {
+	float: left;
+}
+
+.main .submenu {
+	float: right;
+}
+
+.main .clear {
+	clear: both;
 }
 
 .content { 

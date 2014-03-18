@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-	$links = $(".links a");
+	$links = $(".links a, .hash");
 	$registerBtn = $(".register.button");
 	$loginBtn = $(".login.button");
 
@@ -15,6 +15,27 @@ $(document).ready(function() {
 	$modalContainer = $(".modals");
 	$modalBackground = $(".modal-background");
 	$modals = $(".modals > div");
+
+	$classList = $(".modals .create .list");
+	$classSummary = null;
+
+	currentClass = null;
+
+	$classList.on("click", "div", function() {
+		$classSummary.hide();
+		currentClass = $(this).html();
+		$(".modals .create .info."+currentClass).show();
+	});
+
+	$(".create .primary-button").click(function(){
+		createCharacter($(".create .name-input").val(), currentClass);	
+
+		//$.post("/create", data, function() {
+
+		//});
+	});
+
+	classInformation = {};
 
 	$modalBackground.click(function() {
 		$modalBackground.hide();
@@ -48,6 +69,13 @@ $(document).ready(function() {
 			$modalBackground.show();
 			$modalContainer.css("display","flex");
 			$(".modals .settings").css("display","block");
+		} else if (hash == "#create") {
+			$modalBackground.show();
+			$modalContainer.css("display","flex");
+			$(".modals .create").css("display","block");
+			//var character = prompt("Create a new character using '<name>,<class' (eg 'Tim,Asian'))","");
+			//var response = character.split(',');
+			//createCharacter(response[0], response[1]); 
 		}
 
 		evt.preventDefault();
@@ -66,7 +94,7 @@ $(document).ready(function() {
 			password: $passwordInput.val()
 		}
 		var hash = makeBaseAuth(info);
-
+		//initAccount();
 
 		$.ajax({
 			type:"POST",
@@ -78,7 +106,6 @@ $(document).ready(function() {
 				initAccount(data);
 			}
 		});
-
 	});
 
 	templates = {
@@ -89,8 +116,51 @@ $(document).ready(function() {
 				'<div class="name">' + obj.name + '</div>' +
 				'<div class="info">Level ' + obj.level + " " + obj.class + "</div>" +
 				'</div>';
+		}, 
+		classList: function(obj) {
+
+		},
+		classSummary: function(obj) {
+			var stats = "";
+			for(item in obj.stats) {
+				stats += '<div><span>' + item + ':</span> ' + obj.stats[item] + '</div>';
+			}
+
+			return ''+
+				'<div class="info ' + obj.name + '">' +
+				'<div class="stats">'+
+					stats +
+				'</div>' +
+				'<div class="description">' +
+					obj.description +
+				'</div>' +
+				'</div>';
 		}
 	}
+
+
+    function createCharacter(username, classType) {
+    	var token = getCookie("token");
+    	var data = {
+    		token: token,
+    		name: username,
+    		class: classType
+    	}
+
+
+		console.log(data);	
+
+        $.post("/create", data, function(response){
+        	console.log(response);
+        	var character = {
+        		name: username,
+        		level: 1,
+        		class: classType
+        	}
+        	var $template = $(templates.characterItem(character));
+			$charSelect.append($template);
+        });
+    }
 
 	$game = $(".game-screen");
 	$gameClient = $(".game-screen .client");
@@ -121,7 +191,6 @@ $(document).ready(function() {
 			opacity: 1,
 			top: 0
 		});
-		console.log("WHY");
 	}
 
 	$registerBtn.click(function(evt){
@@ -132,7 +201,7 @@ $(document).ready(function() {
 		}
 		$.post("/register", info, function(data){
 
-				var template = templates.characterItem(data);
+			//var template = templates.characterItem(data);
 
 		});
 	});
@@ -141,11 +210,43 @@ $(document).ready(function() {
 		$(".login-page").hide();
 		$(".accounts, .player-content").show();
 
+		
 		setCookie("token",token,60*60);
 
 		$charSelect.html("");
 
-			console.log(token);
+		//console.log(token);
+
+		var charsUrl = "characters.json";
+
+		
+		$.get("/classes", function(data){
+			//var response = JSON.parse(data);
+			console.log("!",data);
+			var classes = data.classes;
+			for(var obj in classes){
+				$classList.append('<div>'+classes[obj].name+'</div>');
+				console.log(templates.classSummary(classes[obj]));
+				var $template = $(templates.classSummary(classes[obj]));
+				$classList.after($template);
+			}
+
+			$classSummary = $(".modals .create .info");
+		});
+
+		/*
+		$.get("/chars", function(data){
+			//var response = JSON.parse(data);
+			console.log("!",data);
+			var chars = data;
+			for(var obj in chars){
+				var $template = $(templates.characterItem(chars[obj])).hide();
+				$charSelect.append($template);
+				$template.fadeIn();
+			}
+		});
+		*/
+		
 		$.post("/chars", token, function(data){
 			var response = JSON.parse(data);
 			console.log(response,data);

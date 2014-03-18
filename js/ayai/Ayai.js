@@ -30,7 +30,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
     
     $('button#createAI').click(function() {
       var message = new CreateAIMessage();
-      ayai.connection.send(message);
+      ayai.connection.send(message.data);
       console.log("Creating AI");
     });
 

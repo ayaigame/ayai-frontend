@@ -21,7 +21,7 @@ define("AcceptQuest", ["GameStateInterface"], function(GameStateInterface) {
     p.show = function(message) {
         //Fix this hack
         var questToShow = message.quest;
-        message.quest.entityId = message.entityId;
+        questToShow.entityId = message.entityId;
         p.currentQuest = questToShow;
         p.renderQuest(questToShow);
         $('div#accept-quest').toggleClass("open");

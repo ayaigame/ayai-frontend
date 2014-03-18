@@ -215,11 +215,8 @@ $(document).ready(function() {
 
 		$charSelect.html("");
 
-		//console.log(token);
-
-		var charsUrl = "characters.json";
-
-		
+		console.log(token);
+			
 		$.get("/classes", function(data){
 			//var response = JSON.parse(data);
 			console.log("!",data);
@@ -233,19 +230,6 @@ $(document).ready(function() {
 
 			$classSummary = $(".modals .create .info");
 		});
-
-		/*
-		$.get("/chars", function(data){
-			//var response = JSON.parse(data);
-			console.log("!",data);
-			var chars = data;
-			for(var obj in chars){
-				var $template = $(templates.characterItem(chars[obj])).hide();
-				$charSelect.append($template);
-				$template.fadeIn();
-			}
-		});
-		*/
 		
 		$.post("/chars", token, function(data){
 			var response = JSON.parse(data);

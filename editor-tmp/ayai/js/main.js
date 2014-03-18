@@ -220,7 +220,7 @@ $(document).ready(function() {
 		$.get("/classes", function(data){
 			var response = JSON.parse(data);
 			console.log("!",data);
-			var classes = data.classes;
+			var classes = response.classes;
 			for(var obj in classes){
 				$classList.append('<div>'+classes[obj].name+'</div>');
 				console.log(templates.classSummary(classes[obj]));

@@ -1,4 +1,4 @@
-define("AcceptQuest", ["MessageSender"], function() {
+define("AcceptQuest", ["GameStateInterface"], function(GameStateInterface) {
 
     function AcceptQuest(MessageSender) {
         p.messageSender = MessageSender;
@@ -36,9 +36,7 @@ define("AcceptQuest", ["MessageSender"], function() {
 
     p.sendAcceptMessage = function(questToAccept) {
         console.log(questToAccept);
-        //Send a message using p.message sender
-        //questToAccept is the questMessage that was received so you can grab the ID from there
-        //to create a new message to send back to the server
+        GameStateInterface.prototype.sendAcceptQuestMessage(questToAccept.id);
     }
 
     p.update = function(quests) {};

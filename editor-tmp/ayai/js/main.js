@@ -183,7 +183,7 @@ $(document).ready(function() {
 		$.post("/register", info, function(data){
 
 				var template = templates.characterItem(data);
-
+				alert("registered " + token);
 		});
 	});
 

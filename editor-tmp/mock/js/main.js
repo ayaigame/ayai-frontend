@@ -94,8 +94,9 @@ $(document).ready(function() {
 			password: $passwordInput.val()
 		}
 		var hash = makeBaseAuth(info);
-		//initAccount();
+		initAccount();
 
+		/*
 		$.ajax({
 			type:"POST",
 			url: "/login",
@@ -106,6 +107,7 @@ $(document).ready(function() {
 				initAccount(data);
 			}
 		});
+		*/
 	});
 
 	templates = {
@@ -159,9 +161,6 @@ $(document).ready(function() {
         	}
         	var $template = $(templates.characterItem(character));
 			$charSelect.append($template);
-			$modalBackground.hide();
-			$modalContainer.hide();
-			$modals.hide();
         });
     }
 
@@ -202,11 +201,15 @@ $(document).ready(function() {
 			email: $emailInput.val(),
 			password: $passwordInput.val()
 		}
+
+		initAccount();
+		/*
 		$.post("/register", info, function(data){
-			alert("registered! " + data);
+
 			//var template = templates.characterItem(data);
-			initAccount(data);
+
 		});
+		*/
 	});
 
 	function initAccount(token) {
@@ -218,12 +221,15 @@ $(document).ready(function() {
 
 		$charSelect.html("");
 
-		console.log(token);
-			
-		$.get("/classes", function(data){
-			var response = JSON.parse(data);
+		//console.log(token);
+
+		var charsUrl = "characters.json";
+
+		
+		$.get("classes.json", function(data){
+			//var response = JSON.parse(data);
 			console.log("!",data);
-			var classes = response.classes;
+			var classes = data.classes;
 			for(var obj in classes){
 				$classList.append('<div>'+classes[obj].name+'</div>');
 				console.log(templates.classSummary(classes[obj]));
@@ -233,7 +239,20 @@ $(document).ready(function() {
 
 			$classSummary = $(".modals .create .info");
 		});
+
 		
+		$.get("characters.json", function(data){
+			//var response = JSON.parse(data);
+			console.log("!",data);
+			var chars = data;
+			for(var obj in chars){
+				var $template = $(templates.characterItem(chars[obj])).hide();
+				$charSelect.append($template);
+				$template.fadeIn();
+			}
+		});
+		
+		/*
 		$.post("/chars", token, function(data){
 			var response = JSON.parse(data);
 			console.log(response,data);
@@ -244,6 +263,7 @@ $(document).ready(function() {
 				$template.fadeIn();
 			}
 		});
+		*/
 	}
 
 	function makeBaseAuth(info) {

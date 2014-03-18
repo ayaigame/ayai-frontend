@@ -1,4 +1,4 @@
-define("QuestLog", function() {
+define("QuestLog", ["GameStateInterface", "AbandonQuestMessage"], function(GameStateInterface, AbandonQuestMessage) {
 
     function QuestLog() {
 
@@ -37,13 +37,18 @@ define("QuestLog", function() {
         p.attachClickListeners();
 
         if (p.selectedQuest == null) {
+            $('div#questlogRight').html("");
             return;
         }
 
         var templateSource = $("#questView-template").html();
         var template = Handlebars.compile(templateSource);
+        p.selectedQuest.showAbandon = true;
         var html = template(p.selectedQuest);
+        console.log(p.selectedQuest);
+        p.selectedQuest.showAbandon = false;
         $('div#questlogRight').html(html);
+        p.attachAbandonListener();
     };
 
     p.toggle = function() {
@@ -60,6 +65,20 @@ define("QuestLog", function() {
             p.renderQuests();
         });
     };
+
+    p.attachAbandonListener = function() {
+        $('button.abandonButton').on('click', function() {
+            console.log("Clicked!");
+            console.log($(this).data('questid'));
+            var questId = $(this).data('questid');
+            GameStateInterface.prototype.sendAbandonQuestMessage($(this).data('questid'));
+            p.questList = _.filter(p.questList, function(quest){ return quest.id != questId; });
+            p.selectedQuest = null;
+            p.renderQuests();
+        });
+    }
+
+
 
     p.update = function(quests) {};
     return QuestLog;

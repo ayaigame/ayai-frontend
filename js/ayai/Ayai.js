@@ -215,7 +215,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
                 break;
 
             case "quest-offer":
-                ayai.acceptQuest.show(evt.detail.msg.quest);
+                ayai.acceptQuest.show(evt.detail.msg);
 
             case "attack":
                 ayai.gameState.displayAttack(evt.detail.msg);

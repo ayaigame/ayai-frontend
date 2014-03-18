@@ -189,8 +189,8 @@ $(document).ready(function() {
 		}
 		$.post("/register", info, function(data){
 
-				initAccount(token);
-				alert("registered " + token);
+				initAccount(data);
+				alert("registered " + data);
 		});
 	});
 

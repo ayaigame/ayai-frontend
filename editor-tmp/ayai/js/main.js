@@ -201,7 +201,7 @@ $(document).ready(function() {
 			password: $passwordInput.val()
 		}
 		$.post("/register", info, function(data){
-
+			alert("registered! " + data);
 			//var template = templates.characterItem(data);
 			initAccount(data);
 		});

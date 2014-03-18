@@ -28,6 +28,7 @@ define("AcceptQuest", ["GameStateInterface"], function(GameStateInterface) {
         $('button.quest-accept-button').on('click', function(questToShow) {
             console.log("got here");
             p.sendAcceptMessage(questToAccept);
+            $('div#accept-quest').removeClass("open");
         });
         $('button.quest-decline-button').on('click', function(questToShow) {
             $('div#accept-quest').removeClass("open");

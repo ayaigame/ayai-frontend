@@ -201,7 +201,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
                 break;
 
             case "disconnect":
-                console.log(evt.detail.msg);
+                ayai.gameState.disconnect(evt.detail.msg);
                 break;
 
 

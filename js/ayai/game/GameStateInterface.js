@@ -109,7 +109,8 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
         var initiator = json.initator;
         var victim = json.victim;
 
-        this.entities[victim].displayDamage(json.damage);
+        if(this.entities[victim] != undefined)
+            this.entities[victim].displayDamage(json.damage);
     };
 
     p.sendNPCInteractionMessage = function(npcId) {
@@ -184,6 +185,13 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
         var newChar = new Entity(json);
         this.entities[json.id] = newChar;
         return newChar;
+    }
+
+
+    p.disconnect = function(json) {
+
+        console.log("removing character " + json.id);
+        this.removeCharacter(this.entities[json.id]);
     }
 
     p.removeCharacter = function(e) {

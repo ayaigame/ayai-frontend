@@ -240,7 +240,11 @@ define("Entity", ["phaser"], function(Phaser) {
 
 
     p.removeFromStage = function() {
-        ayai.stage.removeChild(this.sprite);
+
+        this.namePlate.destroy();
+        this.sprite.destroy();
+        this.healthFrame.destroy();
+        this.healthBar.destroy();
     }
 
 	return Entity;

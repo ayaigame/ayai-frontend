@@ -1,6 +1,6 @@
 
-define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "Inventory", "Chat", "QuestLog", "AcceptQuest"], 
-    function(Phaser, InputHandler, Connection, GameStateInterface, Inventory, Chat, QuestLog, AcceptQuest) {
+define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "Inventory", "Chat", "QuestLog", "AcceptQuest", "CreateAIMessage"], 
+    function(Phaser, InputHandler, Connection, GameStateInterface, Inventory, Chat, QuestLog, AcceptQuest, CreateAIMessage) {
     // constructor
 
     ayai = Ayai.prototype;
@@ -28,6 +28,12 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
     };
 
     
+    $('button#createAI').click(function() {
+      var message = new CreateAIMessage();
+      ayai.connection.send(message.data);
+      console.log("Creating AI");
+    });
+
 
     ayai.renderMap = function(tileset, tilemap, options) {
 
@@ -201,7 +207,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
                 break;
 
             case "disconnect":
-                console.log(evt.detail.msg);
+                ayai.gameState.disconnect(evt.detail.msg);
                 break;
 
 

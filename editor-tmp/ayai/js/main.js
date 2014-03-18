@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-	$links = $(".links a, .hash");
+	$links = $(".links a");
 	$registerBtn = $(".register.button");
 	$loginBtn = $(".login.button");
 
@@ -70,13 +70,6 @@ $(document).ready(function() {
 			$modalBackground.show();
 			$modalContainer.css("display","flex");
 			$(".modals .settings").css("display","block");
-		} else if (hash == "#create") {
-			$modalBackground.show();
-			$modalContainer.css("display","flex");
-			$(".modals .create").css("display","block");
-			//var character = prompt("Create a new character using '<name>,<class' (eg 'Tim,Asian'))","");
-			//var response = character.split(',');
-			//createCharacter(response[0], response[1]); 
 		}
 
 		evt.preventDefault();
@@ -95,7 +88,7 @@ $(document).ready(function() {
 			password: $passwordInput.val()
 		}
 		var hash = makeBaseAuth(info);
-		//initAccount();
+
 
 		$.ajax({
 			type:"POST",
@@ -107,6 +100,7 @@ $(document).ready(function() {
 				initAccount(data);
 			}
 		});
+
 	});
 
 	templates = {
@@ -116,25 +110,6 @@ $(document).ready(function() {
 				'<div class="icon"></div>' +
 				'<div class="name">' + obj.name + '</div>' +
 				'<div class="info">Level ' + obj.level + " " + obj.class + "</div>" +
-				'</div>';
-		}, 
-		classList: function(obj) {
-
-		},
-		classSummary: function(obj) {
-			var stats = "";
-			for(item in obj.stats) {
-				stats += '<div><span>' + item + ':</span> ' + obj.stats[item] + '</div>';
-			}
-
-			return ''+
-				'<div class="info ' + obj.name + '">' +
-				'<div class="stats">'+
-					stats +
-				'</div>' +
-				'<div class="description">' +
-					obj.description +
-				'</div>' +
 				'</div>';
 		}
 	}
@@ -196,6 +171,7 @@ $(document).ready(function() {
 			opacity: 1,
 			top: 0
 		});
+		console.log("WHY");
 	}
 
 	$registerBtn.click(function(evt){
@@ -205,9 +181,9 @@ $(document).ready(function() {
 			password: $passwordInput.val()
 		}
 		$.post("/register", info, function(data){
-			alert("registered! " + data);
-			//var template = templates.characterItem(data);
-			initAccount(data);
+
+				var template = templates.characterItem(data);
+
 		});
 	});
 
@@ -215,7 +191,6 @@ $(document).ready(function() {
 		$(".login-page").hide();
 		$(".accounts, .player-content").show();
 
-		
 		setCookie("token",token,60*60);
 
 		$charSelect.html("");

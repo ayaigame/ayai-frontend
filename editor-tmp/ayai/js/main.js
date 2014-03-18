@@ -159,6 +159,7 @@ $(document).ready(function() {
         	}
         	var $template = $(templates.characterItem(character));
 			$charSelect.append($template);
+			$modalContainer.hide();
         });
     }
 
@@ -202,7 +203,7 @@ $(document).ready(function() {
 		$.post("/register", info, function(data){
 
 			//var template = templates.characterItem(data);
-
+			initAccount();
 		});
 	});
 

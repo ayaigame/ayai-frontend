@@ -1,0 +1,522 @@
+a {
+	color: #028302;
+	transition: color .25s, text-shadow .25s;
+	text-decoration: none;
+	text-shadow: 1px 1px 2px rgba(18,85,18,0); 
+}
+
+a:hover {
+	color: #125512;
+	text-shadow: 1px 1px 3px rgba(18,85,18,0.25); 
+}
+
+.login-page {
+	display: block;
+}
+
+.accounts, .player-content, .admin-content {
+	display: none;
+}
+
+*, *:before, *:after {
+ 	-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;	
+ }
+ 
+ div { 
+ 	font-size: 13px;
+ }
+
+body {
+	color: #333;
+	margin: 0;
+	font-family: "Lato", sans-serif;
+}
+
+body,html,.container,.login-page, table{ 
+	height:100%;
+}
+
+.game-screen {
+	position: absolute;
+	overflow: hidden;
+	top: -20px;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #333;
+	z-index: 50;
+	visibility: hidden;
+	opacity: 0;
+	transition: top .25s, opacity .25s;
+}
+
+.game-screen .loading, .game-screen table {
+	display:box;
+	box-pack:center;
+	box-align:center;
+	display:-webkit-box;
+	-webkit-box-pack:center;
+	-webkit-box-align:center;
+	top: 0;
+	left: 0;
+	width: 150px;
+	height: 100%;
+	margin: 0 auto;
+	color: #fff;
+	font-size: 24px;
+	font-family: "Overlock", sans-serif;
+}
+
+.game-screen td {
+	text-align: center;
+	vertical-align: middle;
+	width: 150px;
+	color: #fff;
+}
+
+.game-screen .client {
+	position: absolute;
+	visibility: hidden;
+	top: -20px;
+	opacity: 0;
+	width: 100%;
+	height: 100%;
+	transition: top .25s, opacity .25s;
+	z-index: 501;
+}
+
+.game-screen iframe {
+	width: 100%;
+	height: 100%;
+	border: 0;
+}
+
+.modals {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	display: none;
+	justify-content: center;
+	align-items: center;
+}
+
+.modal-background {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.25);
+	z-index: 5000;
+	display: none;
+}
+
+.modals > div {
+	border-radius: 5px;
+	border-top-left-radius: 0;
+	background: rgba(255,255,255,0.95);
+	width: 50%;
+	margin: 0 auto;
+	padding: 15px;
+	display: none;
+	z-index:5001;
+}
+
+.modals > div div {
+	margin: 10px 0;
+}
+
+.modals .create div {
+	margin: 0;
+}
+
+.modals .create .list {
+	float: left;
+	width: 20%;
+	border-radius: 8px;
+	border-top-left-radius: 0;
+	border: 1px solid #ccc;
+	overflow: hidden;
+	margin-bottom: 30px;
+}
+
+.modals .create .list div {
+	padding: 8px;
+	transition: background .5s;
+	cursor: pointer;
+	background: rgba(230,230,230,0);
+}
+
+.modals .create .list div:hover {
+	background: rgba(230,230,230,1);
+}
+
+.modals .create .info {
+	float:left;
+	width: 80%;
+	display:none;
+}
+
+.modals .create .stats {
+	float: left;
+	width: 25%;
+	margin-bottom: 30px;
+	padding-left: 30px;
+}
+
+.modals .create .description {
+	position: relative;
+	float:left;
+	width: 75%;
+	margin-bottom: 10px;
+	font-style: italic;
+	padding: 0 25px;
+	text-align: justify;
+}
+
+.modals .create .description:before {
+	content: '\201C';
+	display: block;
+	position: absolute;
+	top: -5px;
+	left: 0px;
+	font-size: 30px;
+	font-family: serif;
+}
+
+.modals .create .description:after {
+	content: '\201E';
+	display: block;
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	font-size: 30px;
+	font-family: serif;
+}
+
+.modals .create .info span {
+	font-style: bold;
+}
+
+.modals .create .stats div {
+	margin-bottom: 5px;
+}
+
+.modals .create .title {
+	clear: both;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+.modals .create .form .name {
+	margin-bottom: 10px;
+}
+
+.container { 
+	width: 80%;
+	margin: 20px auto 0 auto;
+}
+
+.header { 
+	height: 100px;
+}
+
+.accounts .logo {
+	float:left;
+	position: relative;
+	left: -10px;
+	margin-right: 10px;
+	width: 120px;
+}
+
+.accounts .search {
+	float: left;
+	position: relative;
+	width: calc(100% - 394px);
+	line-height: 100px;
+}
+
+.accounts .search input {
+	width: 100%;
+	padding:10px;
+	border: 1px solid #999;
+	border-radius: 5px;
+	border-top-left-radius: 0;
+	outline: none;
+	font-family: "Lato", sans-serif;
+	display:none;
+}
+
+.accounts .search .results {
+	position: absolute;
+	width: 100%;
+	padding: 0;
+	border: 1px solid #999;
+	border-radius: 5px;
+	line-height: normal;
+	top: 69px;
+	opacity: 0;
+	overflow: hidden;
+	pointer-events: none;
+	transition: top .25s, opacity .25s;
+}
+
+.accounts .search .results > div {
+	padding: 10px;
+	background: rgba(255,255,255,.9);
+	transition: background .25s;
+	cursor: pointer;
+}
+
+.accounts .search .results > div:hover {
+	background: rgba(230,230,230,.9);
+}
+
+
+.accounts .search .results span {
+	font-weight: 700;
+}
+
+
+
+
+.menu { 
+	line-height: 100px;
+	float: right;
+	width: 254px;
+	margin-left:10px;
+}
+
+.links a {
+	font-family: "Overlock";
+	font-size: 18px;
+	font-weight: 700;
+	margin-left: 10px;
+	
+}
+
+h2 { 
+	font-family: "Overlock";
+	margin: 0 0 15px 0;
+	padding: 0;
+}
+
+.main h2 {
+	float: left;
+}
+
+.main .submenu {
+	float: right;
+}
+
+.main .clear {
+	clear: both;
+}
+
+.content { 
+	clear: both;
+}
+
+.accounts .side { 
+	width: 27%;
+	padding-right: 20px;
+	float: left;
+}
+
+.overview { 
+	margin-bottom: 15px;
+}
+
+.overview span {
+	font-weight: 700;
+}
+
+.main {
+	width: 73%;
+	float: left;
+}
+
+.main .label {
+	float: left;
+	width: 18%;
+	padding: 10px 0;
+}
+
+.admin-content .main {
+	width: calc(100% - 140px);
+}
+
+.admin-content .side {
+	width: 140px;
+}
+
+.admin-content .main h2 {
+	font-size: 24px;
+	margin: 0;
+}
+
+.admin-content .breadcrumb {
+	margin-bottom: 10px;
+}
+
+.main input, .main textarea {
+	float:left;
+	width: 82%;
+	padding: 10px;
+	border: 1px solid #999;
+	border-radius: 5px;
+	border-top-left-radius: 0;
+	outline: none;
+	transition: border .5s;
+	font-family: "Lato", sans-serif;
+}
+
+.main input:hover, .main textarea:hover,
+.main input:focus, .main textarea:focus {
+	border: 1px solid #222;
+}
+
+.footer {
+	text-align: center;
+	padding-top: 25px;
+	clear: both;
+}
+
+.selection > div {
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	border-top-left-radius: 0;
+	margin-bottom: 10px;
+	transition: background .4s;
+	cursor: pointer;
+}
+
+.selection > div:hover {
+	background: #eee;
+}
+
+.updates > div {
+	margin-bottom: 8px;
+}
+
+.navigation a {
+	display: block;
+	font-size: 15px;
+}
+
+.navigation h2:first-child { margin: 0 0 5px 0; }
+.navigation h2 {
+	margin: 10px 0 5px 0;
+}
+
+.char .name {
+	font-size: 16px;
+	font-weight: 700;
+}
+
+.login-page .main { 
+	float: left;
+	width: 50%;
+}
+
+.login-page .logo {
+	
+}
+
+.login-page .side {
+	position:relative;
+	float: right;
+	width: 50%;
+	padding-left: 10px;
+	top: 80px;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.login-page .subtext {
+	font-family: "Overlock";
+	font-size: 25px;
+	margin: 10px 0;
+	position: relative;
+	top: -61px;
+	right: -158px;
+	width: 180px;
+	line-height: 90%;
+}
+
+.login-page .intro {
+	font-size: 14px;
+	position: relative;
+	top: -55px;
+	left: 15px;
+	width: 300px;
+}
+
+.primary-input input {
+	border: 0px;
+	background: none;
+	font-size: 16px;
+	color: #666666;
+	width: calc(100% - 100px);
+	font-family: "Lato", sans-serif;
+	outline: none;
+} 
+
+.primary-input {
+	width: 100%;
+	background: #fff;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	border-top-left-radius: 0;
+	font-size: 16px;
+	color: #666666;
+	border: 1px solid #999999;
+	padding: 10px;
+	cursor: pointer;
+}
+
+.primary-input span {
+	width: 90px;
+	display: inline-block;
+}
+
+.primary-button {
+	display:inline-block;
+	background: #666666;
+	border-radius: 5px;
+	font-size: 16px;
+	color: #fff;
+	padding: 10px;
+	width: 48%;
+	cursor: pointer;
+	transition: background .3s;
+}
+
+.primary-button:hover {
+	background: #888;
+}
+
+.primary-button.right {
+	position: absolute;
+	right: 0;
+}
+
+.login-page .login {
+}
+
+table {
+	width: 815px;
+	margin: auto;
+}
+
+td { 
+	vertical-align: middle; 
+}
+

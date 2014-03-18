@@ -1,5 +1,5 @@
-define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "StopMovementMessage", "AttackMessage", "EquipMessage", "UnequipMessage", "DropItemMessage", "InteractMessage"], 
-    function(Entity, UnitFrame, StartMovementMessage, StopMovementMessage, AttackMessage, EquipMessage, UnequipMessage, DropItemMessage, InteractMessage) {
+define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "StopMovementMessage", "AttackMessage", "EquipMessage", "UnequipMessage", "DropItemMessage", "InteractMessage", "AbandonQuestMessage", "AcceptQuestMessage"], 
+    function(Entity, UnitFrame, StartMovementMessage, StopMovementMessage, AttackMessage, EquipMessage, UnequipMessage, DropItemMessage, InteractMessage, AbandonQuestMessage, AcceptQuestMessage) {
     //  constructor
     //  ===========
     var p = GameStateInterface.prototype;
@@ -54,6 +54,16 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
             var message = new StopMovementMessage(p.characterId);
             p.connection.send(message.data);
         }
+    };
+
+    p.sendAbandonQuestMessage = function(questId) {
+        var message = new AbandonQuestMessage(questId);
+        p.connection.send(message.data);
+    };
+
+    p.sendAcceptQuestMessage = function(questId) {
+        var message = new AcceptQuestMessage(questId);
+        p.connection.send(message.data);
     };
 
     p.sendAttack = function() {
@@ -111,13 +121,16 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
     p.updateEntities = function(json) {
 
         var players = json.players;
+        var npcs = json.npcs;
+
+        var entities = players.concat(npcs);
 
         ayai.quests = json.models.quests;
         ayai.inventory.sync(json.models.inventory, json.models.equipment);
 
-        for (var index in players) {
+        for (var index in entities) {
 
-            var characterJson = players[index];
+            var characterJson = entities[index];
 
             if(characterJson.id == Window.character.id) {
                 UnitFrame.prototype.syncPlayerFrame(characterJson);

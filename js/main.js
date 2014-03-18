@@ -19,6 +19,8 @@ window.onload = function() {
 			UnitFrame: 'ayai/display/hud/UnitFrame',
 			GameStateInterface: 'ayai/game/GameStateInterface',
 			Connection: 'ayai/net/Connection',
+			AbandonQuestMessage: 'ayai/net/messages/AbandonQuestMessage',
+			AcceptQuestMessage: 'ayai/net/messages/AcceptQuestMessage',
 			DropItemMessage: 'ayai/net/messages/DropItemMessage',
 			UnequipMessage: 'ayai/net/messages/UnequipMessage',
 			EquipMessage: 'ayai/net/messages/EquipMessage',

@@ -17,8 +17,8 @@ $(document).ready(function() {
 	$modals = $(".modals > div");
 
 	$classList = $(".modals .create .list");
-	$classSummary = null;
 	$classInfo = $(".modals .create .summaries");
+	$classSummary = null;
 
 	currentClass = null;
 
@@ -95,8 +95,9 @@ $(document).ready(function() {
 			password: $passwordInput.val()
 		}
 		var hash = makeBaseAuth(info);
-		//initAccount();
+		initAccount();
 
+		/*
 		$.ajax({
 			type:"POST",
 			url: "/login",
@@ -107,6 +108,7 @@ $(document).ready(function() {
 				initAccount(data);
 			}
 		});
+		*/
 	});
 
 	templates = {
@@ -151,9 +153,8 @@ $(document).ready(function() {
 
 		console.log(data);	
 
-        $.post("/create", data, function(response, text, code){
-
-        	console.log(response,text,code);
+       // $.post("/create", data, function(response){
+        	console.log(response);
         	var character = {
         		name: username,
         		level: 1,
@@ -161,10 +162,7 @@ $(document).ready(function() {
         	}
         	var $template = $(templates.characterItem(character));
 			$charSelect.append($template);
-			$modalBackground.hide();
-			$modalContainer.hide();
-			$modals.hide();
-        });
+        //});
     }
 
 	$game = $(".game-screen");
@@ -204,11 +202,15 @@ $(document).ready(function() {
 			email: $emailInput.val(),
 			password: $passwordInput.val()
 		}
+
+		initAccount();
+		/*
 		$.post("/register", info, function(data){
-			alert("registered! " + data);
+
 			//var template = templates.characterItem(data);
-			initAccount(data);
+
 		});
+		*/
 	});
 
 	function initAccount(token) {
@@ -220,10 +222,13 @@ $(document).ready(function() {
 
 		$charSelect.html("");
 
-		console.log(token);
-			
-		$.get("/classes", function(data){
-			var response = JSON.parse(data);
+		//console.log(token);
+
+		var charsUrl = "characters.json";
+
+		
+		$.get("classes.json", function(data){
+			//var response = JSON.parse(data);
 			$classInfo.html("");
 			$classList.html("");
 			console.log("!",data);
@@ -237,7 +242,20 @@ $(document).ready(function() {
 
 			$classSummary = $(".modals .create .info");
 		});
+
 		
+		$.get("characters.json", function(data){
+			//var response = JSON.parse(data);
+			console.log("!",data);
+			var chars = data;
+			for(var obj in chars){
+				var $template = $(templates.characterItem(chars[obj])).hide();
+				$charSelect.append($template);
+				$template.fadeIn();
+			}
+		});
+		
+		/*
 		$.post("/chars", token, function(data){
 			var response = JSON.parse(data);
 			console.log(response,data);
@@ -248,6 +266,7 @@ $(document).ready(function() {
 				$template.fadeIn();
 			}
 		});
+		*/
 	}
 
 	function makeBaseAuth(info) {

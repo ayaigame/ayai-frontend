@@ -1,0 +1,28 @@
+{
+	"classes": [
+		{
+			"id": 0,
+			"name": "Mage",
+			"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur nec libero commodo, tempor ipsum vel, scelerisque dui. Duis ipsum mi, tempus ut turpis vel, semper sagittis tellus.",
+			"stats": {
+				"Strength": 5,
+				"Intellect": 10,
+				"Agility": 4,
+				"Health": 141,
+				"Mana": 214
+			}
+		}, 
+		{
+			"id": 1,
+			"name": "Warrior",
+			"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur nec libero commodo, tempor ipsum vel, scelerisque dui. Duis ipsum mi, tempus ut turpis vel, semper sagittis tellus.",
+			"stats": {
+				"Strength": 12,
+				"Intellect": 5,
+				"Agility": 8,
+				"Health": 214,
+				"Mana": 74
+			}
+		} 
+	]
+}

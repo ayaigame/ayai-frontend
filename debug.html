@@ -17,6 +17,7 @@
     <script data-main="js/main" src="js/lib/require.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
     <script src="js/lib/jquery-ui-1.10.4.custom.min.js"></script>
     <script src="menus.js"></script>
     <script src="debug.js"></script>
@@ -36,6 +37,9 @@
       <br/>
       <hr/>
       <p class="questText">{{description}}</p>
+      {{#if showAbandon}}
+        <button class="abandonButton" data-questid="{{id}}">Abandon</button>
+      {{/if}}
     </div>
     </script>
 
@@ -194,7 +198,7 @@
       <button class="quest-decline-button">Decline</button>
       </div>
     </div>
-    <div id="questlog">
+    <div id="questlog" class="ui-base ui-modal">
       <div id="header">
         <h4>Quest Journal</h4>
         <hr/>
@@ -219,7 +223,7 @@
         </div>
       </div>
     </div>
-    <div id="char-window" class="ui-base ui-frame">
+    <div id="char-window" class="ui-base ui-modal">
       <div id="container">
         <div id="equipment">
           <div>

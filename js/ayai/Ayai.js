@@ -39,7 +39,6 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
 
         ayai.game.world.destroy();
         ayai.gameState.clearEntities();
-        placeNpcs();
 
         var tileset = ayai.game.add.tileset(tileset);
         ayai.map = ayai.game.add.tilemap(tilemap);
@@ -73,7 +72,8 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
             health: {
                 currHealth: 1,
                 maximumHealth: 1
-            }
+            },
+            spritesheet: ayai.spritesheet
         });
 
         ayai.game.world.setBounds(0, 0, mapWidth, mapHeight);
@@ -88,12 +88,15 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
         console.log("Loading assets...");
         ayai.game.load.spritesheet('guy', '../assets/sprites/guy/guysheet.png', 32, 32);
         ayai.game.load.spritesheet('npc', '../assets/sprites/npc/npcsheet.png', 32, 48);
+        ayai.game.load.spritesheet('props', '../assets/sprites/props/gravesheet.png', 40, 40);
         ayai.game.load.spritesheet('healthframe', '../assets/sprites/ui/healthframe.png', 48, 13);
         ayai.game.load.spritesheet('itemicons', '../assets/sprites/ui/itemicons.png', 40, 40);
+        ayai.game.load.spritesheet('sword', '../assets/sprites/weapons/swordsheet.png', 18, 18)
         ayai.game.load.image('skillicon', '../assets/sprites/ui/skillsheet.png');
         ayai.game.load.tilemap('tilemap', ayai.tilemap, null, Phaser.Tilemap.TILED_JSON);
         ayai.game.load.tileset('tileset', ayai.tileset, ayai.TILE_WIDTH, ayai.TILE_HEIGHT);
-        ayai.game.load.audio('zelda', ['../assets/audio/overworld.mp3']);
+        ayai.game.load.audio('zelda', ['../assets/audio/music/overworld.mp3']);
+        ayai.game.load.audio('sword', ['../assets/audio/sfx/sword.mp3']);
     };
 
 
@@ -111,7 +114,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
 
 
         $("ul#skills").css("left", (($("div#chat").position().left + $("ul.unitframes").width())/2) - $("ul#skills").width() / 2);
-
+        $("div.ui-modal").css("left", (($("div#chat").position().left + $("ul.unitframes").width())/2) - $("div#char-window").width() / 2);
         // -----------------------------------------------
 
 
@@ -120,8 +123,9 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
 
         ayai.renderMap(ayai.currentTileset, ayai.currentTilemap);
 
-        music = ayai.game.add.audio('zelda');
-        //music.play();
+        ayai.music = {zelda: ayai.game.add.audio('zelda')};
+        ayai.sfx = {sword: ayai.game.add.audio('sword')};
+
     }
     
     window.onresize = function() {
@@ -140,26 +144,12 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
         }
 
 
+        $("div.ui-modal").css("left", (($("div#chat").position().left + $("ul.unitframes").width())/2) - $("div#char-window").width() / 2);
         $("ul#skills").css("left", (($("div#chat").position().left + $("ul.unitframes").width())/2) - $("ul#skills").width() / 2);
 
 
     }
 
-    function placeNpcs() {
-        $.get(ayai.tilemap, function(val) {
-            var npcs = val.npcs;
-            for (var i = 0; i < npcs.length; i++) {
-                var npc = npcs[i];
-                var newnpc = ayai.game.add.sprite(npc.position.x, npc.position.y, 'npc');
-                switch (npc.sprite_id) {
-                    case "0":
-                        newnpc.animations.add('facedown', [0]);
-                        break;
-                }
-            }
-            newnpc.animations.play('facedown', 1, true);
-        });
-    };
 
     ayai._messageReceived = function(evt) {
 
@@ -179,6 +169,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
                 ayai.characterId = evt.detail.msg.id;
                 ayai.startingX = evt.detail.msg.x;
                 ayai.startingY = evt.detail.msg.y;
+                ayai.spritesheet = evt.detail.msg.spritesheet;
                 ayai.tileset = "/assets/tiles/" + evt.detail.msg.tilesets[0].image;
                 ayai.tilemap = "/assets/maps/" + evt.detail.msg.tilemap;
                 ayai.currentTileset = 'tileset';
@@ -193,7 +184,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
                 ayai.game.load.start();
                 ayai.gameLoaded = false;
                 ayai.game.load.onLoadComplete.dispatch = function() {
-                    ayai.currentTileset = 'tileset'
+                    ayai.currentTileset = 'tileset';
                     ayai.currentTilemap = 'tilemap';
                     ayai.renderMap(ayai.currentTileset, ayai.currentTilemap);
                 }
@@ -204,11 +195,11 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
                     ayai.gameState.updateEntities(evt.detail.msg);
                 break;
 
-            case "quest":
-                p.acceptQuest.show(evt.detail.msg);
+            case "quest-offer":
+                ayai.acceptQuest.show(evt.detail.msg);
 
             case "attack":
-                //ayai.gameState.displayAttack(evt.detail.msg);
+                ayai.gameState.displayAttack(evt.detail.msg);
                 break; 
 
             case "chat":
@@ -216,7 +207,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
                 break;
 
             case "disconnect":
-                console.log(evt.detail.msg);
+                ayai.gameState.disconnect(evt.detail.msg);
                 break;
 
 

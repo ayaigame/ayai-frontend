@@ -1,4 +1,4 @@
-define("AcceptQuest", ["MessageSender"], function() {
+define("AcceptQuest", ["GameStateInterface"], function(GameStateInterface) {
 
     function AcceptQuest(MessageSender) {
         p.messageSender = MessageSender;
@@ -18,7 +18,10 @@ define("AcceptQuest", ["MessageSender"], function() {
 
     };
 
-    p.show = function(questToShow) {
+    p.show = function(message) {
+        //Fix this hack
+        var questToShow = message.quest;
+        questToShow.entityId = message.entityId;
         p.currentQuest = questToShow;
         p.renderQuest(questToShow);
         $('div#accept-quest').toggleClass("open");
@@ -28,6 +31,7 @@ define("AcceptQuest", ["MessageSender"], function() {
         $('button.quest-accept-button').on('click', function(questToShow) {
             console.log("got here");
             p.sendAcceptMessage(questToAccept);
+            $('div#accept-quest').removeClass("open");
         });
         $('button.quest-decline-button').on('click', function(questToShow) {
             $('div#accept-quest').removeClass("open");
@@ -36,9 +40,7 @@ define("AcceptQuest", ["MessageSender"], function() {
 
     p.sendAcceptMessage = function(questToAccept) {
         console.log(questToAccept);
-        //Send a message using p.message sender
-        //questToAccept is the questMessage that was received so you can grab the ID from there
-        //to create a new message to send back to the server
+        GameStateInterface.prototype.sendAcceptQuestMessage(questToAccept.id, questToAccept.entityId);
     }
 
     p.update = function(quests) {};

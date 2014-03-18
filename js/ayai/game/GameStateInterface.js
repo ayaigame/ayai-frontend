@@ -121,13 +121,16 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
     p.updateEntities = function(json) {
 
         var players = json.players;
+        var npcs = json.npcs;
+
+        var entities = players.concat(npcs);
 
         ayai.quests = json.models.quests;
         ayai.inventory.sync(json.models.inventory, json.models.equipment);
 
-        for (var index in players) {
+        for (var index in entities) {
 
-            var characterJson = players[index];
+            var characterJson = entities[index];
 
             if(characterJson.id == Window.character.id) {
                 UnitFrame.prototype.syncPlayerFrame(characterJson);

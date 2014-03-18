@@ -159,7 +159,9 @@ $(document).ready(function() {
         	}
         	var $template = $(templates.characterItem(character));
 			$charSelect.append($template);
+			$modalBackground.hide();
 			$modalContainer.hide();
+			$modals.hide();
         });
     }
 

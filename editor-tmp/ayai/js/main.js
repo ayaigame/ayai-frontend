@@ -70,6 +70,13 @@ $(document).ready(function() {
 			$modalBackground.show();
 			$modalContainer.css("display","flex");
 			$(".modals .settings").css("display","block");
+		} else if (hash == "#create") {
+			$modalBackground.show();
+			$modalContainer.css("display","flex");
+			$(".modals .create").css("display","block");
+			//var character = prompt("Create a new character using '<name>,<class' (eg 'Tim,Asian'))","");
+			//var response = character.split(',');
+			//createCharacter(response[0], response[1]); 
 		}
 
 		evt.preventDefault();
@@ -182,7 +189,7 @@ $(document).ready(function() {
 		}
 		$.post("/register", info, function(data){
 
-				var template = templates.characterItem(data);
+				initAccount(token);
 				alert("registered " + token);
 		});
 	});

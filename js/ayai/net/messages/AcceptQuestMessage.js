@@ -1,10 +1,11 @@
 define("AcceptQuestMessage", function() {
 
-    function AcceptQuestMessage(questId) {
+    function AcceptQuestMessage(questId, entityId) {
         // constructor
         this.data = {
             type: "quest-accept",
-            questId: questId
+            questId: questId,
+            entityId: entityId
         };
     };
     var p = AcceptQuestMessage.prototype;

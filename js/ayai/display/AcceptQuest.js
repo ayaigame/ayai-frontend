@@ -18,7 +18,10 @@ define("AcceptQuest", ["GameStateInterface"], function(GameStateInterface) {
 
     };
 
-    p.show = function(questToShow) {
+    p.show = function(message) {
+        //Fix this hack
+        var questToShow = message.quest;
+        questToShow.entityId = message.entityId;
         p.currentQuest = questToShow;
         p.renderQuest(questToShow);
         $('div#accept-quest').toggleClass("open");
@@ -37,7 +40,7 @@ define("AcceptQuest", ["GameStateInterface"], function(GameStateInterface) {
 
     p.sendAcceptMessage = function(questToAccept) {
         console.log(questToAccept);
-        GameStateInterface.prototype.sendAcceptQuestMessage(questToAccept.id);
+        GameStateInterface.prototype.sendAcceptQuestMessage(questToAccept.id, questToAccept.entityId);
     }
 
     p.update = function(quests) {};

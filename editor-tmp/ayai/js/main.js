@@ -218,7 +218,7 @@ $(document).ready(function() {
 		console.log(token);
 			
 		$.get("/classes", function(data){
-			//var response = JSON.parse(data);
+			var response = JSON.parse(data);
 			console.log("!",data);
 			var classes = data.classes;
 			for(var obj in classes){

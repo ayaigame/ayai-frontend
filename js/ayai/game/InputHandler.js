@@ -1,4 +1,4 @@
-define("InputHandler", ["phaser", "InputEvent"], function (Phaser, InputEvent) {
+define("InputHandler", ["phaser", "InputEvent", "UnitFrame"], function (Phaser, InputEvent, UnitFrame) {
 	var p = InputHandler.prototype;
 
 	function InputHandler(game, gameState, inventory, chat, questLog, acceptQuest) {
@@ -20,6 +20,7 @@ define("InputHandler", ["phaser", "InputEvent"], function (Phaser, InputEvent) {
 		lKey = p.game.input.keyboard.addKey(Phaser.Keyboard.L);
 		gKey = p.game.input.keyboard.addKey(Phaser.Keyboard.G);
 		tKey = p.game.input.keyboard.addKey(Phaser.Keyboard.T);
+		escKey = p.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
 
 		boundKeys.push(upKey);
 		boundKeys.push(downKey);
@@ -30,8 +31,10 @@ define("InputHandler", ["phaser", "InputEvent"], function (Phaser, InputEvent) {
 		boundKeys.push(lKey);
 		boundKeys.push(gKey);
 		boundKeys.push(tKey);
+		boundKeys.push(escKey);
 
 		enterKey = p.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+
 
 		enterKey.onDown.add(function() {
 
@@ -58,6 +61,7 @@ define("InputHandler", ["phaser", "InputEvent"], function (Phaser, InputEvent) {
 				iKey = p.game.input.keyboard.addKey(Phaser.Keyboard.I);
 				lKey = p.game.input.keyboard.addKey(Phaser.Keyboard.L);
 				gKey = p.game.input.keyboard.addKey(Phaser.Keyboard.G);
+				escKey = p.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
 				p.registerKeyPresses();
 			}
 		});
@@ -65,6 +69,12 @@ define("InputHandler", ["phaser", "InputEvent"], function (Phaser, InputEvent) {
 	};
 
 	p.registerKeyPresses = function() {
+
+
+		escKey.onDown.add(function() {
+
+			UnitFrame.prototype.clearTarget();
+		})
 
 		spaceKey.onDown.add(function() {
 

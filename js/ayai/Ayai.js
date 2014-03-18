@@ -33,7 +33,6 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
 
         ayai.game.world.destroy();
         ayai.gameState.clearEntities();
-        placeNpcs();
 
         var tileset = ayai.game.add.tileset(tileset);
         ayai.map = ayai.game.add.tilemap(tilemap);
@@ -67,7 +66,8 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
             health: {
                 currHealth: 1,
                 maximumHealth: 1
-            }
+            },
+            spritesheet: ayai.spritesheet
         });
 
         ayai.game.world.setBounds(0, 0, mapWidth, mapHeight);
@@ -82,6 +82,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
         console.log("Loading assets...");
         ayai.game.load.spritesheet('guy', '../assets/sprites/guy/guysheet.png', 32, 32);
         ayai.game.load.spritesheet('npc', '../assets/sprites/npc/npcsheet.png', 32, 48);
+        ayai.game.load.spritesheet('props', '../assets/sprites/props/gravesheet.png', 40, 40);
         ayai.game.load.spritesheet('healthframe', '../assets/sprites/ui/healthframe.png', 48, 13);
         ayai.game.load.spritesheet('itemicons', '../assets/sprites/ui/itemicons.png', 40, 40);
         ayai.game.load.spritesheet('sword', '../assets/sprites/weapons/swordsheet.png', 18, 18)
@@ -143,33 +144,6 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
 
     }
 
-    function placeNpcs() {
-        $.get(ayai.tilemap, function(val) {
-            var npcs = val.npcs;
-            for (var i = 0; i < npcs.length; i++) {
-                var npc = npcs[i];
-                var newnpc = ayai.game.add.sprite(npc.position.x, npc.position.y, 'npc');
-                newnpc.inputEnabled = true;
-                console.log(newnpc);
-                newnpc.events.onInputDown.add(function() {
-                    console.log("clicked the npc");
-                    ayai.gameState.sendNPCInteractionMessage(npc.sprite_id);
-                });
-
-
-                switch (npc.sprite_id) {
-                    case "0":
-                        newnpc.animations.add('facedown', [0]);
-                        break;
-                }
-
-
-            }
-            newnpc.animations.play('facedown', 1, true);
-        });
-    };
-
-
 
     ayai._messageReceived = function(evt) {
 
@@ -189,6 +163,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
                 ayai.characterId = evt.detail.msg.id;
                 ayai.startingX = evt.detail.msg.x;
                 ayai.startingY = evt.detail.msg.y;
+                ayai.spritesheet = evt.detail.msg.spritesheet;
                 ayai.tileset = "/assets/tiles/" + evt.detail.msg.tilesets[0].image;
                 ayai.tilemap = "/assets/maps/" + evt.detail.msg.tilemap;
                 ayai.currentTileset = 'tileset';

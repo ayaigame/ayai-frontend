@@ -6,15 +6,18 @@ define("Entity", ["phaser"], function(Phaser) {
 
  		this.id = json.id;
         this.name = json.name;
+        this.spritesheet = json.spritesheet.path;
+        this.animations = json.spritesheet.animations;
         this.position = json.position;
         this.level = json.level;
         this.experience = json.experience;
         this.health = json.health;
         this.Mana = json.Mana;
-        this._startDamagePos = {x: 0, y: 0};
         this.state = p.STATE.IDLE;
         this.facing = p.FACING.DOWN;
         this.currentAnimation = null;
+
+        this.buildSprite();
 
 
 	};
@@ -51,40 +54,36 @@ define("Entity", ["phaser"], function(Phaser) {
     this._startDamagePos = {x: 0, y: 0};
 
 
-	p.buildSprite = function(game, spriteName) {
+	p.buildSprite = function() {
 
-        this.sprite = game.add.sprite(this.position.x, this.position.y, spriteName);
+        this.sprite = ayai.game.add.sprite(this.position.x, this.position.y, this.spritesheet);
+
+        for (var i = 0; i < this.animations.length; i++)
+        {
+            var animation = this.animations[i];
+            var frames = [];
+            for (var x = animation.startFrame; x <= animation.endFrame; x++) {
+                frames.push(x);
+            }
+
+            this.sprite.animations.add(animation.name, frames);
+
+        }
+
         this.sprite.inputEnabled = true;
         this.sprite.input.pixelPerfect = true;
         this.sprite.input.useHandCursor = true;
         this.sprite.events.onInputDown.add(function() {
-            
-            $("ul.unitframes li#target").css("display", "none");
 
             Window.target = this;
-//            console.log(Window.target);
+            console.log(Window.target.id);
 
+            $("ul.unitframes li#target").css("display", "none");
             $("ul.unitframes li#target").css("display", "block");
 
-        }, this);
-        this.sprite.events.onInputDown.add(function() {
-            console.log(Window.target.id)
             ayai.gameState.sendNPCInteractionMessage(Window.target.id);
-        });
-        this.sprite.animations.add('facedown', [1]);
-        this.sprite.animations.add('faceleft', [4]);
-        this.sprite.animations.add('faceright', [7]);
-        this.sprite.animations.add('faceup', [10]);
-        this.sprite.animations.add('walkdown', [0, 1, 2]);
-        this.sprite.animations.add('walkleft', [3, 4, 5]);
-        this.sprite.animations.add('walkright', [6, 7, 8]);
-        this.sprite.animations.add('walkup', [9, 10, 11]);
 
-
-        var attackDown = this.sprite.animations.add('attackdown', [12, 13, 14, 15]);
-        var attackLeft = this.sprite.animations.add('attackleft', [18, 19, 20, 21]);
-        var attackRight = this.sprite.animations.add('attackright', [24, 25, 26, 27]);
-        var attackUp = this.sprite.animations.add('attackup', [30, 31, 32, 33]);
+        }, this);
 
         var self = this;
         this.sprite.events.onAnimationComplete.add(function() {
@@ -96,17 +95,16 @@ define("Entity", ["phaser"], function(Phaser) {
 
         var style = { font: "14px Arial", fill: "#ffffff", align: "center" };
 
-        this.namePlate =  game.add.text(this.sprite.x + 16, this.sprite.y - 16, this.name, style);
+        this.namePlate =  ayai.game.add.text(this.sprite.x + 16, this.sprite.y - 16, this.name, style);
 
-        this.healthBar = game.add.sprite(this.sprite.x - 8, this.sprite.y - 32, 'healthframe');
+        this.healthBar = ayai.game.add.sprite(this.sprite.x - 8, this.sprite.y - 32, 'healthframe');
         this.healthBar.animations.add('bar', [0]);
         this.healthBar.animations.play('bar', 1, true);
         this.healthBar.width = 0;
 
-        this.healthFrame = game.add.sprite(this.sprite.x - 8, this.sprite.y - 32, 'healthframe');
+        this.healthFrame = ayai.game.add.sprite(this.sprite.x - 8, this.sprite.y - 32, 'healthframe');
         this.healthFrame.animations.add('frame', [1]);
         this.healthFrame.animations.play('frame', 1, true);
-
 
         this.setAnimation('facedown', 15, false);
 
@@ -146,44 +144,47 @@ define("Entity", ["phaser"], function(Phaser) {
 
     p.resolveAnimation = function() {
 
-        if (this.currentAnimation.indexOf("attack") != -1) {
 
-            var anim = ""
+        if(this.currentAnimation != undefined) {
+            if (this.currentAnimation.indexOf("attack") != -1) {
 
-            switch(this.state) {
+                var anim = ""
 
-                case p.STATE.WALKING:
-                    anim += "walk";
-                    break;
+                switch(this.state) {
 
-                case p.STATE.IDLE:
-                    anim += "face";
-                    break;
+                    case p.STATE.WALKING:
+                        anim += "walk";
+                        break;
+
+                    case p.STATE.IDLE:
+                        anim += "face";
+                        break;
+
+                }
+
+                switch(this.facing) {
+
+                    case p.FACING.RIGHT:
+                        anim += "right";
+                        break;
+
+                    case p.FACING.LEFT:
+                        anim += "left";
+                        break;
+                    case p.FACING.UP:
+                        anim += "up";
+                        break;
+                    case p.FACING.DOWN:
+                        anim += "down";
+                        break;
+
+                    
+                }
+            
+            
+                this.setAnimation(anim);
 
             }
-
-            switch(this.facing) {
-
-                case p.FACING.RIGHT:
-                    anim += "right";
-                    break;
-
-                case p.FACING.LEFT:
-                    anim += "left";
-                    break;
-                case p.FACING.UP:
-                    anim += "up";
-                    break;
-                case p.FACING.DOWN:
-                    anim += "down";
-                    break;
-
-                
-            }
-        
-        
-            this.setAnimation(anim);
-
         }
     }
 
@@ -199,9 +200,6 @@ define("Entity", ["phaser"], function(Phaser) {
         var digitTextOutlines = [];
 
         for(var i = 0; i < digits.length; i++) {
-
-        	this._startDamagePos.x = this.sprite.x;
-        	this._startDamagePos.y = this.sprite.y;
 
             var digitTextOutline = ayai.game.add.text((this.sprite.x + 26) + (i * 15), this.sprite.y - 17,  digits[i], styleOutline);
         	var digitText = ayai.game.add.text((this.sprite.x + 24) + (i * 15), this.sprite.y - 18, digits[i], style);

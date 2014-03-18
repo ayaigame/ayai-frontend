@@ -18,6 +18,12 @@ define("UnitFrame", function() {
 		$("ul.unitframes li#target div.mana div.bar").css("width", targetManaPercent);
 	};
 
+	p.clearTarget = function() {
+
+		Window.target = null;
+		$("ul.unitframes li#target").css("display", "none");
+	}
+
 	p.syncPlayerFrame = function(e) {
 
 		var healthPercent = Math.floor((e.health.currHealth / e.health.maximumHealth) * 100) + "%";

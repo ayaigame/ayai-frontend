@@ -138,7 +138,9 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
             if (this.entities[characterJson.id] == null) {
 
                 //new entity
+
                 this.addPlayerCharacter(characterJson);
+                
             } 
 
             else {
@@ -167,7 +169,6 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
 
         console.log("adding player character" + json.id);
         var newChar = new Entity(json);
-        newChar.buildSprite(p.game, 'guy');
         this.entities[json.id] = newChar;
         return newChar;
     };
@@ -176,7 +177,6 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
 
         console.log("adding non-player character" + json.id);
         var newChar = new Entity(json);
-        newChar.buildSprite(p.game, '');
         this.entities[json.id] = newChar;
         return newChar;
     }

@@ -9,29 +9,6 @@ define("InputHandler", ["phaser", "InputEvent", "UnitFrame"], function (Phaser, 
 		p.chat = chat;
 		p.questLog = questLog;
 		p.acceptQuest = acceptQuest;
-		boundKeys = [];
-
-		upKey = p.game.input.keyboard.addKey(Phaser.Keyboard.W);
-		downKey = p.game.input.keyboard.addKey(Phaser.Keyboard.S);
-		leftKey = p.game.input.keyboard.addKey(Phaser.Keyboard.A);
-		rightKey = p.game.input.keyboard.addKey(Phaser.Keyboard.D);
-		spaceKey = p.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-		iKey = p.game.input.keyboard.addKey(Phaser.Keyboard.I);
-		lKey = p.game.input.keyboard.addKey(Phaser.Keyboard.L);
-		gKey = p.game.input.keyboard.addKey(Phaser.Keyboard.G);
-		tKey = p.game.input.keyboard.addKey(Phaser.Keyboard.T);
-		escKey = p.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
-
-		boundKeys.push(upKey);
-		boundKeys.push(downKey);
-		boundKeys.push(leftKey);
-		boundKeys.push(rightKey);
-		boundKeys.push(spaceKey);
-		boundKeys.push(iKey);
-		boundKeys.push(lKey);
-		boundKeys.push(gKey);
-		boundKeys.push(tKey);
-		boundKeys.push(escKey);
 
 		enterKey = p.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
 
@@ -53,23 +30,37 @@ define("InputHandler", ["phaser", "InputEvent", "UnitFrame"], function (Phaser, 
 			else {
 				p.chat.send();
 				p.chat.closeEditBox();
-				upKey = p.game.input.keyboard.addKey(Phaser.Keyboard.W);
-				downKey = p.game.input.keyboard.addKey(Phaser.Keyboard.S);
-				leftKey = p.game.input.keyboard.addKey(Phaser.Keyboard.A);
-				rightKey = p.game.input.keyboard.addKey(Phaser.Keyboard.D);
-				spaceKey = p.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-				iKey = p.game.input.keyboard.addKey(Phaser.Keyboard.I);
-				lKey = p.game.input.keyboard.addKey(Phaser.Keyboard.L);
-				gKey = p.game.input.keyboard.addKey(Phaser.Keyboard.G);
-				escKey = p.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+
 				p.registerKeyPresses();
 			}
 		});
+
 		p.registerKeyPresses();
 	};
 
 	p.registerKeyPresses = function() {
 
+		boundKeys = [];
+
+		upKey = p.game.input.keyboard.addKey(Phaser.Keyboard.W);
+		downKey = p.game.input.keyboard.addKey(Phaser.Keyboard.S);
+		leftKey = p.game.input.keyboard.addKey(Phaser.Keyboard.A);
+		rightKey = p.game.input.keyboard.addKey(Phaser.Keyboard.D);
+		spaceKey = p.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+		iKey = p.game.input.keyboard.addKey(Phaser.Keyboard.I);
+		lKey = p.game.input.keyboard.addKey(Phaser.Keyboard.L);
+		gKey = p.game.input.keyboard.addKey(Phaser.Keyboard.G);
+		escKey = p.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+
+		boundKeys.push(upKey);
+		boundKeys.push(downKey);
+		boundKeys.push(leftKey);
+		boundKeys.push(rightKey);
+		boundKeys.push(spaceKey);
+		boundKeys.push(iKey);
+		boundKeys.push(lKey);
+		boundKeys.push(gKey);
+		boundKeys.push(escKey);
 
 		escKey.onDown.add(function() {
 
@@ -87,11 +78,7 @@ define("InputHandler", ["phaser", "InputEvent", "UnitFrame"], function (Phaser, 
 		lKey.onDown.add(function() {
 			p.questLog.toggle();
 		});
-		tKey.onDown.add(function() {
-			var quest = {title:"Test Quest", description:"You must kill troublesome boars in the forest",
-						objectives:[{name:"Kill Boars", totalCompleted:1, totalNeeded:1000}]};
-			p.acceptQuest.show(quest);
-		})
+
 		gKey.onDown.add(function() {
 			Window.character.displayDamage();
 		});

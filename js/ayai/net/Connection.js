@@ -51,6 +51,12 @@ define("Connection", ["MessageSender", "MessageReceiver"], function(MessageSende
       var sender = new MessageSender(p.WebSocket, msg);
     };
 
+    p.close = function() {
+
+      p.WebSocket.close();
+
+    }
+
     //  private methods
     //  ===============
 

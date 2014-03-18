@@ -109,7 +109,14 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
 
         $("ul#skills").css("left", (($("div#chat").position().left + $("ul.unitframes").width())/2) - $("ul#skills").width() / 2);
         $("div.ui-modal").css("left", (($("div#chat").position().left + $("ul.unitframes").width())/2) - $("div#char-window").width() / 2);
+
         // -----------------------------------------------
+
+        $("ul li#logout").click(function() {
+
+            ayai.connection.close();
+            
+        });
 
 
         //pass references to everything into the input handler for now. baaaad rob

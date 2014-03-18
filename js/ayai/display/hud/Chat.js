@@ -43,7 +43,7 @@ define("Chat", ["ChatMessage"],  function(ChatMessage) {
 		var editbox = $("#editbox input");
 
 		if(editbox.val().length != 0) {
-		      var message = new ChatMessage(editbox.val(), "tim");
+		      var message = new ChatMessage(editbox.val(), "character");
 		      console.log("Sending: " + message.data);
 		      p.connection.send(message.data);
 		      editbox.val("");

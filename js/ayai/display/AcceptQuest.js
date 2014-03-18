@@ -37,7 +37,7 @@ define("AcceptQuest", ["GameStateInterface"], function(GameStateInterface) {
 
     p.sendAcceptMessage = function(questToAccept) {
         console.log(questToAccept);
-        GameStateInterface.prototype.sendAcceptQuestMessage(questToAccept.id);
+        GameStateInterface.prototype.sendAcceptQuestMessage(questToAccept.id, questToAccept.entityId);
     }
 
     p.update = function(quests) {};

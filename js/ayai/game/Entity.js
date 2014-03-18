@@ -57,18 +57,20 @@ define("Entity", ["phaser"], function(Phaser) {
         this.sprite.inputEnabled = true;
         this.sprite.input.pixelPerfect = true;
         this.sprite.input.useHandCursor = true;
-
         this.sprite.events.onInputDown.add(function() {
             
             $("ul.unitframes li#target").css("display", "none");
 
             Window.target = this;
-            console.log(Window.target);
+//            console.log(Window.target);
 
             $("ul.unitframes li#target").css("display", "block");
 
         }, this);
-
+        this.sprite.events.onInputDown.add(function() {
+            console.log(Window.target.id)
+            ayai.gameState.sendNPCInteractionMessage(Window.target.id);
+        });
         this.sprite.animations.add('facedown', [1]);
         this.sprite.animations.add('faceleft', [4]);
         this.sprite.animations.add('faceright', [7]);

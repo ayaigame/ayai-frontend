@@ -1,10 +1,10 @@
 define("InteractMessage", function() {
 
-    function InteractMessage(npcId) {
+    function InteractMessage(entityId) {
         // constructor
         this.data = {
             type: "interact",
-            npcId: npcId
+            entityId: entityId
         };
     };
     var p = InteractMessage.prototype;

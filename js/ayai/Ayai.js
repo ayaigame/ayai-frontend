@@ -214,8 +214,8 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
                     ayai.gameState.updateEntities(evt.detail.msg);
                 break;
 
-            case "quest":
-                p.acceptQuest.show(evt.detail.msg);
+            case "quest-offer":
+                ayai.acceptQuest.show(evt.detail.msg.quest);
 
             case "attack":
                 ayai.gameState.displayAttack(evt.detail.msg);

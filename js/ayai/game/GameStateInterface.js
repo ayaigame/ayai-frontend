@@ -103,6 +103,7 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
     };
 
     p.sendNPCInteractionMessage = function(npcId) {
+        console.log("Sending NPCID: " + npcId)
         var message = new InteractMessage(npcId);
         p.connection.send(message.data);
     };

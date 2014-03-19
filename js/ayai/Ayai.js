@@ -9,7 +9,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
 
         ayai.gameLoaded = false;
         ayai.verboseLogger = false; 
-        ayai.connection = new Connection("ws://192.168.100.10/ws");
+        ayai.connection = new Connection("ws://localhost:8007");
 
         ayai.TILE_WIDTH = 32;
         ayai.TILE_HEIGHT = 32;

@@ -1,0 +1,68 @@
+div#control-settings {
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid #bbbbbb;
+  position: absolute;
+  right: 500px;
+  bottom: 60px;
+  transition: opacity 0.25s ease-out;
+  opacity: 0;
+  text-align: center;
+  width: 550px;
+  height: 600px;
+}
+
+div#change-control-popup {
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid #bbbbbb;
+  position: absolute;
+  right: 500px;
+  bottom: 300px;
+  transition: opacity 0.25s ease-out;
+  opacity: 0;
+  text-align: center;
+  width: 200px;
+  height: 200px;
+    color:white;
+}
+
+div#change-control-popup.open {
+    z-index: 1001;
+    transition: opacity 0.25s ease-out;
+    opacity: 1;
+}
+
+div#control-settings div.header {
+    width: 100%;
+    height: 10%;
+}
+
+div#control-settings div.header h4 {
+      color: white;
+}
+
+div#control-settings-body table {
+    color:white;
+    margin-left:auto;
+    margin-right:auto;
+
+}
+
+td.key-value {
+    text-align:left;
+    padding-right:10px;
+    border:1px;
+    border-color:silver;
+    border-style:groove;
+}
+
+
+
+
+div#control-settings.open {
+  transition: opacity 0.25s ease-out;
+  opacity: 1;
+}
+
+.open {
+  z-index: 1000;
+}

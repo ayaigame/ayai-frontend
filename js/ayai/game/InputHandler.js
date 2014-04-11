@@ -1,6 +1,12 @@
 define("InputHandler", ["phaser", "InputEvent", "UnitFrame"], function (Phaser, InputEvent, UnitFrame) {
 	var p = InputHandler.prototype;
 
+    //To add a new key you must update the following
+    //1. you must update loadKeyConfigurate to set the default value
+    //2. you must add your key to fixReferences
+    //3. you must add your keys functionality to registerKeypresses
+
+
 	function InputHandler(game, gameState, inventory, chat, questLog, acceptQuest) {
 
 		p.game = game;
@@ -9,8 +15,10 @@ define("InputHandler", ["phaser", "InputEvent", "UnitFrame"], function (Phaser, 
 		p.chat = chat;
 		p.questLog = questLog;
 		p.acceptQuest = acceptQuest;
+        p.loadKeyConfiguration();
 
-		enterKey = p.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+
+/*		enterKey = p.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
 
 
 		enterKey.onDown.add(function() {
@@ -33,77 +41,153 @@ define("InputHandler", ["phaser", "InputEvent", "UnitFrame"], function (Phaser, 
 
 				p.registerKeyPresses();
 			}
-		});
+		});*/
 
 		p.registerKeyPresses();
 	};
 
+    p.changeControlForName = function(name, newKeycode) {
+        var keyToChange = _.where(p.boundKeys, {"name":name})[0]; //should only return one, this is why we need to have the names unique
+
+
+        p.game.input.keyboard.removeKey(keyToChange.key.keyCode);
+        var actualKey = keyToChange.key;
+        console.log(actualKey);
+        keyToChange.key = p.game.input.keyboard.addKey(newKeycode);
+        keyToChange.boundString = p.charCodeToString(newKeycode);
+        console.log(p.rightKey);
+        p.fixReferences();
+        p.registerKeyPresses();
+    }
+
+    p.loadKeyConfiguration = function() {
+
+        //TODO Load from HTML5 localstorage
+        p.upKey = p.game.input.keyboard.addKey(Phaser.Keyboard.W);
+		p.downKey = p.game.input.keyboard.addKey(Phaser.Keyboard.S);
+		p.leftKey = p.game.input.keyboard.addKey(Phaser.Keyboard.A);
+		p.rightKey = p.game.input.keyboard.addKey(Phaser.Keyboard.D);
+		p.attackKey = p.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+		p.inventoryKey = p.game.input.keyboard.addKey(Phaser.Keyboard.I);
+		p.questLogKey = p.game.input.keyboard.addKey(Phaser.Keyboard.L);
+		p.displayDamageKey = p.game.input.keyboard.addKey(Phaser.Keyboard.G);
+		p.clearTargetKey = p.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+
+        p.boundKeys = [];
+
+        //Names must be unique!
+
+        p.boundKeys.push({"key": p.upKey, "name":"up", "boundString": p.charCodeToString(p.upKey.keyCode)});
+		p.boundKeys.push({"key": p.downKey, "name":"down", "boundString": p.charCodeToString(p.downKey.keyCode)});
+		p.boundKeys.push({"key": p.leftKey, "name":"left", "boundString": p.charCodeToString(p.leftKey.keyCode)});
+		p.boundKeys.push({"key": p.rightKey, "name":"right", "boundString": p.charCodeToString(p.rightKey.keyCode)});
+		p.boundKeys.push({"key": p.attackKey, "name":"attack", "boundString": p.charCodeToString(p.attackKey.keyCode)});
+		p.boundKeys.push({"key": p.inventoryKey, "name":"inventory", "boundString": p.charCodeToString(p.inventoryKey.keyCode)});
+		p.boundKeys.push({"key": p.questLogKey, "name":"quest log", "boundString": p.charCodeToString(p.questLogKey.keyCode)});
+		p.boundKeys.push({"key": p.displayDamageKey, "name":"display damage", "boundString": p.charCodeToString(p.displayDamageKey.keyCode)});
+		p.boundKeys.push({"key": p.clearTargetKey, "name":"clear target", "boundString": p.charCodeToString(p.clearTargetKey.keyCode)});
+
+    }
+
+    p.charCodeToString = function(charCode) {
+        var toReturn = String.fromCharCode(charCode);
+
+        console.log(toReturn);
+        if (toReturn.match("[A-Z]")) {
+            return toReturn;
+        }
+
+        switch (charCode) {
+            case Phaser.Keyboard.SPACEBAR:
+                return "space";
+            case Phaser.Keyboard.ESCAPE:
+                return "escape";
+            case Phaser.Keyboard.UP:
+                return "up arrow";
+            case Phaser.Keyboard.DOWN:
+                return "down arrow";
+            case Phaser.Keyboard.LEFT:
+                return "left arrow";
+            case Phaser.Keyboard.RIGHT:
+                return "right arrow";
+            case Phaser.Keyboard.DELETE:
+                return "delete";
+            case Phaser.Keyboard.INSERT:
+                return "insert";
+            case Phaser.Keyboard.HOME:
+                return "home";
+            case Phaser.Keyboard.END:
+                return "end";
+            case Phaser.Keyboard.PAGE_UP:
+                return "page up";
+            case Phaser.Keyboard.PAGE_DOWN:
+                return "page down";
+            case Phaser.Keyboard.ESC:
+                return "escape";
+        }
+
+        return "unknown key";
+    }
+
+    p.fixReferences = function() {
+        p.upKey = _.where(p.boundKeys, {"name":"up"})[0].key;
+		p.downKey = _.where(p.boundKeys, {"name":"down"})[0].key;
+		p.leftKey = _.where(p.boundKeys, {"name":"left"})[0].key;
+		p.rightKey = _.where(p.boundKeys, {"name":"right"})[0].key;
+		p.attackKey = _.where(p.boundKeys, {"name":"attack"})[0].key;
+		p.inventoryKey = _.where(p.boundKeys, {"name":"inventory"})[0].key;
+		p.questLogKey = _.where(p.boundKeys, {"name":"quest log"})[0].key;
+		p.displayDamageKey = _.where(p.boundKeys, {"name":"display damage"})[0].key;
+		p.clearTargetKey = _.where(p.boundKeys, {"name":"clear target"})[0].key;
+    }
+
 	p.registerKeyPresses = function() {
 
-		boundKeys = [];
 
-		upKey = p.game.input.keyboard.addKey(Phaser.Keyboard.W);
-		downKey = p.game.input.keyboard.addKey(Phaser.Keyboard.S);
-		leftKey = p.game.input.keyboard.addKey(Phaser.Keyboard.A);
-		rightKey = p.game.input.keyboard.addKey(Phaser.Keyboard.D);
-		spaceKey = p.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-		iKey = p.game.input.keyboard.addKey(Phaser.Keyboard.I);
-		lKey = p.game.input.keyboard.addKey(Phaser.Keyboard.L);
-		gKey = p.game.input.keyboard.addKey(Phaser.Keyboard.G);
-		escKey = p.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
 
-		boundKeys.push(upKey);
-		boundKeys.push(downKey);
-		boundKeys.push(leftKey);
-		boundKeys.push(rightKey);
-		boundKeys.push(spaceKey);
-		boundKeys.push(iKey);
-		boundKeys.push(lKey);
-		boundKeys.push(gKey);
-		boundKeys.push(escKey);
 
-		escKey.onDown.add(function() {
+		p.clearTargetKey.onDown.add(function() {
 
 			UnitFrame.prototype.clearTarget();
 		})
 
-		spaceKey.onDown.add(function() {
+		p.attackKey.onDown.add(function() {
 
 			ayai.sfx.sword.play();
 			p.gameState.sendAttack();
 		});
-		iKey.onDown.add(function() {
+		p.inventoryKey.onDown.add(function() {
 			p.inventory.toggle();
 		});
-		lKey.onDown.add(function() {
+		p.questLogKey.onDown.add(function() {
 			p.questLog.toggle();
 		});
 
-		gKey.onDown.add(function() {
+		p.displayDamageKey.onDown.add(function() {
 			Window.character.displayDamage();
 		});
-		upKey.onDown.add(function() {
+		p.upKey.onDown.add(function() {
 			p.gameState.sendInputToGameState(new InputEvent("isUp"));
 		});
-		rightKey.onDown.add(function() {
+		p.rightKey.onDown.add(function() {
 			p.gameState.sendInputToGameState(new InputEvent("isRight"));
 		});
-		leftKey.onDown.add(function() {
+		p.leftKey.onDown.add(function() {
 			p.gameState.sendInputToGameState(new InputEvent("isLeft"));
 		});
-		downKey.onDown.add(function() {
+		p.downKey.onDown.add(function() {
 			p.gameState.sendInputToGameState(new InputEvent("isDown"));
 		});
-		upKey.onUp.add(function() {
+		p.upKey.onUp.add(function() {
 			p.gameState.sendInputToGameState(new InputEvent("!isUp"));
 		});
-		rightKey.onUp.add(function() {
+		p.rightKey.onUp.add(function() {
 			p.gameState.sendInputToGameState(new InputEvent("!isRight"));
 		});
-		leftKey.onUp.add(function() {
+		p.leftKey.onUp.add(function() {
 			p.gameState.sendInputToGameState(new InputEvent("!isLeft"));
 		});
-		downKey.onUp.add(function() {
+		p.downKey.onUp.add(function() {
 			p.gameState.sendInputToGameState(new InputEvent("!isDown"));
 		});
 	};

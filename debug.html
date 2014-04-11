@@ -12,6 +12,7 @@
     <link href="css/chat.css" rel="stylesheet"/>
     <link href="css/inventory.css" rel="stylesheet"/>
     <link href="css/questlog.css" rel="stylesheet"/>
+    <link href="css/control-settings.css" rel="stylesheet"/>
     <link href="css/accept-quest.css" rel="stylesheet"/>
     <link href="css/jquery-ui-1.10.4.custom.min.css" rel="stylesheet"/>
     <script data-main="js/main" src="js/lib/require.js"></script>
@@ -111,6 +112,21 @@
         
     </script>
 
+    <script id="controlSettings-template" type="text/x-handlebars-template">
+        <table>
+
+            {{#each this}}
+            <tr>
+                <td>{{name}}</td>
+                <td class="key-value" data-name="{{name}}">{{boundString}}</td>
+            </tr>
+
+            {{/each}}
+
+
+        </table>
+    </script>
+
   </head>
 
   <body>
@@ -144,6 +160,7 @@
       <ul>
         <li>Graphics</li>
         <li>Sound</li>
+        <li id="control-settings-button">Controls</li>
         <hr />
         <li>Switch Character</li>
         <li id="logout">Logout</li>
@@ -190,6 +207,27 @@
         <div id="editbox" class="ui-base"><input type="text"></input></div>
       </div>
   </div>
+
+    <div id="control-settings">
+        <div class="header">
+            <h4>Controls</h4>
+
+        </div>
+        <div id="control-settings-body">
+
+        </div>
+        <button id="close-control-settings">close</button>
+    </div>
+
+    <div id="change-control-popup">
+        <div class="header">
+            <h4>Change Control</h4>
+        </div>
+        <div>Press a new key</div>
+        <div class="new-key"></div>
+        <button id="cancel-changing-key">Cancel</button>
+    </div>
+
     <div id="accept-quest">
       <div id="accept-questview">
       </div>

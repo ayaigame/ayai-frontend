@@ -1,6 +1,6 @@
 
-define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "Inventory", "Chat", "QuestLog", "AcceptQuest", "CreateAIMessage"], 
-    function(Phaser, InputHandler, Connection, GameStateInterface, Inventory, Chat, QuestLog, AcceptQuest, CreateAIMessage) {
+define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "Inventory", "Chat", "QuestLog", "AcceptQuest", "CreateAIMessage", "ControlSettings"],
+    function(Phaser, InputHandler, Connection, GameStateInterface, Inventory, Chat, QuestLog, AcceptQuest, CreateAIMessage, ControlSettings) {
     // constructor
 
     ayai = Ayai.prototype;
@@ -110,7 +110,8 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
         ayai.inventory = new Inventory();
         ayai.chat = new Chat(ayai.connection, ayai.characterId);
         ayai.questLog = new QuestLog();
-        ayai.acceptQuest = new AcceptQuest(); 
+        ayai.acceptQuest = new AcceptQuest();
+
 
 
         $("ul#skills").css("left", (($("div#chat").position().left + $("ul.unitframes").width())/2) - $("ul#skills").width() / 2);
@@ -127,7 +128,8 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
 
         //pass references to everything into the input handler for now. baaaad rob
         ayai.inputHandler = new InputHandler(ayai.game, ayai.gameState, ayai.inventory, ayai.chat, ayai.questLog, ayai.acceptQuest);
-
+        //Have to make the controlSettings after the input handler.
+        ayai.controlSettings = new ControlSettings(ayai.inputHandler, ayai.game);
         ayai.renderMap(ayai.currentTileset, ayai.currentTilemap);
 
         ayai.music = {zelda: ayai.game.add.audio('zelda')};

@@ -22,6 +22,13 @@ $(document).ready(function() {
 
 	currentClass = null;
 
+	currentState = 0;
+	
+	var states = {
+		isLoggedIn: true,
+		viewingAdmin: false
+	}
+
 	$classList.on("click", "div", function() {
 		$classSummary.hide();
 		currentClass = $(this).html();
@@ -55,11 +62,7 @@ $(document).ready(function() {
 			$(".accounts").css("display", "block");
 			$(".player-content").css("display", "block");
 		} else if (hash == "#admin") {
-			$searchBar.fadeIn();
-			$(".login-page").css("display", "none");
-			$(".player-content").css("display", "none");
-			$(".accounts").css("display", "block");
-			$(".admin-content").css("display", "block");
+
 		} else if (hash == "#logout") {
 			$searchBar.fadeOut();
 			$(".login-page").css("display", "block");
@@ -138,9 +141,119 @@ $(document).ready(function() {
 					obj.description +
 				'</div>' +
 				'</div>';
+		},
+		collectionPage: function() {
+			return '' +
+				'';
+		},
+		spellPage: function() { 
+			return '' +
+				'<form class="spell-form">' +
+				'<h2><%= name %></h2>' +
+				'<div class="clear breadcrumb">' +
+					'<a href="#">home</a>&nbsp;>&nbsp;' +
+					'<a href="#/admin/spells">spells</a>&nbsp;>&nbsp;' +
+					'<a href="#/admin/spells/<%=id%>"><%= name %></a>' +
+				'</div>' +
+				'<div class="spell-name">' +
+					'<span class="label">Name</span>' +
+					'<input type="text" name="name" value="<%= name %>"></input>' +
+				'</div>' +
+				'<div class="description">' +
+					'<span class="label">Description</span>' +
+					'<input type="text" name="description" value="<%= description %>"></input>' +
+				'</div>' +
+				'<div class="icon">' +
+					'<span class="label">Icon</span>' +
+					'<input type="text" name="icon" value="<%= icon %>"></input>' +
+				'</div>' +
+				'<div class="damage">' +
+					'<span class="label">Damage</span>' +
+					'<input type="text" name="damage" value="<%= damage %>"></input>' +
+				'</div>' +
+				'<div class="damageType">' +
+					'<span class="label">Damage Type</span>' +
+					'<input type="text" name="damageType" value="<%= damageType %>"></input>' +
+				'</div>' +
+				'<div>' +
+					'<span class="label">Targeting</span>' +
+					'<input type="text" name="targeting" value="<%= targeting %>"></input>' +
+				'</div>' +
+				'<div>' +
+					'<span class="label">Effects</span>' +
+					'<input type="text" name="effects" value="<%= effects %>"></input>' +
+				'</div>' +
+				'<div>' +
+					'<span class="label">Range</span>' +
+					'<input type="text" name="range" value="<%= range %>"></input>' +
+				'</div>'+
+			'</form>';
+		},
+		itemPage: function() { 
+			return '' +
+				'<form class="item-form">' +
+				'<h2><%= name %></h2>' +
+				'<div class="clear breadcrumb">' +
+					'<a href="#">home</a>&nbsp;>&nbsp;' +
+					'<a href="#">spells</a>&nbsp;>&nbsp;' +
+					'<a href="#"><%= name %></a>' +
+				'</div>' +
+				'<div class="spell-name">' +
+					'<span class="label">Name</span>' +
+					'<input type="text" name="name" value="<%= name %>"></input>' +
+				'</div>' +
+				'<div class="description">' +
+					'<span class="label">Description</span>' +
+					'<input type="text" name="description" value="<%= description %>"></input>' +
+				'</div>' +
+				'<div class="icon">' +
+					'<span class="label">Icon</span>' +
+					'<input type="text" name="icon" value="<%= icon %>"></input>' +
+				'</div>' +
+				'<div class="damage">' +
+					'<span class="label">Damage</span>' +
+					'<input type="text" name="damage" value="<%= damage %>"></input>' +
+				'</div>' +
+				'<div class="damageType">' +
+					'<span class="label">Damage Type</span>' +
+					'<input type="text" name="damageType" value="<%= damageType %>"></input>' +
+				'</div>' +
+				'<div>' +
+					'<span class="label">Targeting</span>' +
+					'<input type="text" name="targeting" value="<%= targeting %>"></input>' +
+				'</div>' +
+				'<div>' +
+					'<span class="label">Effects</span>' +
+					'<input type="text" name="effects" value="<%= effects %>"></input>' +
+				'</div>' +
+				'<div>' +
+					'<span class="label">Range</span>' +
+					'<input type="text" name="range" value="<%= range %>"></input>' +
+				'</div>'+
+			'</form>';
+		}, collectionView: function() {
+			return '<div class="list-view">' + 
+				'<h2><%=type%></h2>' +
+				'<div class="clear breadcrumb">' +
+					'<a href="#">home</a>&nbsp;>&nbsp;' +
+					'<a href="#"><%=type%></a>' +
+				'</div>' +
+				'<div class="labels">' +
+					'<div class="title">Name</div>' +
+						'<div class="description">Description</div>' +
+						'<div class="last-modified">Last Modified</div>' +
+					'</div>' +
+					'<div class="spells">' +
+						'<% _.each(items, function(item) { %>' +
+						'<div data-id="<%=item.id%>">' +
+							'<div class="title"><%=item.name%></div>' +
+							'<div class="description"><%=item.description%></div>' +
+							'<div class="last-modified"><%=item.lastModified%></div>' +
+						'</div>' +
+						'<% }); %>' +
+					'</div></div>';	
 		}
-	}
-
+}
 
     function createCharacter(username, classType) {
     	var token = getCookie("token");
@@ -151,10 +264,10 @@ $(document).ready(function() {
     	}
 
 
-		console.log(data);	
+		//console.log(data);	
 
        // $.post("/create", data, function(response){
-        	console.log(response);
+        	//console.log(response);
         	var character = {
         		name: username,
         		level: 1,
@@ -181,7 +294,7 @@ $(document).ready(function() {
 			$game.unbind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd");
 			$gameClient.html($clientIframe);
 			$clientIframe.load(initGame);
-			console.log("TEEHEE");
+			//console.log("TEEHEE");
 		});
 	}
 
@@ -214,15 +327,12 @@ $(document).ready(function() {
 	});
 
 	function initAccount(token) {
-		$(".login-page").hide();
+		$(".login-page, .admin-content").hide();
 		$(".accounts, .player-content").show();
-
+		$searchBar.stop().fadeOut();
 		
 		setCookie("token",token,60*60);
-
 		$charSelect.html("");
-
-		//console.log(token);
 
 		var charsUrl = "characters.json";
 
@@ -231,11 +341,11 @@ $(document).ready(function() {
 			//var response = JSON.parse(data);
 			$classInfo.html("");
 			$classList.html("");
-			console.log("!",data);
+			//console.log("!",data);
 			var classes = data.classes;
 			for(var obj in classes){
 				$classList.append('<div>'+classes[obj].name+'</div>');
-				console.log(templates.classSummary(classes[obj]));
+				//console.log(templates.classSummary(classes[obj]));
 				var $template = $(templates.classSummary(classes[obj]));
 				$classInfo.append($template);
 			}
@@ -246,7 +356,7 @@ $(document).ready(function() {
 		
 		$.get("characters.json", function(data){
 			//var response = JSON.parse(data);
-			console.log("!",data);
+			//console.log("!",data);
 			var chars = data;
 			for(var obj in chars){
 				var $template = $(templates.characterItem(chars[obj])).hide();
@@ -269,16 +379,6 @@ $(document).ready(function() {
 		*/
 	}
 
-	function makeBaseAuth(info) {
-	  var tok = info.email + ':' + info.password;
-	  var hash = btoa(tok);
-	  return "Basic " + hash;
-	}
-
-	function goToPage(hash) {
-
-	}
-
 	$searchBar.focus(fadeInResults);
 	$searchBar.focusout(fadeOutResults);
 
@@ -288,6 +388,21 @@ $(document).ready(function() {
 			"opacity": 1,
 			"pointer-events": "all"
 		});
+	}
+
+	function fadeOutResults(){
+		$results.css({
+			"top": "69px",
+			"opacity": 0,
+			"pointer-events": "none"
+		});
+	}
+
+
+	function makeBaseAuth(info) {
+	  var tok = info.email + ':' + info.password;
+	  var hash = btoa(tok);
+	  return "Basic " + hash;
 	}
 
 	window.setCookie = function(key, value, expires) {
@@ -305,11 +420,154 @@ $(document).ready(function() {
 		return null;
 	}
 
-	function fadeOutResults(){
-		$results.css({
-			"top": "69px",
-			"opacity": 0,
-			"pointer-events": "none"
-		});
+	var SpellModel = Backbone.Model.extend();
+	var NpcModel = Backbone.Model.extend();
+	var ClassModel = Backbone.Model.extend();
+	var QuestModel = Backbone.Model.extend();
+	var ItemModel = Backbone.Model.extend();
+
+	var DefaultDetailView = Backbone.View.extend({
+		events: {
+			"change input": "update"
+		},
+		render: function() {
+			this.$el.html(this.template(this.model.attributes));
+    		return this;
+		},
+		update: function(evt) {
+			var current = evt.currentTarget;
+			var key = current.name;
+			var value = current.value;
+			this.model.set(key, value);
+		}
+	});
+
+	var ListView = Backbone.View.extend({
+		el: $('.admin-main'),
+		template: _.template(templates.collectionView()),
+		render: function(list) {
+			console.log("??", list);
+			this.$el.html(this.template(list));
+			return this;
+		}
+	});
+
+	var Collections = {
+		spells: new (Backbone.Collection.extend({
+			model: SpellModel,
+			url: 'spells.json'
+		}))
 	}
+
+	var Views = {
+		spells:  DefaultDetailView.extend({
+			el: $('.admin-main'),
+			template: _.template(templates.spellPage()),
+		})
+	};
+
+	var promises = {
+		spells: $.Deferred()
+	}
+	
+	var loaders = {
+		spells: function() {
+			Collections.spells.fetch()
+				.complete(promises.spells.resolve);
+		}
+	}
+
+	var renderers = {
+		collection: function(type) {
+			displayAdmin();
+			var listView = new ListView();
+			listView.render({
+				type: type,
+				items: Collections[type].toJSON()
+			});
+		},
+		detail: function(type, id) { 
+			displayAdmin();
+			var collection = Collections[type];
+			var View = Views[type];
+			console.log("5");
+			var detailView = new View({model: collection.get(id)});
+			detailView.render();
+		}
+	}
+
+	var initializeData = $.Callbacks("once");
+	initializeData.add(loaders.spells);	
+
+	var Router = Backbone.Router.extend({
+		routes : {
+			"" : "main",
+			"admin": "admin",
+			"admin/:collection": "collectionView",
+			"admin/:collection/:id": "itemView"
+		},
+		main: function() {
+			displayMain();
+			initAccount();
+		},
+		admin: function() {
+			console.log("lold");
+			displayAdmin();
+			this.navigate("admin/spells", {trigger:true});
+		},
+		collectionView: function(collection) {
+			initializeData.fire(loaders[collection]);
+			promises[collection].done(function() {
+				console.log("!?!");
+				renderers.collection(collection);
+			});
+		},
+		itemView: function(collection, id) {
+			initializeData.fire(loaders[collection]);
+			promises[collection].done(function(){
+				console.log("4");
+				renderers.detail(collection, id);			
+			});
+		}
+
+	});
+	var router = new Router();
+	Backbone.history.start();
+
+	function canShowAccounts() {
+		console.log(states);
+	
+		if(states.isLoggedIn) {
+			$searchBar.fadeOut();
+			$(".login-page").css("display", "none");
+			$(".accounts").css("display", "block");
+			return true	
+		} else {
+			console.log("show login screen");
+			return false;
+		}
+	}
+
+	function displayMain() {
+		
+	}
+
+	function displayAdmin() {
+		if (!canShowAccounts())
+			return
+		if(!states.viewingAdmin) {			
+			$searchBar.fadeIn();
+			$(".player-content").css("display", "none");
+			$(".admin-content").css("display", "block");
+		}
+	}
+
+	//function i
+
+
+	$(".admin-main").on("click", ".spells > div", function() {
+		var id = $(this).data('id');
+		console.log(id);
+		router.navigate("admin/spells/" + id, {trigger:true});
+	});
 });

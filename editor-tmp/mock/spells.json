@@ -1,1 +1,23 @@
-token=token&name=Orun&class=mage
+[{
+	"id": 0,
+	"name": "Frostbolt",
+	"description": "A frosty bolt that deals {d} damage.",
+	"icon": "icon.png",
+	"damage": "50-63",
+	"damageType": "frost",
+	"targeting": "",
+	"effects": "",
+	"range": 750,
+	"lastModified": "January 1st, 2000"
+}, {
+	"id": 1,
+	"name": "Fireball",
+	"description": "A fiery ball that deals {d} damage.",
+	"icon": "icon.png",
+	"damage": "52-61",
+	"damageType": "fire",
+	"targeting": "",
+	"effects": "",
+	"range": 800,
+	"lastModified": "January 1st, 2000"
+}]

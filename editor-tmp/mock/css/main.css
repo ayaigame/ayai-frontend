@@ -371,6 +371,7 @@ h2 {
 	outline: none;
 	transition: border .5s;
 	font-family: "Lato", sans-serif;
+	margin-bottom: 5px;
 }
 
 .main input:hover, .main textarea:hover,
@@ -520,3 +521,32 @@ td {
 	vertical-align: middle; 
 }
 
+.list-view .spells > div {
+	clear: both;
+	transition: background .25s;
+	line-height: 25px;
+	height: 25px; 
+	left: -10px;
+	position: relative;
+	cursor: pointer;
+}
+
+.list-view .spells > div:hover {
+	background: #f1f1f1;
+}
+
+.list-view .spells > div > div {
+	float: left;	
+}
+
+.list-view .labels > div { 
+	float: left;
+	font-weight: 700;
+	margin-bottom: 5px;
+	left: -10px;
+	position: relative;
+}
+
+.list-view .title { width: calc(20% - 10px); margin-left: 10px;}
+.list-view .description { width: 60%; }
+.list-view .last-modified { width: 20%; }

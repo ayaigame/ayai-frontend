@@ -119,26 +119,28 @@ define("Entity", ["phaser"], function(Phaser) {
         this.sprite.x = e.position.x;
         this.sprite.y = e.position.y;
         this.name = e.name;
-        this.level = e.level;
-        this.experience = e.experience;
-        this.health = e.health;
-        this.Mana = e.Mana;
-        var healthPercent = Math.floor((e.health.currHealth / e.health.maximumHealth) * 100) + "%";
-        var manaPercent = Math.floor((e.Mana.currMana / e.Mana.maximumMana) * 100) + "%";
+        if(this.name != null) {
+            this.level = e.level;
+            this.experience = e.experience;
+            this.health = e.health;
+            this.Mana = e.Mana;
+            var healthPercent = Math.floor((e.health.currHealth / e.health.maximumHealth) * 100) + "%";
+            var manaPercent = Math.floor((e.Mana.currMana / e.Mana.maximumMana) * 100) + "%";
 
 
-        this.namePlate.x = this.sprite.x;
-        this.namePlate.y = this.sprite.y - 18;
-        this.namePlate.content = this.name;
+            this.namePlate.x = this.sprite.x;
+            this.namePlate.y = this.sprite.y - 18;
+            this.namePlate.content = this.name;
 
-        this.healthBar.x = this.sprite.x - 8;
-        this.healthBar.y = this.sprite.y - 32;
+            this.healthBar.x = this.sprite.x - 8;
+            this.healthBar.y = this.sprite.y - 32;
 
 
-        ayai.game.add.tween(this.healthBar).to({ width: 48 * (e.health.currHealth / e.health.maximumHealth) }, 250, Phaser.Easing.Linear.None, true, 0);
+            ayai.game.add.tween(this.healthBar).to({ width: 48 * (e.health.currHealth / e.health.maximumHealth) }, 250, Phaser.Easing.Linear.None, true, 0);
 
-        this.healthFrame.x = this.sprite.x - 8;
-        this.healthFrame.y = this.sprite.y - 32;
+            this.healthFrame.x = this.sprite.x - 8;
+            this.healthFrame.y = this.sprite.y - 32;
+        }
 
     };
 
@@ -240,11 +242,10 @@ define("Entity", ["phaser"], function(Phaser) {
 
 
     p.removeFromStage = function() {
-
         this.namePlate.destroy();
-        this.sprite.destroy();
         this.healthFrame.destroy();
         this.healthBar.destroy();
+        this.sprite.destroy();
     }
 
 	return Entity;

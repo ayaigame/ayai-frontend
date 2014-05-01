@@ -123,8 +123,10 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
 
         var players = json.players;
         var npcs = json.npcs;
+        var projectiles = json.projs;
 
         var entities = players.concat(npcs);
+        var entities = entities.concat(projectiles);
 
         ayai.quests = json.models.quests;
         ayai.inventory.sync(json.models.inventory, json.models.equipment);

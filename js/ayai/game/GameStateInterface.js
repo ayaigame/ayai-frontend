@@ -1,5 +1,5 @@
-define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "StopMovementMessage", "AttackMessage", "EquipMessage", "UnequipMessage", "DropItemMessage", "InteractMessage", "AbandonQuestMessage", "AcceptQuestMessage"], 
-    function(Entity, UnitFrame, StartMovementMessage, StopMovementMessage, AttackMessage, EquipMessage, UnequipMessage, DropItemMessage, InteractMessage, AbandonQuestMessage, AcceptQuestMessage) {
+define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "StopMovementMessage", "AttackMessage", "UseItemMessage", "EquipMessage", "UnequipMessage", "DropItemMessage", "InteractMessage", "AbandonQuestMessage", "AcceptQuestMessage"], 
+    function(Entity, UnitFrame, StartMovementMessage, StopMovementMessage, AttackMessage, UseItemMessage, EquipMessage, UnequipMessage, DropItemMessage, InteractMessage, AbandonQuestMessage, AcceptQuestMessage) {
     //  constructor
     //  ===========
     var p = GameStateInterface.prototype;
@@ -101,6 +101,11 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
 
     p.sendDropItem = function(slot) {
         var message = new DropItemMessage(slot);
+        p.connection.send(message.data);
+    };
+
+    p.sendUseItem = function(id) {
+        var message = new UseItemMessage(id);
         p.connection.send(message.data);
     };
 

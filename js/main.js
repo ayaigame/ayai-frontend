@@ -31,6 +31,7 @@ window.onload = function() {
 		    InteractMessage: 'ayai/net/messages/InteractMessage',
 			StartMovementMessage: 'ayai/net/messages/StartMovementMessage',
 			StopMovementMessage: 'ayai/net/messages/StopMovementMessage',
+			UseItemMessage: 'ayai/net/messages/UseItemMessage',
 			MessageSender: 'ayai/net/MessageSender',
 			MessageReceiver: 'ayai/net/MessageReceiver',
 			phaser: 'lib/phaser'

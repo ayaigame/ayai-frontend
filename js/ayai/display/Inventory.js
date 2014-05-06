@@ -19,6 +19,11 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 				return block.fn(this);
 		});
 
+		Handlebars.registerHelper('isConsumable', function(block) {
+			if(this.itemType.type == "consumable")
+				return block.fn(this);
+		});
+
 	};
 
 	var p = Inventory.prototype;
@@ -54,6 +59,7 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 			p.renderEquipment();
 			p.renderInventory();
 			p.registerTooltipMouseovers();
+			p.registerMenuOptions();
 			p.registerDraggables();
 
 	}
@@ -259,6 +265,32 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 						top: ev.clientY - 1500
 					});
 			$(document).mousemove(function(ev) {});
+		});
+	};
+
+
+	p.registerMenuOptions = function() {
+		var menubox = null;
+		$("div#inventory ul.slots li div.item").click(function(e) {
+			console.log($(this));
+			$(this).parent().css("z-index", "100");
+				//console.log("dragging item " + $(this).attr("index") + " from inventory");
+				p.draggedItemIndex = parseInt($(this).attr("index"));
+				var item = p.items[p.draggedItemIndex];
+		});
+	};
+
+
+	p.registerMenuOptions = function() {
+		var menubox = null;
+		$("div#inventory ul.slots li div.item").click(function(e) {
+			console.log($(this));
+			$(this).parent().css("z-index", "100");
+			//console.log("dragging item " + $(this).attr("index") + " from inventory");
+			p.draggedItemIndex = parseInt($(this).attr("index"));
+			var item = p.items[p.draggedItemIndex];
+			console.log(item);
+			GameStateInterface.prototype.sendUseItem(item.id);
 		});
 	};
 

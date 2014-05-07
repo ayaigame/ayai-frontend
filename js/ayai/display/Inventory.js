@@ -355,7 +355,7 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
                     console.log("GOT CLICK");
                     $("#context-menu").hide();
                     $("#context-menu").html('');
-                    $('body').off('click');
+                    $('body').off('mousedown');
                 });
 
             }

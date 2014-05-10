@@ -1,0 +1,29 @@
+[{
+	"id": 0,
+	"name": "Bandit",
+	"description": "An evil doer.",
+	"faction": "axis",
+	"room": 0,
+	"weapon": 0,
+	"helmet": 0,
+	"torso": 0,
+	"legs": 0,
+	"feet": 0,
+	"experience": 100,
+	"level": 5,	
+	"lastModified": "January 1st, 2000"
+}, {
+	"id": 1,
+	"name": "Constable",
+	"description": "A nice guy.",
+	"faction": "allied",
+	"room": 1,
+	"weapon": 0,
+	"helmet": 0,
+	"torso": 0,
+	"legs": 0,
+	"feet": 0,
+	"experience": 100,
+	"level": 5,	
+	"lastModified": "January 1st, 2000"
+}]

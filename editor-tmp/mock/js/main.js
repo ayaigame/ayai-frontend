@@ -150,8 +150,9 @@ $(document).ready(function() {
 			return '' +
 				'<form class="spell-form">' +
 				'<h2><%= name %></h2>' +
+				'<div class="save">save</div>' +
 				'<div class="clear breadcrumb">' +
-					'<a href="#">home</a>&nbsp;>&nbsp;' +
+					'<a href="#/admin">home</a>&nbsp;>&nbsp;' +
 					'<a href="#/admin/spells">spells</a>&nbsp;>&nbsp;' +
 					'<a href="#/admin/spells/<%=id%>"><%= name %></a>' +
 				'</div>' +
@@ -188,15 +189,192 @@ $(document).ready(function() {
 					'<input type="text" name="range" value="<%= range %>"></input>' +
 				'</div>'+
 			'</form>';
+		}, 
+		classPage: function() { 
+			return '' +
+				'<form class="class-form">' +
+				'<h2><%= name %></h2>' +
+				'<div class="save">save</div>' +
+				'<div class="clear breadcrumb">' +
+					'<a href="#/admin">home</a>&nbsp;>&nbsp;' +
+					'<a href="#/admin/classes">classes</a>&nbsp;>&nbsp;' +
+					'<a href="#/admin/classes/<%=id%>"><%= name %></a>' +
+				'</div>' +
+				'<div class="class-name">' +
+					'<span class="label">Name</span>' +
+					'<input type="text" name="name" value="<%= name %>"></input>' +
+				'</div>' +
+				'<div class="description">' +
+					'<span class="label">Description</span>' +
+					'<input type="text" name="name" value="<%= description %>"></input>' +
+				'</div>' +
+				'<div class="health">' +
+					'<span class="label">Base Health</span>' +
+					'<input type="text" name="description" value="<%= health %>"></input>' +
+				'</div>' +
+				'<div class="mana">' +
+					'<span class="label">Base Mana</span>' +
+					'<input type="text" name="icon" value="<%= mana %>"></input>' +
+				'</div>' +
+				'<div class="stats">' +
+					'<span class="label">Base Stats</span>' +
+					'<input type="text" name="stats" value="<%= stats %>"></input>' +
+				'</div>' +
+				'<div class="growth">' +
+					'<span class="label">Stat Growth</span>' +
+					'<input type="text" name="growth" value="<%= growth %>"></input>' +
+				'</div>' +
+				'<div class="spritesheet">' +
+					'<span class="label">Spritesheet Location</span>' +
+					'<input type="text" name="spritesheet" value="<%= spritesheet %>"></input>' +
+				'</div>' +
+			'</form>';
+		},
+		npcPage: function() { 
+			return '' +
+				'<form class="npc-form">' +
+				'<h2><%= name %></h2>' +
+				'<div class="save">save</div>' +
+				'<div class="clear breadcrumb">' +
+					'<a href="#/admin">home</a>&nbsp;>&nbsp;' +
+					'<a href="#/admin/npcs">npcs</a>&nbsp;>&nbsp;' +
+					'<a href="#/admin/npcs/<%=id%>"><%= name %></a>' +
+				'</div>' +
+				'<div class="npc-name">' +
+					'<span class="label">Name</span>' +
+					'<input type="text" name="name" value="<%= name %>"></input>' +
+				'</div>' +
+				'<div class="description">' +
+					'<span class="label">Description</span>' +
+					'<input type="text" name="name" value="<%= description %>"></input>' +
+				'</div>' +
+				'<div class="faction">' +
+					'<span class="label">Faction</span>' +
+					'<input type="text" name="faction" value="<%= faction %>"></input>' +
+				'</div>' +
+				'<div class="room">' +
+					'<span class="label">Room</span>' +
+					'<input type="text" name="room" value="<%= room %>"></input>' +
+				'</div>' +
+				'<div class="weapon">' +
+					'<span class="label">Weapon</span>' +
+					'<input type="text" name="weapon" value="<%= weapon %>"></input>' +
+				'</div>' +
+				'<div class="helmet">' +
+					'<span class="label">Helmet</span>' +
+					'<input type="text" name="helmet" value="<%= helmet %>"></input>' +
+				'</div>' +
+				'<div class="torso">' +
+					'<span class="label">Torso</span>' +
+					'<input type="text" name="torso" value="<%= torso %>"></input>' +
+				'</div>' +
+				'<div class="legs">' +
+					'<span class="label">Legs</span>' +
+					'<input type="text" name="legs" value="<%= legs %>"></input>' +
+				'</div>' + 
+				'<div class="feet">' +
+					'<span class="label">Feet</span>' +
+					'<input type="text" name="torso" value="<%= torso %>"></input>' +
+				'</div>' +
+				'<div class="experience">' +
+					'<span class="label">Experience</span>' +
+					'<input type="text" name="experience" value="<%= experience %>"></input>' +
+				'</div>' +
+				'<div class="level">' +
+					'<span class="label">Level</span>' +
+					'<input type="text" name="level" value="<%= level %>"></input>' +
+				'</div>' +
+			'</form>';
+		},
+		effectPage: function() { 
+			return '' +
+				'<form class="effect-form">' +
+				'<h2><%= name %></h2>' +
+				'<div class="save">save</div>' +
+				'<div class="clear breadcrumb">' +
+					'<a href="#/admin">home</a>&nbsp;>&nbsp;' +
+					'<a href="#/admin/effects">effects</a>&nbsp;>&nbsp;' +
+					'<a href="#/admin/effects/<%=id%>"><%= name %></a>' +
+				'</div>' +
+				'<div class="effect-name">' +
+					'<span class="label">Name</span>' +
+					'<input type="text" name="name" value="<%= name %>"></input>' +
+				'</div>' +
+				'<div class="description">' +
+					'<span class="label">Description</span>' +
+					'<input type="text" name="description" value="<%= description %>"></input>' +
+				'</div>' +
+				'<div class="effect-type">' +
+					'<span class="label">Effect Type</span>' +
+					'<input type="text" name="effect-type" value="<%= effectType %>"></input>' +
+				'</div>' +
+				'<div class="value">' +
+					'<span class="label">Value</span>' +
+					'<input type="text" name="value" value="<%= value %>"></input>' +
+				'</div>' +
+				'<div class="attribute">' +
+					'<span class="label">Attribute</span>' +
+					'<input type="text" name="attribute" value="<%= attribute %>"></input>' +
+				'</div>' +
+				'<div class="multiplier">' +
+					'<span class="label">Multiplier</span>' +
+					'<input type="text" name="multiplier" value="<%= multiplier %>"></input>' +
+				'</div>' +
+				'<div class="is-rel">' +
+					'<span class="label">Is Relative?</span>' +
+					'<input type="text" name="is-rel" value="<%= isRelative %>"></input>' +
+				'</div>' + 
+				'<div class="is-value">' +
+					'<span class="label">Is Value Relative?</span>' +
+					'<input type="text" name="is-value" value="<%= isValueRelative %>"></input>' +
+				'</div>' +
+				'<div class="icon">' +
+					'<span class="label">Icon Location</span>' +
+					'<input type="text" name="experience" value="<%= iconLocation %>"></input>' +
+				'</div>' +
+			'</form>';
+		},
+		questPage: function() { 
+			return '' +
+				'<form class="quest-form">' +
+				'<h2><%= name %></h2>' +
+				'<div class="save">save</div>' +
+				'<div class="clear breadcrumb">' +
+					'<a href="#/admin">home</a>&nbsp;>&nbsp;' +
+					'<a href="#/admin/quests">quests</a>&nbsp;>&nbsp;' +
+					'<a href="#/admin/quests/<%=id%>"><%= name %></a>' +
+				'</div>' +
+				'<div class="quest-name">' +
+					'<span class="label">Name</span>' +
+					'<input type="text" name="name" value="<%= name %>"></input>' +
+				'</div>' +
+				'<div class="description">' +
+					'<span class="label">Description</span>' +
+					'<input type="text" name="description" value="<%= description %>"></input>' +
+				'</div>' +
+				'<div class="type">' +
+					'<span class="label">Type</span>' +
+					'<input type="text" name="type" value="<%= type %>"></input>' +
+				'</div>' +
+				'<div class="ids">' +
+					'<span class="label">IDs</span>' +
+					'<input type="text" name="ids" value="<%= ids %>"></input>' +
+				'</div>' +
+				'<div class="quantity">' +
+					'<span class="label">Quantity</span>' +
+					'<input type="text" name="quantity" value="<%= quantity %>"></input>' +
+				'</div>' +
+			'</form>';
 		},
 		itemPage: function() { 
 			return '' +
 				'<form class="item-form">' +
 				'<h2><%= name %></h2>' +
+				'<div class="save">save</div>' +
 				'<div class="clear breadcrumb">' +
-					'<a href="#">home</a>&nbsp;>&nbsp;' +
-					'<a href="#">spells</a>&nbsp;>&nbsp;' +
-					'<a href="#"><%= name %></a>' +
+					'<a href="#admin">home</a>&nbsp;>&nbsp;' +
+					'<a href="#admin/items">items</a>&nbsp;>&nbsp;' +
+					'<a href="#admin/items/<%=id%>"><%= name %></a>' +
 				'</div>' +
 				'<div class="spell-name">' +
 					'<span class="label">Name</span>' +
@@ -208,28 +386,47 @@ $(document).ready(function() {
 				'</div>' +
 				'<div class="icon">' +
 					'<span class="label">Icon</span>' +
-					'<input type="text" name="icon" value="<%= icon %>"></input>' +
+					'<input type="text" name="icon" value="<%= iconLocation %>"></input>' +
+				'</div>' +
+				'<div class="value">' +
+					'<span class="label">Value</span>' +
+					'<input type="text" name="value" value="<%= value %>"></input>' +
+				'</div>' +
+				'<div class="weight">' +
+					'<span class="label">Weight</span>' +
+					'<input type="text" name="weight" value="<%= weight %>"></input>' +
+				'</div>' +
+				'<div class="item-type">' +
+					'<span class="label">Item Type</span>' +
+					'<input type="text" name="targeting" value="<%= itemType %>"></input>' +
+				'</div>' +
+
+				
+				'<div class="range">' +
+					'<span class="label">Range</span>' +
+					'<input type="text" name="range" value="<%= range %>"></input>' +
 				'</div>' +
 				'<div class="damage">' +
 					'<span class="label">Damage</span>' +
 					'<input type="text" name="damage" value="<%= damage %>"></input>' +
 				'</div>' +
-				'<div class="damageType">' +
+				'<div class="damage-type">' +
 					'<span class="label">Damage Type</span>' +
-					'<input type="text" name="damageType" value="<%= damageType %>"></input>' +
+					'<input type="text" name="damage-type" value="<%= damageType %>"></input>' +
 				'</div>' +
-				'<div>' +
-					'<span class="label">Targeting</span>' +
-					'<input type="text" name="targeting" value="<%= targeting %>"></input>' +
+
+				'<div class="slot">' +
+					'<span class="label">Slot</span>' +
+					'<input type="text" name="slot" value="<%= slot %>"></input>' +
+				'</div>' +				
+				'<div class="protection">' +
+					'<span class="label">Protection</span>' +
+					'<input type="text" name="protection" value="<%= protection %>"></input>' +
 				'</div>' +
-				'<div>' +
-					'<span class="label">Effects</span>' +
-					'<input type="text" name="effects" value="<%= effects %>"></input>' +
+				'<div class="armor-type">' +
+					'<span class="label">Armor Type</span>' +
+					'<input type="text" name="armor-type" value="<%= armorType %>"></input>' +
 				'</div>' +
-				'<div>' +
-					'<span class="label">Range</span>' +
-					'<input type="text" name="range" value="<%= range %>"></input>' +
-				'</div>'+
 			'</form>';
 		}, collectionView: function() {
 			return '<div class="list-view">' + 
@@ -245,7 +442,7 @@ $(document).ready(function() {
 					'</div>' +
 					'<div class="spells">' +
 						'<% _.each(items, function(item) { %>' +
-						'<div data-id="<%=item.id%>">' +
+						'<div data-id="<%=type%>/<%=item.id%>">' +
 							'<div class="title"><%=item.name%></div>' +
 							'<div class="description"><%=item.description%></div>' +
 							'<div class="last-modified"><%=item.lastModified%></div>' +
@@ -425,14 +622,17 @@ $(document).ready(function() {
 	var ClassModel = Backbone.Model.extend();
 	var QuestModel = Backbone.Model.extend();
 	var ItemModel = Backbone.Model.extend();
+	var EffectModel = Backbone.Model.extend();
 
 	var DefaultDetailView = Backbone.View.extend({
+		el: $('.admin-main'),
 		events: {
-			"change input": "update"
+			"change input": "update",
+			"click .save": "saveChanges"
 		},
 		render: function() {
 			this.$el.html(this.template(this.model.attributes));
-    		return this;
+    			return this;
 		},
 		update: function(evt) {
 			var current = evt.currentTarget;
@@ -456,27 +656,104 @@ $(document).ready(function() {
 		spells: new (Backbone.Collection.extend({
 			model: SpellModel,
 			url: 'spells.json'
+		})), 
+		classes: new (Backbone.Collection.extend({
+			model: ClassModel,
+			url: 'classes-admin.json'
+		})), 
+		npcs: new (Backbone.Collection.extend({
+			model: NpcModel,
+			url: 'npcs.json'
+		})), 
+		effects: new (Backbone.Collection.extend({
+			model: EffectModel,
+			url: 'effects.json'
+		})),
+		quests: new (Backbone.Collection.extend({
+			model: QuestModel,
+			url: 'quests.json'
+		})),
+		items: new (Backbone.Collection.extend({
+			model: ItemModel,
+			url: 'items_.json'
 		}))
 	}
 
 	var Views = {
 		spells:  DefaultDetailView.extend({
-			el: $('.admin-main'),
 			template: _.template(templates.spellPage()),
+			saveChanges: function() {
+				var formcls = this.$el.find("form").attr("class");
+				var data = this.$el.find("form").serializeArray();
+				console.log(data);				
+				alert("Spell saved!" + formcls);
+				console.log(this);
+			},
+		}),
+		classes:  DefaultDetailView.extend({
+			template: _.template(templates.classPage()),
+			saveChanges: function() {
+				var data = this.$el.find("form").serializeArray();
+				console.log(data);				
+				alert("Class saved!");
+			},
+		}),
+		npcs:  DefaultDetailView.extend({
+			template: _.template(templates.npcPage()),
+		}),
+		effects:  DefaultDetailView.extend({
+			template: _.template(templates.effectPage()),
+		}),
+		quests:  DefaultDetailView.extend({
+			template: _.template(templates.questPage()),
+		}),
+		items:  DefaultDetailView.extend({
+			template: _.template(templates.itemPage()),
 		})
 	};
 
 	var promises = {
-		spells: $.Deferred()
+		spells: $.Deferred(),
+		classes: $.Deferred(),
+		npcs: $.Deferred(),
+		effects: $.Deferred(),
+		quests: $.Deferred(),
+		items: $.Deferred()
 	}
 	
 	var loaders = {
 		spells: function() {
 			Collections.spells.fetch()
 				.complete(promises.spells.resolve);
-		}
+		},
+		classes: function() {
+			console.log("claz");
+			Collections.classes.fetch()
+				.complete(promises.classes.resolve);
+		},
+		npcs: function() {
+			console.log("npcz");
+			Collections.npcs.fetch()
+				.complete(promises.npcs.resolve);
+		},
+		effects: function() {
+			console.log("effectz");
+			Collections.effects.fetch()
+				.complete(promises.effects.resolve);
+		},
+		quests: function() {
+			console.log("qustsz");
+			Collections.quests.fetch()
+				.complete(promises.quests.resolve);
+		},
+		items: function() {
+			console.log("itemz");
+			Collections.items.fetch()
+				.complete(promises.items.resolve);
+		},
 	}
 
+	var currentDetail;
 	var renderers = {
 		collection: function(type) {
 			displayAdmin();
@@ -486,18 +763,24 @@ $(document).ready(function() {
 				items: Collections[type].toJSON()
 			});
 		},
-		detail: function(type, id) { 
+		detail: function(type, id) {
+			if(currentDetail) currentDetail.undelegateEvents(); 
 			displayAdmin();
 			var collection = Collections[type];
-			var View = Views[type];
+			//var View = Views[type];
 			console.log("5");
-			var detailView = new View({model: collection.get(id)});
-			detailView.render();
+			currentDetail = new Views[type]({model: collection.get(id)});
+			currentDetail.render();
 		}
 	}
 
 	var initializeData = $.Callbacks("once");
-	initializeData.add(loaders.spells);	
+	initializeData.add(loaders.spells);
+	initializeData.add(loaders.classes);		
+	initializeData.add(loaders.npcs);		
+	initializeData.add(loaders.effects);	
+	initializeData.add(loaders.quests);
+	initializeData.add(loaders.items);
 
 	var Router = Backbone.Router.extend({
 		routes : {
@@ -516,6 +799,7 @@ $(document).ready(function() {
 			this.navigate("admin/spells", {trigger:true});
 		},
 		collectionView: function(collection) {
+			console.log(collection);
 			initializeData.fire(loaders[collection]);
 			promises[collection].done(function() {
 				console.log("!?!");
@@ -566,8 +850,8 @@ $(document).ready(function() {
 
 
 	$(".admin-main").on("click", ".spells > div", function() {
-		var id = $(this).data('id');
-		console.log(id);
-		router.navigate("admin/spells/" + id, {trigger:true});
+		var url = $(this).data('id');
+		console.log(url);
+		router.navigate("/admin/" + url, {trigger:true});
 	});
 });

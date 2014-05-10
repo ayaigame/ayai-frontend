@@ -1,0 +1,20 @@
+[{
+	"id": 0,
+	"name": "Mighty Sword",
+	"description": "Fucks you up,son.",
+	"value": 100,
+	"weight": 20,
+	"iconLocation": "items/sword.png",
+	"itemType": "weapon",
+	
+	"range": 100,
+	"damage": 200,
+	"damageType": "physical",
+	"weaponType": 0,
+	
+	"slot": "torso",
+	"protection": 100,
+	"armorType": "physical",
+
+	"lastModified": "January 1st, 2000"
+}]

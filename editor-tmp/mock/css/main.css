@@ -550,3 +550,21 @@ td {
 .list-view .title { width: calc(20% - 10px); margin-left: 10px;}
 .list-view .description { width: 60%; }
 .list-view .last-modified { width: 20%; }
+
+.admin-main .save {
+	float: right;
+	background: #ddd;
+	padding: 8px;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background .25s, color .25s;
+}
+
+.admin-main .save:hover {
+	float: right;
+	background: #777;
+	color: #fff;
+	padding: 8px;
+	border-radius: 5px;
+	cursor: pointer;
+}

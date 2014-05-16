@@ -1,4 +1,4 @@
-div#control-settings {
+div#sound-settings {
   background: rgba(0, 0, 0, 0.7);
   border: 2px solid #bbbbbb;
   position: absolute;
@@ -11,7 +11,7 @@ div#control-settings {
   height: 600px;
 }
 
-div#change-control-popup {
+div#change-sound-popup {
   background: rgba(0, 0, 0, 0.7);
   border: 2px solid #bbbbbb;
   position: absolute;
@@ -25,22 +25,22 @@ div#change-control-popup {
     color:white;
 }
 
-div#change-control-popup.open {
+div#change-sound-popup.open {
     z-index: 1001;
     transition: opacity 0.25s ease-out;
     opacity: 1;
 }
 
-div#control-settings div.header {
+div#sound-settings div.header {
     width: 100%;
     height: 10%;
 }
 
-div#control-settings div.header h4 {
+div#sound-settings div.header h4 {
       color: white;
 }
 
-div#control-settings-body table {
+div#sound-settings-body table {
     color:white;
     margin-left:auto;
     margin-right:auto;
@@ -55,10 +55,51 @@ td.key-value {
     border-style:groove;
 }
 
+div#master-sound-slider-header {
+
+    margin-bottom:15px;
+    color:white;
+    font-size: 18px;
+}
+
+div#master-sound-slider {
+    margin-left:145px;
+    margin-bottom:50px;
+    width:260px;
+
+}
+
+div#sfx-sound-slider-header {
+
+    margin-bottom:15px;
+    color:white;
+    font-size: 18px;
+}
+
+div#sfx-sound-slider {
+    margin-left:145px;
+    margin-bottom:50px;
+    width:260px;
+
+}
+
+div#music-sound-slider-header {
+
+    margin-bottom:15px;
+    color:white;
+    font-size: 18px;
+}
+
+div#music-sound-slider {
+    margin-left:145px;
+    margin-bottom:50px;
+    width:260px;
+
+}
 
 
 
-div#control-settings.open {
+div#sound-settings.open {
   transition: opacity 0.25s ease-out;
   opacity: 1;
 }

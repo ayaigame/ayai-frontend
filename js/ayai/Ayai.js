@@ -1,6 +1,6 @@
 
-define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "Inventory", "Chat", "QuestLog", "AcceptQuest", "CreateAIMessage", "ControlSettings"],
-    function(Phaser, InputHandler, Connection, GameStateInterface, Inventory, Chat, QuestLog, AcceptQuest, CreateAIMessage, ControlSettings) {
+define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "Inventory", "Chat", "QuestLog", "AcceptQuest", "CreateAIMessage", "ControlSettings", "SoundSettings"],
+    function(Phaser, InputHandler, Connection, GameStateInterface, Inventory, Chat, QuestLog, AcceptQuest, CreateAIMessage, ControlSettings, SoundSettings) {
     // constructor
 
     ayai = Ayai.prototype;
@@ -130,10 +130,13 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
         ayai.inputHandler = new InputHandler(ayai.game, ayai.gameState, ayai.inventory, ayai.chat, ayai.questLog, ayai.acceptQuest);
         //Have to make the controlSettings after the input handler.
         ayai.controlSettings = new ControlSettings(ayai.inputHandler, ayai.game);
+        ayai.soundSettings = new SoundSettings(ayai.game);
         ayai.renderMap(ayai.currentTileset, ayai.currentTilemap);
 
         ayai.music = {zelda: ayai.game.add.audio('zelda')};
         ayai.sfx = {sword: ayai.game.add.audio('sword')};
+
+        ayai.music.zelda.play();
 
     }
     

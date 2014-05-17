@@ -16,6 +16,7 @@ $padding: 10px;
         width:$width;
         height:$height;
         color:white;
+        z-index: -100;
 
         div.ActiveLabel {
 
@@ -43,4 +44,5 @@ $padding: 10px;
     div#accept-quest.open {
         transition: opacity 0.25s ease-out;
         opacity: 1;
+        z-index: 20;
     }

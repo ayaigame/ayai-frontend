@@ -1,6 +1,7 @@
 
-define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "Inventory", "Chat", "QuestLog", "AcceptQuest", "CreateAIMessage", "ControlSettings", "SoundSettings"],
-    function(Phaser, InputHandler, Connection, GameStateInterface, Inventory, Chat, QuestLog, AcceptQuest, CreateAIMessage, ControlSettings, SoundSettings) {
+define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "Inventory", "Chat", "QuestLog", "AcceptQuest", "SpawnMessage", "ControlSettings"],
+    function(Phaser, InputHandler, Connection, GameStateInterface, Inventory, Chat, QuestLog, AcceptQuest, SpawnMessage, ControlSettings) {
+
     // constructor
 
     ayai = Ayai.prototype;
@@ -28,11 +29,29 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
     };
 
     
-    $('button#createAI').click(function() {
-      var message = new CreateAIMessage();
-      ayai.connection.send(message.data);
-      console.log("Creating AI");
+    $('button#spawnEntity').click(function() {
+
+        var typeTitle = $("div.debug a.chosen-single span").html();
+        var entityType = "";
+
+        $("select.chosen option").each(function(index, item) {
+
+            if( $(item).html() == typeTitle)
+                entityType = $(item).val()
+        });
+
+        var entityTypeId = $("input#spawnEntityType").val();
+        var x = $("input#spawnEntityLocationX").val();
+        var y = $("input#spawnEntityLocationY").val(); 
+ 
+        var message = new SpawnMessage(entityType, entityTypeId, x, y);
+        ayai.connection.send(message.data);
+
+        console.log("spawning");
+        console.log(message.data);
+
     });
+
 
 
     ayai.renderMap = function(tileset, tilemap, options) {

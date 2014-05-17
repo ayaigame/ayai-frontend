@@ -9,6 +9,7 @@ div#control-settings {
   text-align: center;
   width: 550px;
   height: 600px;
+  z-index: -100;
 }
 
 div#change-control-popup {
@@ -23,6 +24,7 @@ div#change-control-popup {
   width: 200px;
   height: 200px;
     color:white;
+    z-index: -100;
 }
 
 div#change-control-popup.open {
@@ -64,5 +66,5 @@ div#control-settings.open {
 }
 
 .open {
-  z-index: 1000;
+  z-index: 1000 !important;
 }

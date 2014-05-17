@@ -28,11 +28,11 @@ window.onload = function() {
 			EquipMessage: 'ayai/net/messages/EquipMessage',
 			AttackMessage: 'ayai/net/messages/AttackMessage',
       		ChatMessage: 'ayai/net/messages/ChatMessage',
-      		CreateAIMessage: 'ayai/net/messages/CreateAIMessage',
 		    InteractMessage: 'ayai/net/messages/InteractMessage',
 			StartMovementMessage: 'ayai/net/messages/StartMovementMessage',
 			StopMovementMessage: 'ayai/net/messages/StopMovementMessage',
 			UseItemMessage: 'ayai/net/messages/UseItemMessage',
+			SpawnMessage: 'ayai/net/messages/SpawnMessage',
 			MessageSender: 'ayai/net/MessageSender',
 			MessageReceiver: 'ayai/net/MessageReceiver',
 			phaser: 'lib/phaser'

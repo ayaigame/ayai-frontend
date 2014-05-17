@@ -2,8 +2,12 @@ div#control-settings {
   background: rgba(0, 0, 0, 0.7);
   border: 2px solid #bbbbbb;
   position: absolute;
+
   left: 300px;
   top: 100px;
+  right: 500px;
+  bottom: 60px;
+
   transition: opacity 0.25s ease-out;
   opacity: 0;
   text-align: center;

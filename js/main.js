@@ -17,6 +17,7 @@ window.onload = function() {
 			AcceptQuest: 'ayai/display/AcceptQuest',
             ControlSettings: 'ayai/display/ControlSettings',
             SoundSettings: 'ayai/display/SoundSettings',
+
 			Entity: 'ayai/game/Entity',
 			UnitFrame: 'ayai/display/hud/UnitFrame',
 			GameStateInterface: 'ayai/game/GameStateInterface',
@@ -32,6 +33,7 @@ window.onload = function() {
 			StartMovementMessage: 'ayai/net/messages/StartMovementMessage',
 			StopMovementMessage: 'ayai/net/messages/StopMovementMessage',
 			UseItemMessage: 'ayai/net/messages/UseItemMessage',
+
 			SpawnMessage: 'ayai/net/messages/SpawnMessage',
 			MessageSender: 'ayai/net/MessageSender',
 			MessageReceiver: 'ayai/net/MessageReceiver',

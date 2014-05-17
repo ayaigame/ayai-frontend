@@ -1,6 +1,6 @@
 
-define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "Inventory", "Chat", "QuestLog", "AcceptQuest", "SpawnMessage", "ControlSettings"],
-    function(Phaser, InputHandler, Connection, GameStateInterface, Inventory, Chat, QuestLog, AcceptQuest, SpawnMessage, ControlSettings) {
+define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "Inventory", "Chat", "QuestLog", "AcceptQuest", "SpawnMessage", "ControlSettings", "SoundSettings"],
+    function(Phaser, InputHandler, Connection, GameStateInterface, Inventory, Chat, QuestLog, AcceptQuest, SpawnMessage, ControlSettings, SoundSettings) {
 
     // constructor
 
@@ -37,7 +37,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
         $("select.chosen option").each(function(index, item) {
 
             if( $(item).html() == typeTitle)
-                entityType = $(item).val()
+                entityType = $(item).val();
         });
 
         var entityTypeId = $("input#spawnEntityType").val();
@@ -106,6 +106,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
     ayai.preload = function() {
         console.log("Loading assets...");
         ayai.game.load.spritesheet('guy', '../assets/sprites/guy/guysheet.png', 32, 32);
+
         ayai.game.load.spritesheet('npc', '../assets/sprites/npc/npcsheet.png', 32, 48);
         ayai.game.load.spritesheet('props', '../assets/sprites/props/gravesheet.png', 40, 40);
         ayai.game.load.spritesheet('healthframe', '../assets/sprites/ui/healthframe.png', 48, 13);
@@ -149,13 +150,16 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
         ayai.inputHandler = new InputHandler(ayai.game, ayai.gameState, ayai.inventory, ayai.chat, ayai.questLog, ayai.acceptQuest);
         //Have to make the controlSettings after the input handler.
         ayai.controlSettings = new ControlSettings(ayai.inputHandler, ayai.game);
+
         ayai.soundSettings = new SoundSettings(ayai.game);
+
         ayai.renderMap(ayai.currentTileset, ayai.currentTilemap);
 
         ayai.music = {zelda: ayai.game.add.audio('zelda')};
         ayai.sfx = {sword: ayai.game.add.audio('sword')};
 
-        ayai.music.zelda.play();
+
+        //ayai.music.zelda.play();
 
     }
     
@@ -175,9 +179,10 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
         }
 
 
+
+
         $("div.ui-modal").css("left", (($("div#chat").position().left + $("ul.unitframes").width())/2) - $("div#char-window").width() / 2);
         $("ul#skills").css("left", (($("div#chat").position().left + $("ul.unitframes").width())/2) - $("ul#skills").width() / 2);
-
 
     }
 

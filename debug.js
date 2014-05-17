@@ -1,6 +1,8 @@
 $(document).ready(function() {
 
+
     $('#context-menu').hide();
+
 	$(document).tooltip({
 		track:true,
 		show:false,

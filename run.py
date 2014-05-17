@@ -1,13 +1,13 @@
 #!/usr/bin/python
 
-import http.server
-import socketserver
+import SimpleHTTPServer
+import SocketServer
 
 PORT = 8000
 
-Handler = http.server.SimpleHTTPRequestHandler
+Handler = SimpleHTTPServer.SimpleHTTPRequestHandler
 
-httpd = socketserver.TCPServer(("", PORT), Handler)
+httpd = SocketServer.TCPServer(("", PORT), Handler)
 
 print("serving at port", PORT)
 httpd.serve_forever()

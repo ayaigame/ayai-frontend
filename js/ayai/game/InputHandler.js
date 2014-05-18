@@ -92,7 +92,7 @@ define("InputHandler", ["phaser", "InputEvent", "UnitFrame"], function (Phaser, 
     p.charCodeToString = function(charCode) {
         var toReturn = String.fromCharCode(charCode);
 
-        console.log(toReturn);
+        //console.log(toReturn);
         if (toReturn.match("[A-Z]")) {
             return toReturn;
         }

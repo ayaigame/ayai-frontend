@@ -9,15 +9,59 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 		p.flagged = false;
 		p.oldItems = [];
 
-		Handlebars.registerHelper('isWeapon', function(block) {
-			if(this.itemType.type == "weapon1" || this.itemType.type == "weapon2")
+
+        p.isArmor = function(item) {
+            if(item.itemType.type == "helmet" || item.itemType.type == "armor") {
+                return true;
+            }
+
+            return false;
+        };
+
+        p.isWeapon = function(item) {
+            if(item.itemType.type == "weapon1" || item.itemType.type == "weapon2") {
+                return true;
+            }
+
+            return false;
+        }
+
+        p.isConsumable = function(item) {
+            if(item.itemType.type == "consumable") {
+                return true;
+            }
+
+            return false;
+        }
+
+        p.isEquipable = function(item) {
+            if(p.isWeapon(item) || p.isArmor(item)) {
+                return true;
+            }
+
+            return false;
+        }
+
+        Handlebars.registerHelper('isWeapon', function(block) {
+			if(p.isWeapon(this))
 				return block.fn(this);
 		});
 
 		Handlebars.registerHelper('isArmor', function(block) {
-			if(this.itemType.type == "helmet" || this.itemType.type == "armor") // wat? armor types?
+			if(p.isArmor(this)) // 65 wat? armor types?
 				return block.fn(this);
 		});
+
+		Handlebars.registerHelper('isConsumable', function(block) {
+			if(p.isConsumable(this))
+				return block.fn(this);
+		});
+
+        Handlebars.registerHelper('isEquipable', function(block) {
+            if(p.isEquipable(this)) {
+                return block.fn(this);
+            }
+        });
 
 	};
 
@@ -54,6 +98,7 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 			p.renderEquipment();
 			p.renderInventory();
 			p.registerTooltipMouseovers();
+			//p.registerMenuOptions();
 			p.registerDraggables();
 
 	}
@@ -259,6 +304,63 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 						top: ev.clientY - 1500
 					});
 			$(document).mousemove(function(ev) {});
+		});
+	};
+
+	p.registerMenuOptions = function() {
+        //disable normal context menu
+        document.oncontextmenu = function() {return false;};
+
+		var menubox = null;
+		$("div#inventory ul.slots li div.item").on("mousedown", function(e) {
+            //Regular Click
+            $(this).parent().css("z-index", "100");
+            //console.log("dragging item " + $(this).attr("index") + " from inventory");
+            p.draggedItemIndex = parseInt($(this).attr("index"));
+            var item = p.items[p.draggedItemIndex];
+
+            if (e.button == 0) {
+                console.log(e);
+                console.log($(this));
+
+                console.log(item);
+                GameStateInterface.prototype.sendUseItem(item.id); //Should really pass this class an instance of ayai.gameState but since this is really a static function its fine
+                p.renderInventory();
+            //right click
+            } else if(e.button == 2) {
+
+                console.log("Right Click");
+                var tplSource = $("#item-context-menu-template").html();
+                var template = Handlebars.compile(tplSource);
+                var html = template(item);
+                $("#context-menu").show().html(html);
+                $("#context-menu ul").css({
+                    left: e.pageX + 1,
+                    top: e.pageY + 1
+                });
+                $("#context-menu li.drop").on("mousedown", function(e) {
+                    //drop item;
+                });
+                $("#context-menu li.consume").on("mousedown", function(e) {
+                    console.log("GOT CLICK FIRST");
+                    GameStateInterface.prototype.sendUseItem(item.id);
+
+                });
+                $("context-menu li.equip").on("mousedown", function(e) {
+                    GameStateInterface.prototype.sendEquip(p.draggedItemIndex, item.itemType);
+                })
+
+                e.stopPropagation();
+                $('body').on("mousedown", function () {
+                    console.log("GOT CLICK");
+                    $("#context-menu").hide();
+                    $("#context-menu").html('');
+                    $('body').off('mousedown');
+                });
+
+            }
+
+
 		});
 	};
 

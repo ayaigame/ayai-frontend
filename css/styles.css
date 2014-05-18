@@ -1,11 +1,17 @@
+        body {
+
+            z-index: 0;
+        }
+
         #float
         {
-        opacity: 0.85;
-        background-color: White;
-        position: absolute;
-        left: 0;
-        top: 0;
-        padding: 10px;
+            opacity: 0.85;
+            background-color: White;
+            position: absolute;
+            left: 0;
+            top: 0;
+            padding: 10px;
+            z-index: 20;
         }
 
         .overlay {
@@ -14,7 +20,6 @@
 
         .submenu.settings:before
         {
-            content: "";
             width: 0px;
             height: 0px;
             border-style: solid;
@@ -160,7 +165,23 @@
             margin-bottom: 5px;
         }
 
-        div.debug > ul > li input, div.debug > ul > li label, button {
+        div.debug > ul > li input[type=checkbox], div.debug > ul > li label, button {
 
             cursor: pointer;
+        }
+
+        div.debug input.location{
+
+            width: 40px;
+
+        }
+
+        div.debug input.id {
+
+            width: 50px;
+        }
+
+        div.debug .chosen-container {
+
+            width: auto !important;
         }

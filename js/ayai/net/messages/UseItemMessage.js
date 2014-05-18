@@ -1,17 +1,19 @@
-define("CreateAIMessage", function() {
+define("UseItemMessage", function() {
+    
+    var p = UseItemMessage.prototype;
 
-    function CreateAIMessage() {
-        // constructor
+    function UseItemMessage(id) {
         this.data = {
-            type: "createai",
+          type: "useitem",
+          itemId: id,
         };
     };
-    var p = CreateAIMessage.prototype;
+
 
 
    //  public properties 
    //  =================     
-   
+ 
     p.data = null;
 
 
@@ -23,5 +25,6 @@ define("CreateAIMessage", function() {
     //  ===============
 
 
-    return CreateAIMessage;
+    return UseItemMessage;
+
 });

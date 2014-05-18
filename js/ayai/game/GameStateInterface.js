@@ -1,5 +1,5 @@
-define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "StopMovementMessage", "AttackMessage", "EquipMessage", "UnequipMessage", "DropItemMessage", "InteractMessage", "AbandonQuestMessage", "AcceptQuestMessage"], 
-    function(Entity, UnitFrame, StartMovementMessage, StopMovementMessage, AttackMessage, EquipMessage, UnequipMessage, DropItemMessage, InteractMessage, AbandonQuestMessage, AcceptQuestMessage) {
+define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "StopMovementMessage", "AttackMessage", "UseItemMessage", "EquipMessage", "UnequipMessage", "DropItemMessage", "InteractMessage", "AbandonQuestMessage", "AcceptQuestMessage"], 
+    function(Entity, UnitFrame, StartMovementMessage, StopMovementMessage, AttackMessage, UseItemMessage, EquipMessage, UnequipMessage, DropItemMessage, InteractMessage, AbandonQuestMessage, AcceptQuestMessage) {
     //  constructor
     //  ===========
     var p = GameStateInterface.prototype;
@@ -104,6 +104,11 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
         p.connection.send(message.data);
     };
 
+    p.sendUseItem = function(id) {
+        var message = new UseItemMessage(id);
+        p.connection.send(message.data);
+    };
+
     p.displayAttack = function(json) {
 
         var initiator = json.initator;
@@ -123,8 +128,10 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
 
         var players = json.players;
         var npcs = json.npcs;
+        var projectiles = json.projs;
 
         var entities = players.concat(npcs);
+        var entities = entities.concat(projectiles);
 
         ayai.quests = json.models.quests;
         ayai.inventory.sync(json.models.inventory, json.models.equipment);

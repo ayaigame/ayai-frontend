@@ -9,7 +9,8 @@ div#graphics-settings {
   opacity: 0;
   text-align: center;
   width: 300;
-  height: 500; }
+  height: 500;
+}
 
 div#graphics-settings.open {
   opacity: 1;

@@ -1,0 +1,21 @@
+#context-menu ul {
+    position:absolute;
+    margin:0;
+    padding:10px;
+    background-color: #fefefe;
+    border-radius: 5px;
+    z-index: 10000;
+    box-shadow: 2px 2px 2px black;
+    opacity:.7;
+}
+
+.item-context-menu-item {
+    list-style:none;
+}
+
+.item-context-menu-item:hover {
+    background-color: Black;
+    color: White;
+    cursor: pointer;
+    transition: all 0.25s ease-out;
+}

@@ -107,6 +107,9 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
         console.log("Loading assets...");
         ayai.game.load.spritesheet('guy', '../assets/sprites/guy/guysheet.png', 32, 32);
 
+        ayai.game.load.spritesheet('fireball', '../assets/sprites/projectiles/fireball.png', 32, 32);
+        ayai.game.load.spritesheet('arrows', '../assets/sprites/projectiles/arrowSheet.png', 24, 24);
+
         ayai.game.load.spritesheet('npc', '../assets/sprites/npc/npcsheet.png', 32, 48);
         ayai.game.load.spritesheet('props', '../assets/sprites/props/gravesheet.png', 40, 40);
         ayai.game.load.spritesheet('healthframe', '../assets/sprites/ui/healthframe.png', 48, 13);

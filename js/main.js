@@ -18,6 +18,7 @@ window.onload = function() {
             ControlSettings: 'ayai/display/ControlSettings',
             SoundSettings: 'ayai/display/SoundSettings',
 
+
 			Entity: 'ayai/game/Entity',
 			UnitFrame: 'ayai/display/hud/UnitFrame',
 			GameStateInterface: 'ayai/game/GameStateInterface',

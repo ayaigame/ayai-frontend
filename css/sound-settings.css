@@ -9,6 +9,7 @@ div#sound-settings {
   text-align: center;
   width: 550px;
   height: 600px;
+  z-index: -100;
 }
 
 div#change-sound-popup {

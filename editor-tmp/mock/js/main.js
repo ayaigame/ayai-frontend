@@ -142,6 +142,12 @@ $(document).ready(function() {
 				'</div>' +
 				'</div>';
 		},
+		searchResults: function() {
+			return '' +
+				'<% _.each(results, function(result) { %>' +
+					'<div><span><%=result.name%></span> (<%=result.type%>)</div>' +
+				'<% }) %>';
+		},
 		collectionPage: function() {
 			return '' +
 				'';
@@ -600,12 +606,42 @@ $(document).ready(function() {
 	$searchBar.focus(fadeInResults);
 	$searchBar.focusout(fadeOutResults);
 
+	$searchBar.keyup(function() {
+		var results = searchCollections($searchBar.val());
+		if(results.length > 0) {
+			$results.html(_.template(templates.searchResults(), {results:results}));
+			fadeInResults();
+		} else {
+			$results.html("");
+			fadeOutResults();
+		}
+	});
+
+	function searchCollections(query) {
+		var results = [];
+		for(var category in Collections) {
+			_.each(Collections[category].models, function(model) {
+				var lo = model.get("name").toLowerCase();			
+				if(lo.contains(query) && query != "") {
+					results.push({
+						name: model.get('name'),
+						type: category,
+						time: model.get('lastModified')
+					});
+				}
+			});
+		}
+		return results;
+	}
+
 	function fadeInResults(){
-		$results.css({
-			"top": "74px",
-			"opacity": 1,
-			"pointer-events": "all"
-		});
+		if($results.html() != "") {		
+			$results.css({
+				"top": "74px",
+				"opacity": 1,
+				"pointer-events": "all"
+			});
+		}
 	}
 
 	function fadeOutResults(){
@@ -877,7 +913,7 @@ $(document).ready(function() {
 		console.log(states);
 	
 		if(states.isLoggedIn) {
-			$searchBar.fadeOut();
+			$searchBar.stop().fadeOut();
 			$(".login-page").css("display", "none");
 			$(".accounts").css("display", "block");
 			return true	
@@ -895,7 +931,7 @@ $(document).ready(function() {
 		if (!canShowAccounts())
 			return
 		if(!states.viewingAdmin) {			
-			$searchBar.fadeIn();
+			$searchBar.stop().fadeIn();
 			$(".player-content").css("display", "none");
 			$(".admin-content").css("display", "block");
 		}

@@ -251,6 +251,7 @@ body,html,.container,.login-page, table{
 
 .accounts .search .results {
 	position: absolute;
+	z-index: 1000;
 	width: 100%;
 	padding: 0;
 	border: 1px solid #999;
@@ -361,7 +362,7 @@ h2 {
 	margin-bottom: 10px;
 }
 
-.main input, .main textarea {
+.main input[type=text], .main textarea, .main select {
 	float:left;
 	width: 82%;
 	padding: 10px;
@@ -372,6 +373,7 @@ h2 {
 	transition: border .5s;
 	font-family: "Lato", sans-serif;
 	margin-bottom: 5px;
+	background: #fff;
 }
 
 .main input:hover, .main textarea:hover,
@@ -379,9 +381,15 @@ h2 {
 	border: 1px solid #222;
 }
 
+.main input[type=checkbox] {
+	float: left;
+	margin: 10px 79% 10px 0;
+}
+
+
 .footer {
 	text-align: center;
-	padding-top: 25px;
+	padding: 25px 0;
 	clear: both;
 }
 
@@ -553,8 +561,9 @@ td {
 
 .admin-main .save {
 	float: right;
-	background: #ddd;
+	background: #028302;
 	padding: 8px;
+	color: #fff;
 	border-radius: 5px;
 	cursor: pointer;
 	transition: background .25s, color .25s;
@@ -562,8 +571,7 @@ td {
 
 .admin-main .save:hover {
 	float: right;
-	background: #777;
-	color: #fff;
+	background: #125512;
 	padding: 8px;
 	border-radius: 5px;
 	cursor: pointer;

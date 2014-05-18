@@ -206,15 +206,15 @@ $(document).ready(function() {
 				'</div>' +
 				'<div class="description">' +
 					'<span class="label">Description</span>' +
-					'<input type="text" name="name" value="<%= description %>"></input>' +
+					'<input type="text" name="description" value="<%= description %>"></input>' +
 				'</div>' +
 				'<div class="health">' +
 					'<span class="label">Base Health</span>' +
-					'<input type="text" name="description" value="<%= health %>"></input>' +
+					'<input type="text" name="health" value="<%= health %>"></input>' +
 				'</div>' +
 				'<div class="mana">' +
 					'<span class="label">Base Mana</span>' +
-					'<input type="text" name="icon" value="<%= mana %>"></input>' +
+					'<input type="text" name="mana" value="<%= mana %>"></input>' +
 				'</div>' +
 				'<div class="stats">' +
 					'<span class="label">Base Stats</span>' +
@@ -246,11 +246,15 @@ $(document).ready(function() {
 				'</div>' +
 				'<div class="description">' +
 					'<span class="label">Description</span>' +
-					'<input type="text" name="name" value="<%= description %>"></input>' +
+					'<input type="text" name="description" value="<%= description %>"></input>' +
 				'</div>' +
 				'<div class="faction">' +
 					'<span class="label">Faction</span>' +
-					'<input type="text" name="faction" value="<%= faction %>"></input>' +
+					'<select name="faction">'+
+						'<option value="axis" <% if(faction=="axis"){%>selected<%}%>>Axis</option>' +
+						'<option value="allied" <% if(faction=="allied"){%>selected<%}%>>Allied</option>' +
+						'<option value="village" <% if(faction=="village"){%>selected<%}%>>Village</option>' +
+					'</select>' + 
 				'</div>' +
 				'<div class="room">' +
 					'<span class="label">Room</span>' +
@@ -274,7 +278,7 @@ $(document).ready(function() {
 				'</div>' + 
 				'<div class="feet">' +
 					'<span class="label">Feet</span>' +
-					'<input type="text" name="torso" value="<%= torso %>"></input>' +
+					'<input type="text" name="feet" value="<%= feet %>"></input>' +
 				'</div>' +
 				'<div class="experience">' +
 					'<span class="label">Experience</span>' +
@@ -306,7 +310,7 @@ $(document).ready(function() {
 				'</div>' +
 				'<div class="effect-type">' +
 					'<span class="label">Effect Type</span>' +
-					'<input type="text" name="effect-type" value="<%= effectType %>"></input>' +
+					'<input type="text" name="effectType" value="<%= effectType %>"></input>' +
 				'</div>' +
 				'<div class="value">' +
 					'<span class="label">Value</span>' +
@@ -314,7 +318,11 @@ $(document).ready(function() {
 				'</div>' +
 				'<div class="attribute">' +
 					'<span class="label">Attribute</span>' +
-					'<input type="text" name="attribute" value="<%= attribute %>"></input>' +
+					'<select name="attribute">'+
+						'<option value="TimedInterval" <% if(attribute=="TimedInterval"){%>selected<%}%>>Timed Interval</option>' +
+						'<option value="OneOff" <% if(attribute=="OneOff"){%>selected<%}%>>One Off</option>' +
+						'<option value="Duration" <% if(attribute=="Duration"){%>selected<%}%>>Duration</option>' +
+					'</select>' + 
 				'</div>' +
 				'<div class="multiplier">' +
 					'<span class="label">Multiplier</span>' +
@@ -322,15 +330,23 @@ $(document).ready(function() {
 				'</div>' +
 				'<div class="is-rel">' +
 					'<span class="label">Is Relative?</span>' +
-					'<input type="text" name="is-rel" value="<%= isRelative %>"></input>' +
+					'<input type="checkbox" name="isRelative" <%if(isRelative){%>checked="yes"<%}%>>>' +
 				'</div>' + 
 				'<div class="is-value">' +
 					'<span class="label">Is Value Relative?</span>' +
-					'<input type="text" name="is-value" value="<%= isValueRelative %>"></input>' +
+					'<input type="checkbox" name="isValueRelative" <%if(isValueRelative){%>checked="yes"<%}%>></input>' +
 				'</div>' +
 				'<div class="icon">' +
 					'<span class="label">Icon Location</span>' +
-					'<input type="text" name="experience" value="<%= iconLocation %>"></input>' +
+					'<input type="text" name="iconLocation" value="<%= iconLocation %>"></input>' +
+				'</div>' +
+				'<div class="length">' +
+					'<span class="label">Length</span>' +
+					'<input type="text" name="length" value="<%= length %>"></input>' +
+				'</div>' +
+				'<div class="icon">' +
+					'<span class="label">Interval</span>' +
+					'<input type="text" name="interval" value="<%= interval %>"></input>' +
 				'</div>' +
 			'</form>';
 		},
@@ -354,10 +370,13 @@ $(document).ready(function() {
 				'</div>' +
 				'<div class="type">' +
 					'<span class="label">Type</span>' +
-					'<input type="text" name="type" value="<%= type %>"></input>' +
+					'<select name="type">'+
+						'<option value="hunt" <% if(type=="hunt"){%>selected<%}%>">Hunt</option>' +
+						'<option value="fetch" <% if(type=="fetch"){%>selected<%}%>>Fetch</option>' +
+					'</select>' + 
 				'</div>' +
 				'<div class="ids">' +
-					'<span class="label">IDs</span>' +
+					'<span class="label">ID</span>' +
 					'<input type="text" name="ids" value="<%= ids %>"></input>' +
 				'</div>' +
 				'<div class="quantity">' +
@@ -386,7 +405,7 @@ $(document).ready(function() {
 				'</div>' +
 				'<div class="icon">' +
 					'<span class="label">Icon</span>' +
-					'<input type="text" name="icon" value="<%= iconLocation %>"></input>' +
+					'<input type="text" name="iconLocation" value="<%= iconLocation %>"></input>' +
 				'</div>' +
 				'<div class="value">' +
 					'<span class="label">Value</span>' +
@@ -398,10 +417,12 @@ $(document).ready(function() {
 				'</div>' +
 				'<div class="item-type">' +
 					'<span class="label">Item Type</span>' +
-					'<input type="text" name="targeting" value="<%= itemType %>"></input>' +
+					'<select name="itemType">'+
+						'<option value="weapon" <% if(itemType=="weapon"){%>selected<%}%>>Weapon</option>' +
+						'<option value="armor" <% if(itemType=="armor"){%>selected<%}%>>Armor</option>' +
+						'<option value="consumable" <% if(itemType=="consumable"){%>selected<%}%>>Consumable</option>' +
+					'</select>' + 
 				'</div>' +
-
-				
 				'<div class="range">' +
 					'<span class="label">Range</span>' +
 					'<input type="text" name="range" value="<%= range %>"></input>' +
@@ -412,7 +433,7 @@ $(document).ready(function() {
 				'</div>' +
 				'<div class="damage-type">' +
 					'<span class="label">Damage Type</span>' +
-					'<input type="text" name="damage-type" value="<%= damageType %>"></input>' +
+					'<input type="text" name="damageType" value="<%= damageType %>"></input>' +
 				'</div>' +
 
 				'<div class="slot">' +
@@ -425,7 +446,7 @@ $(document).ready(function() {
 				'</div>' +
 				'<div class="armor-type">' +
 					'<span class="label">Armor Type</span>' +
-					'<input type="text" name="armor-type" value="<%= armorType %>"></input>' +
+					'<input type="text" name="armorType" value="<%= armorType %>"></input>' +
 				'</div>' +
 			'</form>';
 		}, collectionView: function() {
@@ -626,6 +647,10 @@ $(document).ready(function() {
 
 	var DefaultDetailView = Backbone.View.extend({
 		el: $('.admin-main'),
+		checkboxes: [],
+		ints: [],
+		doubles: [],
+		lists: [],
 		events: {
 			"change input": "update",
 			"click .save": "saveChanges"
@@ -639,6 +664,31 @@ $(document).ready(function() {
 			var key = current.name;
 			var value = current.value;
 			this.model.set(key, value);
+		},	
+		saveChanges: function() {
+			var data = this.$el.find("form").serializeArray();
+			for(var key in this.checkboxes) {
+				this.model.set(this.checkboxes[key], false);
+				console.log("!");
+			}
+			for(var i = 0; i < data.length; i++) {
+				var key = data[i].name;
+				var value = data[i].value;
+				if(_.contains(this.checkboxes, key)){
+					console.log(key);
+					this.model.set(key, true);
+				} else if(_.contains(this.ints, key)){
+					this.model.set(key, parseInt(value, 10));
+				} else if(_.contains(this.doubles, key)){
+					this.model.set(key, parseDouble(value, 10));
+				} else if(_.contains(this.lists, key)){
+					this.model.set(key, value.split(","));
+				} else {
+					this.model.set(key, value);
+				}
+			}	
+			alert("Saved!");				
+			console.log(this.model.attributes);
 		}
 	});
 
@@ -683,32 +733,37 @@ $(document).ready(function() {
 		spells:  DefaultDetailView.extend({
 			template: _.template(templates.spellPage()),
 			saveChanges: function() {
-				var formcls = this.$el.find("form").attr("class");
 				var data = this.$el.find("form").serializeArray();
-				console.log(data);				
-				alert("Spell saved!" + formcls);
-				console.log(this);
+				for(var i = 0; i < data.length; i++) {
+					var key = data[i].name;
+					if(key == ""){}
+					console.log(data[item]);
+				}			
+				alert("Spell saved!");
 			},
 		}),
 		classes:  DefaultDetailView.extend({
 			template: _.template(templates.classPage()),
-			saveChanges: function() {
-				var data = this.$el.find("form").serializeArray();
-				console.log(data);				
-				alert("Class saved!");
-			},
+			lists: ["stats", "growth"],
+			ints: ["health", "mana"],
 		}),
 		npcs:  DefaultDetailView.extend({
 			template: _.template(templates.npcPage()),
+			ints: ["room", "weapon", "helmet", "torso", "legs", "feet", "experience", "level"],
 		}),
 		effects:  DefaultDetailView.extend({
 			template: _.template(templates.effectPage()),
+			checkboxes: ["isValueRelative", "isRelative"],
+			ints: ["interval", "length", "value"],
+			doubles: ["multiplier"]
 		}),
 		quests:  DefaultDetailView.extend({
 			template: _.template(templates.questPage()),
+			ints: ["quantity", "ids"],
 		}),
 		items:  DefaultDetailView.extend({
 			template: _.template(templates.itemPage()),
+			ints: ["value","weight", "range", "damage"]
 		})
 	};
 
@@ -791,7 +846,7 @@ $(document).ready(function() {
 		},
 		main: function() {
 			displayMain();
-			initAccount();
+			//initAccount();
 		},
 		admin: function() {
 			console.log("lold");

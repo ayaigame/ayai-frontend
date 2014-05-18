@@ -48,7 +48,7 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 		});
 
 		Handlebars.registerHelper('isArmor', function(block) {
-			if(p.isArmor(this)) // 65 wat? armor types?
+			if(p.isArmor(this))
 				return block.fn(this);
 		});
 
@@ -83,6 +83,8 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 		p.equipment = equipment;
 
 		if(p.flagged) {
+            console.log(p.flagged);
+            console.log(items);
 
 			if(p.oldItems.length != p.items.length) {
 				console.log("rerendering");
@@ -98,7 +100,7 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 			p.renderEquipment();
 			p.renderInventory();
 			p.registerTooltipMouseovers();
-			//p.registerMenuOptions();
+			p.registerMenuOptions();
 			p.registerDraggables();
 
 	}
@@ -312,22 +314,30 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
         document.oncontextmenu = function() {return false;};
 
 		var menubox = null;
-		$("div#inventory ul.slots li div.item").on("mousedown", function(e) {
-            //Regular Click
+
+        $("div#inventory ul.slots li div.item").dblclick(function() {
+                      //Regular Click
             $(this).parent().css("z-index", "100");
             //console.log("dragging item " + $(this).attr("index") + " from inventory");
             p.draggedItemIndex = parseInt($(this).attr("index"));
             var item = p.items[p.draggedItemIndex];
 
-            if (e.button == 0) {
-                console.log(e);
-                console.log($(this));
+            console.log(e);
+            console.log($(this));
 
-                console.log(item);
-                GameStateInterface.prototype.sendUseItem(item.id); //Should really pass this class an instance of ayai.gameState but since this is really a static function its fine
-                p.renderInventory();
-            //right click
-            } else if(e.button == 2) {
+            console.log(item);
+            p.flagged = true;
+            GameStateInterface.prototype.sendUseItem(item.id); //Should really pass this class an instance of ayai.gameState but since this is really a static function its fine
+            p.renderInventory();
+
+        });
+
+        $("div#inventory ul.slots li div.item").on("mousedown", function(e) {
+            if(e.button == 2) {
+
+                $(this).parent().css("z-index", "100");
+                p.draggedItemIndex = parseInt($(this).attr("index"));
+                var item = p.items[p.draggedItemIndex];
 
                 console.log("Right Click");
                 var tplSource = $("#item-context-menu-template").html();
@@ -339,15 +349,21 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
                     top: e.pageY + 1
                 });
                 $("#context-menu li.drop").on("mousedown", function(e) {
-                    //drop item;
+                    GameStateInterface.prototype.sendDropItem(p.draggedItemIndex);
+                    p.flagged = true;
                 });
                 $("#context-menu li.consume").on("mousedown", function(e) {
                     console.log("GOT CLICK FIRST");
                     GameStateInterface.prototype.sendUseItem(item.id);
+                    p.flagged = true;
 
                 });
                 $("context-menu li.equip").on("mousedown", function(e) {
-                    GameStateInterface.prototype.sendEquip(p.draggedItemIndex, item.itemType);
+                    var itemType = item.itemType.type; //black magic woman
+                    if(itemType == "weapon")
+                        itemType = "weapon1";
+                    GameStateInterface.prototype.sendEquip(p.draggedItemIndex, itemType);
+                    p.flagged = true;
                 })
 
                 e.stopPropagation();

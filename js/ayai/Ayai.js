@@ -10,6 +10,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
         ayai.gameLoaded = false;
         ayai.verboseLogger = false; 
         ayai.connection = new Connection("ws://localhost:8007");
+        // ayai.connection = new Connection("ws://localhost/ws");
 
         ayai.TILE_WIDTH = 32;
         ayai.TILE_HEIGHT = 32;
@@ -188,7 +189,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
             case "map":
                 ayai.tileset2 = "/assets/tiles/" + evt.detail.msg.tilesets[0].image;
                 ayai.tilemap2 = "/assets/maps/" + evt.detail.msg.tilemap;
-                ayai.game.load.tilemap('tilemap', ayai.tilemap2, null, Phaser.Tilemap.TILED_JSON);
+                ayai.game.load.tilemap(evt.detail.msg.tilemap);
                 ayai.game.load.tileset('tileset', ayai.tileset2, ayai.TILE_WIDTH, ayai.TILE_HEIGHT);
                 ayai.game.load.start();
                 ayai.gameLoaded = false;

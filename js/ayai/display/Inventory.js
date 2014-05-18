@@ -182,7 +182,6 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 			greedy: true,
 			over: function(event, ui) {
 				$(this).addClass("over");
-
 			},
 			out: function(event, ui) {
 				$(this).removeClass("over");
@@ -208,7 +207,6 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 					p.oldItems.push(p.items[i].name);
 				}
 
-				var equippingItemType = item.itemType.type;
 				GameStateInterface.prototype.sendEquip(p.draggedItemIndex, itemType);
 
 				p.unequippingItemType = "";
@@ -261,6 +259,7 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 					console.log("trashing " + p.draggedItemIndex);
 					GameStateInterface.prototype.sendDropItem(p.draggedItemIndex);
 				}
+
 
 
 				p.unequippingItemType = "";
@@ -349,22 +348,48 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
                     top: e.pageY + 1
                 });
                 $("#context-menu li.drop").on("mousedown", function(e) {
-                    GameStateInterface.prototype.sendDropItem(p.draggedItemIndex);
+
+                    p.oldItems = [];
+					for(var i = 0; i < p.items.length; i++)
+					{
+						p.oldItems.push(p.items[i].name);
+					}
+
                     p.flagged = true;
+
+                    GameStateInterface.prototype.sendDropItem(p.draggedItemIndex);
+
+
                 });
                 $("#context-menu li.consume").on("mousedown", function(e) {
                     console.log("GOT CLICK FIRST");
-                    GameStateInterface.prototype.sendUseItem(item.id);
+
+					p.oldItems = [];
+					for(var i = 0; i < p.items.length; i++)
+					{
+						p.oldItems.push(p.items[i].name);
+					}
                     p.flagged = true;
 
+                    GameStateInterface.prototype.sendUseItem(item.id);
+
                 });
-                $("context-menu li.equip").on("mousedown", function(e) {
+
+                $("#context-menu li.equip").on("mousedown", function(e) {
                     var itemType = item.itemType.type; //black magic woman
                     if(itemType == "weapon")
                         itemType = "weapon1";
-                    GameStateInterface.prototype.sendEquip(p.draggedItemIndex, itemType);
+
+                    p.oldItems = [];
+					for(var i = 0; i < p.items.length; i++)
+					{
+						p.oldItems.push(p.items[i].name);
+					}
                     p.flagged = true;
-                })
+
+                    GameStateInterface.prototype.sendEquip(p.draggedItemIndex, itemType);
+
+                });
 
                 e.stopPropagation();
                 $('body').on("mousedown", function () {

@@ -238,15 +238,18 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
                 ayai.acceptQuest.show(evt.detail.msg);
 
             case "attack":
-                ayai.gameState.displayAttack(evt.detail.msg);
+                if (ayai.gameLoaded)
+                    ayai.gameState.displayAttack(evt.detail.msg);
                 break; 
 
             case "chat":
-                ayai.chat.displayMessage(evt.detail.msg);
+                if (ayai.gameLoaded)
+                    ayai.chat.displayMessage(evt.detail.msg);
                 break;
 
             case "disconnect":
-                ayai.gameState.disconnect(evt.detail.msg);
+                if (ayai.gameLoaded)
+                    ayai.gameState.disconnect(evt.detail.msg);
                 break;
 
 

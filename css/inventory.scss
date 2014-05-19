@@ -82,21 +82,25 @@ div#char-window {
                 position: absolute;
 
 
+                    li {
+
+                        >span {
+
+                            font-size: 7.5pt;
+                            color: White;
+                        }
+
+
+                        
+                    }
+
+
             }
         
              ul.slots.top, ul.slots.bottom {   
 
                     left: 50%;
 
-                    li {
-                        float: left;
-                    }
-                }
-
-
-                ul.slots.left, ul.slots.right {   
-
-                    top: 25px;
                 }
 
 

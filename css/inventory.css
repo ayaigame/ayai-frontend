@@ -49,12 +49,11 @@ div#char-window div#equipment {
     top: 17px; }
     div#char-window div#equipment div#slots ul.slots {
       position: absolute; }
+      div#char-window div#equipment div#slots ul.slots li > span {
+        font-size: 7.5pt;
+        color: White; }
     div#char-window div#equipment div#slots ul.slots.top, div#char-window div#equipment div#slots ul.slots.bottom {
       left: 50%; }
-      div#char-window div#equipment div#slots ul.slots.top li, div#char-window div#equipment div#slots ul.slots.bottom li {
-        float: left; }
-    div#char-window div#equipment div#slots ul.slots.left, div#char-window div#equipment div#slots ul.slots.right {
-      top: 25px; }
     div#char-window div#equipment div#slots ul.slots.bottom, div#char-window div#equipment div#slots ul.slots.top {
       left: 68px; }
 div#char-window div#statistics {

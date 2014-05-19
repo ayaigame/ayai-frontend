@@ -21,10 +21,14 @@ define("AcceptQuest", ["GameStateInterface"], function(GameStateInterface) {
     p.show = function(message) {
         //Fix this hack
         var questToShow = message.quest;
-        questToShow.entityId = message.entityId;
-        p.currentQuest = questToShow;
-        p.renderQuest(questToShow);
-        $('div#accept-quest').toggleClass("open");
+
+        if(questToShow !== undefined) {
+
+            questToShow.entityId = message.entityId;
+            p.currentQuest = questToShow;
+            p.renderQuest(questToShow);
+            $('div#accept-quest').toggleClass("open");
+        }
     };
 
     p.attachClickListeners = function(questToAccept) {

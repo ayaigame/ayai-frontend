@@ -9,7 +9,10 @@ define("UnitFrame", function() {
 		var targetManaPercent = Math.floor((Window.target.Mana.currMana / Window.target.Mana.maximumMana) * 100) + "%";
 		
 		$("ul.unitframes li#target span.name").html(Window.target.name);
-		$("ul.unitframes li#target span.level").html(Window.target.level);
+
+		if(Window.target.experience !== undefined)
+			$("ul.unitframes li#target span.level").html("Level " + Window.target.experience.level);
+		
 		$("ul.unitframes li#target div.health span.total").html(Window.target.health.currHealth.toString() + "/" + Window.target.health.maximumHealth.toString());
 		$("ul.unitframes li#target div.health span.percent").html(targetHealthPercent);
 		$("ul.unitframes li#target div.health div.bar").css("width", targetHealthPercent);
@@ -28,15 +31,18 @@ define("UnitFrame", function() {
 
 		var healthPercent = Math.floor((e.health.currHealth / e.health.maximumHealth) * 100) + "%";
         var manaPercent = Math.floor((e.Mana.currMana / e.Mana.maximumMana) * 100) + "%";
+        var xpPercent = Math.floor((e.experience.baseExperience / e.experience.maxExperience) * 100) + "%";
 
 		$("ul.unitframes li#player span.name").html(e.name);
-		$("ul.unitframes li#player span.level").html(e.level);
+		$("ul.unitframes li#player span.level").html("Level " + e.experience.level);
 		$("ul.unitframes li#player div.health span.total").html(e.health.currHealth.toString() + "/" + e.health.maximumHealth.toString());
 		$("ul.unitframes li#player div.health span.percent").html(healthPercent);
 		$("ul.unitframes li#player div.health div.bar").css("width", healthPercent);
 		$("ul.unitframes li#player div.mana span.total").html(e.Mana.currMana.toString() + "/" + e.Mana.maximumMana.toString());
 		$("ul.unitframes li#player div.mana span.percent").html(manaPercent);
 		$("ul.unitframes li#player div.mana div.bar").css("width", manaPercent);
+		$("ul.unitframes li#player div.xp div.bar").css("width", xpPercent);
+
 	};
 	return UnitFrame;
 });

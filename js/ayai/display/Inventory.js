@@ -11,7 +11,7 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 
 
         p.isArmor = function(item) {
-            if(item.itemType.type == "helmet" || item.itemType.type == "armor") {
+            if(item.itemType.type == "armor") {
                 return true;
             }
 
@@ -83,8 +83,8 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 		p.equipment = equipment;
 
 		if(p.flagged) {
-            console.log(p.flagged);
-            console.log(items);
+            //console.log(p.flagged);
+            //console.log(items);
 
 			if(p.oldItems.length != p.items.length) {
 				console.log("rerendering");
@@ -108,20 +108,32 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 	p.renderEquipment = function() {
 
         renderEquipmentItem(p.equipment.weapon1);
-        renderEquipmentItem(p.equipment.weapon2);
         renderEquipmentItem(p.equipment.feet);
         renderEquipmentItem(p.equipment.helmet);
         renderEquipmentItem(p.equipment.torso);
         renderEquipmentItem(p.equipment.legs);
 	};
 
-	function renderEquipmentItem(weapon) {
-		if(weapon.itemType.empty === undefined) {
+	function renderEquipmentItem(item) {
+		if(item.itemType.empty === undefined) {
+			$("li#"+item.itemType.slot).html(html);
 
 			var tplSource = $("#equipmentItem-template").html();
        		var template = Handlebars.compile(tplSource);
-       		var html = template(weapon)
-			$("li#"+weapon.itemType.type).html(html);
+			var html = template(item);
+
+       		if(item.itemType.type == "weapon") {
+       			$("li#weapon1 span").css("display", "none"); 
+				$("li#weapon1").html(html); 
+			}
+
+			else {
+				$("li#"+item.itemType.slot + " span").css("display", "none");
+				$("li#"+item.itemType.slot).html(html);
+			}
+		}
+
+		else {
 
 		}
 		
@@ -191,6 +203,7 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 				console.log("equipped ");
 				var item = p.items[p.draggedItemIndex];
 				console.log(item);
+				$(this).find(">span").css("display", "none"); 
 
 				ui.draggable.appendTo($(this));
 				ui.draggable.css("left", "0px");

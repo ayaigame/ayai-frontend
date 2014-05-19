@@ -133,19 +133,13 @@
 					<div class="logo"><img src="header.png"></div>					
 					<div class="search">
 						<input></input>
-						<div class="results">
-							<div><span>Lorem</span> (item)</div>
-							<div><span>Lorem</span> (item)</div>
-							<div><span>Lorem</span> (item)</div>
-							<div><span>Lorem</span> (item)</div>
-							<div><span>Lorem</span> (item)</div>
-						</div>
+						<div class="results"></div>
 					</div>
 					<div class="menu">
 						<div class="links">
-							<a href="#game">game</a>
+							<a href="#">game</a>
 							<a href="#admin">admin</a>
-							<a href="#settings">settings</a>
+							<a data-id="settings" href="#">settings</a>
 							<a href="#logout">logout</a>
 						</div>
 					</div>
@@ -159,25 +153,56 @@
 					<div class="side">
 						<div class="navigation">
 							<h2>game</h2>
-							<a href="#">npc</a>
-							<a href="#">items</a>
-							<a href="#">props</a>
-							<a href="#">classes</a>
-							<a href="#">spells</a>
-							<a href="#">effects</a>
-							<a href="#">factions</a>
-							<a href="#">quests</a>
-							<a href="#">rooms</a>
+							<a href="#admin/npcs">npc</a>
+							<a href="#admin/items">items</a>
+							<!--<a href="#">props</a>-->
+							<a href="#admin/classes">classes</a>
+							<a href="#admin/spells">spells</a>
+							<a href="#admin/effects">effects</a>
+							<!--<a href="#">factions</a>-->
+							<a href="#admin/quests">quests</a>
+							<div>rooms</div>
 							<h2>assets</h2>
-							<a href="#">spritesheets</a>
-							<a href="#">tilesheets</a>
-							<h2>community</h2>
+							<div>spritesheets</div>
+							<div>tilesheets</div>
+							<!--<h2>community</h2>
 							<a href="#">users</a>
 							<a href="#">groups</a>
-							<a href="#">analytics</a>
+							<a href="#">analytics</a>-->
 						</div>
 					</div>
-					<div class="main">
+					
+					<div class="main admin-main">
+						<!--<h2>spells</h2>
+						<div class="clear breadcrumb">
+							<a href="#">home</a>&nbsp;>&nbsp;
+							<a href="#">spells</a>
+						</div>
+						<div class="labels">
+							<div class="title">Name</div>
+							<div class="description">Description</div>
+							<div class="last-modified">Last Modified</div>
+						</div>
+						<div class="spells">
+							<div>
+								<div class="title">Frostbolt.</div>
+								<div class="description">A frosty bolt.</div>
+								<div class="last-modified">January 1st, 2000</div>
+							</div>
+							<div>
+								<div class="title">Frostbolt.</div>
+								<div class="description">A frosty bolt.</div>
+								<div class="last-modified">January 1st, 2000</div>
+							</div>
+							<div>
+								<div class="title">Frostbolt.</div>
+								<div class="description">A frosty bolt.</div>
+								<div class="last-modified">January 1st, 2000</div>
+							</div>
+						</div>	-->					
+					</div>
+					<!--
+					<div class="main spell-page">
 						<h2>frostbolt</h2>
 						<div class="clear breadcrumb">
 							<a href="#">home</a>&nbsp;>&nbsp;
@@ -221,6 +246,7 @@
 							<input type="text"></input>
 						</div>
 					</div>
+					-->
 				</div>
 
 
@@ -315,10 +341,6 @@
 				</div>
 				-->
 
-
-
-
-
 				<div class="footer">
 					<a href="#">about</a> &ndash;
 					<a href="#">github</a> &ndash;
@@ -330,7 +352,8 @@
 		</div>
 
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
+		<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
 		<script src="js/main.js"></script>
 	</body>
 </html>

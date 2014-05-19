@@ -117,7 +117,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
         ayai.game.load.spritesheet('itemicons', '../assets/sprites/ui/itemicons.png', 40, 40);
         ayai.game.load.spritesheet('sword', '../assets/sprites/weapons/swordsheet.png', 18, 18)
         ayai.game.load.image('skillicon', '../assets/sprites/ui/skillsheet.png');
-        ayai.game.load.tilemap('tilemap', ayai.tilemap, null, Phaser.Tilemap.TILED_JSON);
+        ayai.game.load.tilemap('tilemap', null, ayai.tilemap, Phaser.Tilemap.TILED_JSON);
         ayai.game.load.tileset('tileset', ayai.tileset, ayai.TILE_WIDTH, ayai.TILE_HEIGHT);
         ayai.game.load.audio('zelda', ['../assets/audio/music/overworld.mp3']);
         ayai.game.load.audio('sword', ['../assets/audio/sfx/sword.mp3']);
@@ -211,7 +211,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
                 ayai.startingY = evt.detail.msg.y;
                 ayai.spritesheet = evt.detail.msg.spritesheet;
                 ayai.tileset = "/assets/tiles/" + evt.detail.msg.tilesets[0].image;
-                ayai.tilemap = "/assets/maps/" + evt.detail.msg.tilemap;
+                ayai.tilemap = evt.detail.msg.tilemap//"/assets/maps/" + evt.detail.msg.tilemap;
                 ayai.currentTileset = 'tileset';
                 ayai.currentTilemap = 'tilemap';
                 break;

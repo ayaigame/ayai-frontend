@@ -98,7 +98,7 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 			p.renderEquipment();
 			p.renderInventory();
 			p.registerTooltipMouseovers();
-			p.registerMenuOptions();
+			//p.registerMenuOptions();
 			p.registerDraggables();
 
 	}

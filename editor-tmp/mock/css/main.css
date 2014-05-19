@@ -251,6 +251,7 @@ body,html,.container,.login-page, table{
 
 .accounts .search .results {
 	position: absolute;
+	z-index: 1000;
 	width: 100%;
 	padding: 0;
 	border: 1px solid #999;
@@ -361,7 +362,7 @@ h2 {
 	margin-bottom: 10px;
 }
 
-.main input, .main textarea {
+.main input[type=text], .main textarea, .main select {
 	float:left;
 	width: 82%;
 	padding: 10px;
@@ -371,6 +372,8 @@ h2 {
 	outline: none;
 	transition: border .5s;
 	font-family: "Lato", sans-serif;
+	margin-bottom: 5px;
+	background: #fff;
 }
 
 .main input:hover, .main textarea:hover,
@@ -378,9 +381,15 @@ h2 {
 	border: 1px solid #222;
 }
 
+.main input[type=checkbox] {
+	float: left;
+	margin: 10px 79% 10px 0;
+}
+
+
 .footer {
 	text-align: center;
-	padding-top: 25px;
+	padding: 25px 0;
 	clear: both;
 }
 
@@ -520,3 +529,50 @@ td {
 	vertical-align: middle; 
 }
 
+.list-view .spells > div {
+	clear: both;
+	transition: background .25s;
+	line-height: 25px;
+	height: 25px; 
+	left: -10px;
+	position: relative;
+	cursor: pointer;
+}
+
+.list-view .spells > div:hover {
+	background: #f1f1f1;
+}
+
+.list-view .spells > div > div {
+	float: left;	
+}
+
+.list-view .labels > div { 
+	float: left;
+	font-weight: 700;
+	margin-bottom: 5px;
+	left: -10px;
+	position: relative;
+}
+
+.list-view .title { width: calc(20% - 10px); margin-left: 10px;}
+.list-view .description { width: 60%; }
+.list-view .last-modified { width: 20%; }
+
+.admin-main .save {
+	float: right;
+	background: #028302;
+	padding: 8px;
+	color: #fff;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background .25s, color .25s;
+}
+
+.admin-main .save:hover {
+	float: right;
+	background: #125512;
+	padding: 8px;
+	border-radius: 5px;
+	cursor: pointer;
+}

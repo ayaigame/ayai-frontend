@@ -1,0 +1,17 @@
+[{
+	"id": 0,
+	"name": "Kill Boars",
+	"description": "There's a boar. Show it how a real man fights.",
+	"type": "hunt",
+	"ids": "4",
+	"quantity": "10",
+	"lastModified": "January 1st, 2000"
+}, {
+	"id": 1,
+	"name": "Collect Boars",
+	"description": "There's a boar. Show it how a real man makes love.",
+	"type": "fetch",
+	"ids": "4",
+	"quantity": "10",
+	"lastModified": "January 1st, 2000"
+}]

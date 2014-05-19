@@ -6,7 +6,6 @@ define("InputHandler", ["phaser", "InputEvent", "UnitFrame"], function (Phaser, 
     //2. you must add your key to fixReferences
     //3. you must add your keys functionality to registerKeypresses
 
-
 	function InputHandler(game, gameState, inventory, chat, questLog, acceptQuest) {
 
 		p.game = game;
@@ -18,33 +17,28 @@ define("InputHandler", ["phaser", "InputEvent", "UnitFrame"], function (Phaser, 
         p.loadKeyConfiguration();
 
 
-/*		enterKey = p.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
+		enterKey = p.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
 
 
 		enterKey.onDown.add(function() {
-
-			if (!p.chat.isEditBoxOpen) {
-				p.chat.openEditBox();
-				p.gameState.sendInputToGameState(new InputEvent("!isUp"));
-				p.gameState.sendInputToGameState(new InputEvent("!isRight"));
-				p.gameState.sendInputToGameState(new InputEvent("!isLeft"));
-				p.gameState.sendInputToGameState(new InputEvent("!isDown"));
-				for (var i = 0; i < boundKeys.length; i++) {
-					p.game.input.keyboard.removeKey(boundKeys[i].keyCode);
-				}
-				p.game.input.keyboard.clearCaptures();
-			} 
-
-			else {
-				p.chat.send();
-				p.chat.closeEditBox();
-
-				p.registerKeyPresses();
-			}
-		});*/
+            p.handleChatButtonPress();
+		});
 
 		p.registerKeyPresses();
 	};
+
+    p.handleChatButtonPress = function() {
+        if (!p.chat.isEditBoxOpen) {
+            p.chat.openEditBox();
+            p.unattachClickHandlers();
+        }
+
+        else {
+            p.chat.send();
+            p.chat.closeEditBox();
+            p.reattachClickHandlers();
+        }
+    }
 
     p.changeControlForName = function(name, newKeycode) {
         var keyToChange = _.where(p.boundKeys, {"name":name})[0]; //should only return one, this is why we need to have the names unique
@@ -62,7 +56,6 @@ define("InputHandler", ["phaser", "InputEvent", "UnitFrame"], function (Phaser, 
 
     p.loadKeyConfiguration = function() {
 
-        //TODO Load from HTML5 localstorage
         p.upKey = p.game.input.keyboard.addKey(Phaser.Keyboard.W);
 		p.downKey = p.game.input.keyboard.addKey(Phaser.Keyboard.S);
 		p.leftKey = p.game.input.keyboard.addKey(Phaser.Keyboard.A);
@@ -87,6 +80,27 @@ define("InputHandler", ["phaser", "InputEvent", "UnitFrame"], function (Phaser, 
 		p.boundKeys.push({"key": p.displayDamageKey, "name":"display damage", "boundString": p.charCodeToString(p.displayDamageKey.keyCode)});
 		p.boundKeys.push({"key": p.clearTargetKey, "name":"clear target", "boundString": p.charCodeToString(p.clearTargetKey.keyCode)});
 
+    }
+
+    p.unattachClickHandlers = function() {
+        p.gameState.sendInputToGameState(new InputEvent("!isUp"));
+        p.gameState.sendInputToGameState(new InputEvent("!isRight"));
+        p.gameState.sendInputToGameState(new InputEvent("!isLeft"));
+        p.gameState.sendInputToGameState(new InputEvent("!isDown"));
+
+        _.map(p.boundKeys, function(key) {
+            p.game.input.keyboard.removeKey(key.key.keyCode);
+            console.log(key);
+        })
+        p.game.input.keyboard.clearCaptures();
+    }
+
+    p.reattachClickHandlers = function() {
+        _.map(p.boundKeys, function(keyDict) {
+            keyDict.key = p.game.input.keyboard.addKey(keyDict.key.keyCode);
+        });
+        p.fixReferences();
+        p.registerKeyPresses();
     }
 
     p.charCodeToString = function(charCode) {
@@ -143,16 +157,11 @@ define("InputHandler", ["phaser", "InputEvent", "UnitFrame"], function (Phaser, 
 
 	p.registerKeyPresses = function() {
 
-
-
-
 		p.clearTargetKey.onDown.add(function() {
 
 			UnitFrame.prototype.clearTarget();
 		})
-
 		p.attackKey.onDown.add(function() {
-
 			ayai.sfx.sword.play();
 			p.gameState.sendAttack();
 		});

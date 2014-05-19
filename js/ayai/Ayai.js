@@ -189,7 +189,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
             case "map":
                 ayai.tileset2 = "/assets/tiles/" + evt.detail.msg.tilesets[0].image;
                 ayai.tilemap2 = "/assets/maps/" + evt.detail.msg.tilemap;
-                ayai.game.load.tilemap(evt.detail.msg.tilemap);
+                ayai.game.load.tilemap('tilemap',  null, evt.detail.msg.tilemap, Phaser.Tilemap.TILED_JSON);
                 ayai.game.load.tileset('tileset', ayai.tileset2, ayai.TILE_WIDTH, ayai.TILE_HEIGHT);
                 ayai.game.load.start();
                 ayai.gameLoaded = false;

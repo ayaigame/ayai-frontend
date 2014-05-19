@@ -28,15 +28,19 @@ define("UnitFrame", function() {
 
 		var healthPercent = Math.floor((e.health.currHealth / e.health.maximumHealth) * 100) + "%";
         var manaPercent = Math.floor((e.Mana.currMana / e.Mana.maximumMana) * 100) + "%";
+        var xpPercent = Math.floor((e.experience.baseExperience / e.experience.maxExperience) * 100) + "%";
+        console.log(e);
+
 
 		$("ul.unitframes li#player span.name").html(e.name);
-		$("ul.unitframes li#player span.level").html(e.level);
+		$("ul.unitframes li#player span.level").html("Level " + e.experience.level.toString());
 		$("ul.unitframes li#player div.health span.total").html(e.health.currHealth.toString() + "/" + e.health.maximumHealth.toString());
 		$("ul.unitframes li#player div.health span.percent").html(healthPercent);
 		$("ul.unitframes li#player div.health div.bar").css("width", healthPercent);
 		$("ul.unitframes li#player div.mana span.total").html(e.Mana.currMana.toString() + "/" + e.Mana.maximumMana.toString());
 		$("ul.unitframes li#player div.mana span.percent").html(manaPercent);
 		$("ul.unitframes li#player div.mana div.bar").css("width", manaPercent);
+        $("ul.unitframes li#player div.xp div.bar").css("width", xpPercent);
 	};
 	return UnitFrame;
 });

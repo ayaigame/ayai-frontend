@@ -83,8 +83,8 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 		p.equipment = equipment;
 
 		if(p.flagged) {
-            console.log(p.flagged);
-            console.log(items);
+            //console.log(p.flagged);
+            //console.log(items);
 
 			if(p.oldItems.length != p.items.length) {
 				console.log("rerendering");
@@ -321,10 +321,10 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
             p.draggedItemIndex = parseInt($(this).attr("index"));
             var item = p.items[p.draggedItemIndex];
 
-            console.log(e);
-            console.log($(this));
+            //console.log(e);
 
-            console.log(item);
+
+            //console.log(item);
             p.flagged = true;
             GameStateInterface.prototype.sendUseItem(item.id); //Should really pass this class an instance of ayai.gameState but since this is really a static function its fine
             p.renderInventory();
@@ -338,7 +338,7 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
                 p.draggedItemIndex = parseInt($(this).attr("index"));
                 var item = p.items[p.draggedItemIndex];
 
-                console.log("Right Click");
+                //console.log("Right Click");
                 var tplSource = $("#item-context-menu-template").html();
                 var template = Handlebars.compile(tplSource);
                 var html = template(item);
@@ -362,7 +362,6 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 
                 });
                 $("#context-menu li.consume").on("mousedown", function(e) {
-                    console.log("GOT CLICK FIRST");
 
 					p.oldItems = [];
 					for(var i = 0; i < p.items.length; i++)
@@ -393,7 +392,6 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 
                 e.stopPropagation();
                 $('body').on("mousedown", function () {
-                    console.log("GOT CLICK");
                     $("#context-menu").hide();
                     $("#context-menu").html('');
                     $('body').off('mousedown');

@@ -1,0 +1,23 @@
+[{
+	"id": 0,
+	"name": "Frostbolt",
+	"description": "A frosty bolt that deals {d} damage.",
+	"icon": "/spells/frostbolt.png",
+	"damage": "50",
+	"damageType": "frost",
+	"targeting": "",
+	"effects": "",
+	"range": 750,
+	"lastModified": "January 1st, 2000"
+}, {
+	"id": 1,
+	"name": "Fireball",
+	"description": "A fiery ball that deals {d} damage.",
+	"icon": "/spells/fireball.png",
+	"damage": "61",
+	"damageType": "fire",
+	"targeting": "",
+	"effects": "",
+	"range": 800,
+	"lastModified": "January 1st, 2000"
+}]

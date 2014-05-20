@@ -1,0 +1,46 @@
+[
+    {
+        "name": "mage",
+        "description": "Shoots fireballs and stuff. C'mon, you know what mages are.",
+        "baseHealth": 100,
+        "baseMana": 100,
+        "baseStats": {
+            "stats": [
+                {
+                    "intelligence": 18,
+                    "growth": 4
+                },
+                {
+                    "strength": 13,
+                    "growth": 1
+                },
+                {
+                    "agility": 15,
+                    "growth": 2
+                }
+            ]
+        }
+    },
+    {
+        "name": "warrior",
+        "description": "Pretty much just a meatshield.",
+        "baseHealth": 200,
+        "baseMana": 50,
+        "baseStats": {
+            "stats": [
+                {
+                    "intelligence": 13,
+                    "growth": 10
+                },
+                {
+                    "strength": 18,
+                    "growth": 15
+                },
+                {
+                    "agility": 15,
+                    "growth": 6
+                }
+            ]
+        }
+    }
+]

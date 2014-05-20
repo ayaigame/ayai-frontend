@@ -1,0 +1,32 @@
+[
+    {
+        "id": 2,
+        "name": "Jarrad",
+        "faction": "allies",
+        "roomId": 1,
+        "weapon1": 0,
+        "legs": 0,
+        "helmet": 0,
+        "feet": 0,
+        "torso": 0,
+        "level": 20,
+        "experience": 2000,
+        "maximumHealth": 500,
+        "maximumMana": 400
+    },
+    {
+        "id": 1,
+        "name": "Rodrigo",
+        "faction": "allies",
+        "roomId": 0,
+        "weapon1": 0,
+        "legs": 0,
+        "helmet": 0,
+        "feet": 0,
+        "torso": 0,
+        "level": 10,
+        "experience": 100,
+        "maximumHealth": 200,
+        "maximumMana": 200
+    }
+]

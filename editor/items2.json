@@ -1,0 +1,40 @@
+[
+    {
+        "id": 2,
+        "name": "Iron Helmet",
+        "value": 20,
+        "weight": 1,
+        "image": "",
+        "itemType": {
+            "slot": "helmet",
+            "protection": 10,
+            "type": "armor"
+        }
+    },
+    {
+        "id": 1,
+        "name": "Fire Sword",
+        "value": 10,
+        "weight": 20,
+        "image": "http://static.planetminecraft.com/files/resource_me dia/screenshot/1231/Fire-sword_3095807.jpg",
+        "itemType": {
+            "range": 15,
+            "damage": 20,
+            "damageType": "physical",
+            "type": "weapon1"
+        }
+    },
+    {
+        "id": 0,
+        "name": "Iron Sword",
+        "value": 10,
+        "weight": 10,
+        "image": "http://piq.codeus.net/static/media/userpics/piq_15198_40 0x400.png",
+        "itemType": {
+            "range": 15,
+            "damage": 3,
+            "damageType": "physical",
+            "type": "weapon1"
+        }
+    }
+]

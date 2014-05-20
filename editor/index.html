@@ -1,0 +1,351 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Ayai</title>
+		<link href='//fonts.googleapis.com/css?family=Overlock:400,700' rel='stylesheet' type='text/css'>
+		<link href='//fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+		<link href='css/main.css' rel='stylesheet' type='text/css'>
+		<style>
+		</style>
+	</head>
+	<body>
+
+		<div class="game-screen">
+			<div class="loading">
+				Loading client
+			</div>
+			<div class="client">
+			</div>
+		</div>
+
+		<div class="modals">
+			<div class="forgotpw">
+				<h2>password recovery</h2>
+				<div>Enter your e-mail address below and we will send you an email that will tell you how to change your password.</div>
+				<div class="password primary-input">
+					<span>email</span>
+					<input class="forgot-email-input" type="text"></input>
+				</div>
+				<span class="primary-button">
+					send
+				</span>
+			</div>
+
+
+			<div class="settings">
+				<h2>account settings</h2>
+				<div class="email primary-input">
+					<span>email</span>
+					<input class="email-input" type="text"></input>
+				</div>
+				<div class="password primary-input">
+					<span>password</span>
+					<input class="pw-input" type="password"></input>
+				</div>
+				<span class="primary-button">
+					save
+				</span>
+			</div>
+
+			<div class="create">
+				<h2>character creation</h2>
+				<div class="title">
+					Step 1: Select class
+				</div>
+				<div class="list">
+					<!--<div>Mage</div>
+					<div>Warrior</div>-->
+				</div>
+				<div class="summaries">
+				</div>
+				<!--
+				<div class="info">
+					<div class="stats">
+						<div><span>Strength:</span> 10</div>
+						<div><span>Intellect:</span> 55</div>
+						<div><span>Agility:</span> 12</div>
+						<div><span>Health:</span> 120</div>
+						<div><span>Mana:</span> 312</div>
+					</div>
+					<div class="description">
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur nec libero commodo, tempor ipsum vel, scelerisque dui. Duis ipsum mi, tempus ut turpis vel, semper sagittis tellus. Duis molestie non mi eget lobortis
+					</div>
+				</div>
+				-->
+				<div class="title">
+					Step 2: Choose a name
+				</div>
+				<div class="form">
+					<div class="name primary-input">
+						<span>username</span>
+						<input class="name-input" type="text"></input>
+					</div>
+					<span class="primary-button">
+						create
+					</span>
+				</div>
+			</div>
+
+		</div>
+		<div class="modal-background"></div>
+
+		<div class="container">
+			<div class="login-page">
+				<table><tr><td>
+					<div class="content">
+						<div class="main">
+							<div class="logo">
+								<img src="splashlogo.png">
+							</div>
+							<div class="subtext">
+								an intelligent open source mmo
+							</div>
+							<!--<div class="intro">
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu ante lorem. Ut pulvinar tristique odio eget sagittis. Vestibulum felis augue, lacinia sed ultricies quis, ultrices in lectus. 
+							</div>-->
+						</div>
+						<div class="side">
+							<div class="primary-input email">
+								<span>email</span>
+								<input class="email-input" type="text"></input>
+							</div>
+							<div class="primary-input password">
+								<span>password</span>
+								<input class="pw-input" type="password"></input>
+							</div>
+							<span class="primary-button login button">
+								login
+							</span>
+							<span class="primary-button register button">
+								register
+							</span>
+						</div>
+					</div>
+				</td></tr></table>
+			</div>
+			
+
+
+
+
+			<div class="accounts">
+				<div class="header">
+					<div class="logo"><img src="header.png"></div>					
+					<div class="search">
+						<input></input>
+						<div class="results"></div>
+					</div>
+					<div class="menu">
+						<div class="links">
+							<a href="#">game</a>
+							<a href="#admin">admin</a>
+							<!--<a data-id="settings" href="#">settings</a>-->
+							<a href="#logout">logout</a>
+						</div>
+					</div>
+				</div>
+				
+
+
+
+
+				<div class="content admin-content">
+					<div class="side">
+						<div class="navigation">
+							<h2>settings</h2>
+							<a href="#admin/npcs">npc</a>
+							<a href="#admin/items">items</a>
+							<!--<a href="#">props</a>-->
+							<a href="#admin/classes">classes</a>
+							<a href="#admin/spells">spells</a>
+							<a href="#admin/effects">effects</a>
+							<!--<a href="#">factions</a>-->
+							<a href="#admin/quests">quests</a>
+							<!--<div>rooms</div>-->
+							<!--<h2>assets</h2>
+							<div>spritesheets</div>
+							<div>tilesheets</div>
+							<h2>community</h2>
+							<a href="#">users</a>
+							<a href="#">groups</a>
+							<a href="#">analytics</a>-->
+						</div>
+					</div>
+					
+					<div class="main admin-main">
+						<!--<h2>spells</h2>
+						<div class="clear breadcrumb">
+							<a href="#">home</a>&nbsp;>&nbsp;
+							<a href="#">spells</a>
+						</div>
+						<div class="labels">
+							<div class="title">Name</div>
+							<div class="description">Description</div>
+							<div class="last-modified">Last Modified</div>
+						</div>
+						<div class="spells">
+							<div>
+								<div class="title">Frostbolt.</div>
+								<div class="description">A frosty bolt.</div>
+								<div class="last-modified">January 1st, 2000</div>
+							</div>
+							<div>
+								<div class="title">Frostbolt.</div>
+								<div class="description">A frosty bolt.</div>
+								<div class="last-modified">January 1st, 2000</div>
+							</div>
+							<div>
+								<div class="title">Frostbolt.</div>
+								<div class="description">A frosty bolt.</div>
+								<div class="last-modified">January 1st, 2000</div>
+							</div>
+						</div>	-->					
+					</div>
+					<!--
+					<div class="main spell-page">
+						<h2>frostbolt</h2>
+						<div class="clear breadcrumb">
+							<a href="#">home</a>&nbsp;>&nbsp;
+							<a href="#">spells</a>&nbsp;>&nbsp;
+							<a href="#">frostbolt</a>
+						</div>
+						<div>
+							<span class="label">Name</span>
+							<input type="text"></input>
+						</div>
+						<div>
+							<span class="label">Description</span>
+							<textarea></textarea>
+						</div>
+						<div>
+							<span class="label">Icon</span>
+							<input type="text"></input>
+						</div>
+						<div>
+							<span class="label">Description</span>
+							<input type="text"></input>
+						</div>
+						<div>
+							<span class="label">Damage</span>
+							<input type="text"></input>
+						</div>
+						<div>
+							<span class="label">Damage Type</span>
+							<input type="text"></input>
+						</div>
+						<div>
+							<span class="label">Targetting</span>
+							<input type="text"></input>
+						</div>
+						<div>
+							<span class="label">Effects</span>
+							<input type="text"></input>
+						</div>
+						<div>
+							<span class="label">Range</span>
+							<input type="text"></input>
+						</div>
+					</div>
+					-->
+				</div>
+
+
+
+
+
+				<div class="content player-content">
+					<div class="side">
+						<div class="overview">
+							<h2>overview</h2>
+							<div class="game"><span>Game:</span> Ayai (1.0)</div>
+							<div class="revision"><span>Last Revision:</span> May 20, 2014</div>
+						</div>
+						<div class="updates">
+							<h2>latest news</h2>
+							<div>
+								Ready to present our framework! 
+							</div>
+							<div>
+								Testing bugs and other things.
+							</div>
+						</div>
+					</div>
+					<div class="main">
+						<h2>character selection</h2>
+						<div class="submenu">
+							<a class="hash" href="#create">create new character</a>
+						</div>
+						<div class="clear selection">	
+							<div class="char">
+								<div class="icon"></div>
+								<div class="name">Orunin</div>
+								<div class="info">Level 15 Paladin</div>
+							</div>
+							<div class="char">
+								<div class="icon"></div>
+								<div class="name">Torle</div>
+								<div class="info">Level 15 Druid</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!--
+				<div class="content create-content">
+					<div class="side">
+						<div class="overview">
+							<h2>overview</h2>
+							<div class="game"><span>Game:</span> Ayai (1.2)</div>
+							<div class="revision"><span>Last Revision:</span> January 5, 2014</div>
+
+							<div class="server"><span>Server:</span> US East</div>
+							<div class="players"><span>Players online:</span> 237</div>
+						</div>
+						<div class="updates">
+							<h2>latest updates</h2>
+							<div>
+								Bandit's (NPC) health raised from 150 to 175.
+							</div>
+							<div>
+								Salvage's (NPC) walking speed increased by 20%.
+							</div>
+							<div>
+								<a>View all recent updates (7 since your last login)</a>
+							</div>
+						</div>
+					</div>
+					<div class="main">
+						<h2>character selection</h2>
+						<div class="submenu">
+							<a href="#create">create new character</a>
+						</div>
+						<div class="clear selection">	
+							<div class="char">
+								<div class="icon"></div>
+								<div class="name">Orunin</div>
+								<div class="info">Level 15 Paladin</div>
+							</div>
+							<div class="char">
+								<div class="icon"></div>
+								<div class="name">Torle</div>
+								<div class="info">Level 15 Druid</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				-->
+
+				<div class="footer">
+					<a href="#">about</a> &ndash;
+					<a href="http://www.github.com/ayaigame">github</a> &ndash;
+					<a href="http://ayaigame.github.io">abstract</a>
+				</div>
+			</div>
+		</div>
+
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
+		<script src="js/main.js"></script>
+	</body>
+</html>

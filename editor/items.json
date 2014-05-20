@@ -1,0 +1,20 @@
+[{
+	"id": 0,
+	"name": "Healing Salve",
+	"description": "A healing thing.",
+	"icon": "icon.png",
+	"actives": [],
+	"passives": [],
+	"attributes": [],
+	"slot": "",
+	"consumable": false
+}, {
+	"id": 1,
+	"name": "Clarity",
+	"description": "Gives you some of dat mana.",
+	"icon": "icon.png",
+	"actives": [],
+	"passives": [],
+	"attributes": [],
+	"slot": ""
+}]

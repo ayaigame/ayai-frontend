@@ -1,0 +1,15 @@
+[{
+	"id": 0,
+	"name": "Burn",
+	"description": "Deals damage over time.",
+	"effectType": "fire",
+	"value": 20,
+	"attribute": "Duration",
+	"multiplier": 1,
+	"isRelative": true,
+	"isValueRelative": false,
+	"iconLocation": "effects/burn.png",
+	"interval": 0,
+	"length": 0,
+	"lastModified": "January 1st, 2000"
+}]

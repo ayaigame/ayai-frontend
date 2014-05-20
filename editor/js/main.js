@@ -98,9 +98,9 @@ $(document).ready(function() {
 			password: $passwordInput.val()
 		}
 		var hash = makeBaseAuth(info);
-		initAccount();
+		//initAccount();
 
-		/*
+		
 		$.ajax({
 			type:"POST",
 			url: "/login",
@@ -111,7 +111,7 @@ $(document).ready(function() {
 				initAccount(data);
 			}
 		});
-		*/
+		
 	});
 
 	templates = {
@@ -128,8 +128,19 @@ $(document).ready(function() {
 		},
 		classSummary: function(obj) {
 			var stats = "";
-			for(item in obj.stats) {
-				stats += '<div><span>' + item + ':</span> ' + obj.stats[item] + '</div>';
+			var statsobj = obj.baseStats.stats;
+			//window.testy = statsobj;
+			for(var item in statsobj) {
+				var growth, statName, statBase;
+				for(var stat in statsobj[item]){
+					if(stat == "growth") {					
+						growth = statsobj[item][stat];
+					} else {
+						statName = stat;
+						statBase = statsobj[item][stat];
+					}
+ 				}
+				stats += '<div><span>' + statName + ':</span> ' + statBase + '</div>';
 			}
 
 			return ''+
@@ -141,6 +152,27 @@ $(document).ready(function() {
 					obj.description +
 				'</div>' +
 				'</div>';
+		},
+		classesModal: function() {
+			return '<h2>character creation</h2>' +
+					'<div class="title">' +
+						'Step 1: Select class' +
+					'</div>' +
+					'<div class="list">' +
+						'<$ _.each(classes, function(class) { %>' +
+							'<div><%=class.name%></div>'+
+						'<% }) %>'+
+					'</div>' +
+					'<div class="info">' +
+						'<div class="stats">' +
+							'<% _.each(classes.baseStats, function(stat) { %>' +
+							 	'<div><span><%= stat %>:</span> <%= stat %></div>'+
+							'<% }) %>' +
+						'</div>' +
+						'<div class="description">' +
+							//<%= clas 
+							
+					'</div>';// +
 		},
 		searchResults: function() {
 			return '' +
@@ -156,7 +188,8 @@ $(document).ready(function() {
 			return '' +
 				'<form class="spell-form">' +
 				'<h2><%= name %></h2>' +
-				'<div class="save">save</div>' +
+				'<div class="option delete">delete</div>' +
+				'<div class="option save">save</div>' +
 				'<div class="clear breadcrumb">' +
 					'<a href="#/admin">home</a>&nbsp;>&nbsp;' +
 					'<a href="#/admin/spells">spells</a>&nbsp;>&nbsp;' +
@@ -200,7 +233,8 @@ $(document).ready(function() {
 			return '' +
 				'<form class="class-form">' +
 				'<h2><%= name %></h2>' +
-				'<div class="save">save</div>' +
+				'<div class="option save">save</div>' +
+				'<div class="option delete">delete</div>' +
 				'<div class="clear breadcrumb">' +
 					'<a href="#/admin">home</a>&nbsp;>&nbsp;' +
 					'<a href="#/admin/classes">classes</a>&nbsp;>&nbsp;' +
@@ -223,8 +257,12 @@ $(document).ready(function() {
 					'<input type="text" name="mana" value="<%= mana %>"></input>' +
 				'</div>' +
 				'<div class="stats">' +
-					'<span class="label">Base Stats</span>' +
+					'<span class="label">Stats</span>' +
 					'<input type="text" name="stats" value="<%= stats %>"></input>' +
+				'</div>' +
+				'<div class="base">' +
+					'<span class="label">Base Stats</span>' +
+					'<input type="text" name="base" value="<%= base %>"></input>' +
 				'</div>' +
 				'<div class="growth">' +
 					'<span class="label">Stat Growth</span>' +
@@ -240,7 +278,8 @@ $(document).ready(function() {
 			return '' +
 				'<form class="npc-form">' +
 				'<h2><%= name %></h2>' +
-				'<div class="save">save</div>' +
+				'<div class="option save">save</div>' +
+				'<div class="option delete">delete</div>' +
 				'<div class="clear breadcrumb">' +
 					'<a href="#/admin">home</a>&nbsp;>&nbsp;' +
 					'<a href="#/admin/npcs">npcs</a>&nbsp;>&nbsp;' +
@@ -261,14 +300,22 @@ $(document).ready(function() {
 						'<option value="allied" <% if(faction=="allied"){%>selected<%}%>>Allied</option>' +
 						'<option value="village" <% if(faction=="village"){%>selected<%}%>>Village</option>' +
 					'</select>' + 
+				'</div>' +				
+				'<div class="health">' +
+					'<span class="label">Max Health</span>' +
+					'<input type="text" name="maximumHealth" value="<%= maximumHealth %>"></input>' +
+				'</div>' +
+				'<div class="mana">' +
+					'<span class="label">Max Mana</span>' +
+					'<input type="text" name="maximumMana" value="<%= maximumMana %>"></input>' +
 				'</div>' +
 				'<div class="room">' +
 					'<span class="label">Room</span>' +
-					'<input type="text" name="room" value="<%= room %>"></input>' +
+					'<input type="text" name="roomId" value="<%= roomId %>"></input>' +
 				'</div>' +
 				'<div class="weapon">' +
 					'<span class="label">Weapon</span>' +
-					'<input type="text" name="weapon" value="<%= weapon %>"></input>' +
+					'<input type="text" name="weapon1" value="<%= weapon1 %>"></input>' +
 				'</div>' +
 				'<div class="helmet">' +
 					'<span class="label">Helmet</span>' +
@@ -300,7 +347,8 @@ $(document).ready(function() {
 			return '' +
 				'<form class="effect-form">' +
 				'<h2><%= name %></h2>' +
-				'<div class="save">save</div>' +
+				'<div class="option save">save</div>' +
+				'<div class="option delete">delete</div>' +
 				'<div class="clear breadcrumb">' +
 					'<a href="#/admin">home</a>&nbsp;>&nbsp;' +
 					'<a href="#/admin/effects">effects</a>&nbsp;>&nbsp;' +
@@ -360,7 +408,8 @@ $(document).ready(function() {
 			return '' +
 				'<form class="quest-form">' +
 				'<h2><%= name %></h2>' +
-				'<div class="save">save</div>' +
+				'<div class="option save">save</div>' +
+				'<div class="option delete">delete</div>' +
 				'<div class="clear breadcrumb">' +
 					'<a href="#/admin">home</a>&nbsp;>&nbsp;' +
 					'<a href="#/admin/quests">quests</a>&nbsp;>&nbsp;' +
@@ -395,7 +444,8 @@ $(document).ready(function() {
 			return '' +
 				'<form class="item-form">' +
 				'<h2><%= name %></h2>' +
-				'<div class="save">save</div>' +
+				'<div class="option save">save</div>' +
+				'<div class="option delete">delete</div>' +
 				'<div class="clear breadcrumb">' +
 					'<a href="#admin">home</a>&nbsp;>&nbsp;' +
 					'<a href="#admin/items">items</a>&nbsp;>&nbsp;' +
@@ -454,6 +504,7 @@ $(document).ready(function() {
 		}, collectionView: function() {
 			return '<div class="list-view">' + 
 				'<h2><%=type%></h2>' +
+				'<div class="option">new</div>' +
 				'<div class="clear breadcrumb">' +
 					'<a href="#">home</a>&nbsp;>&nbsp;' +
 					'<a href="#"><%=type%></a>' +
@@ -483,10 +534,9 @@ $(document).ready(function() {
     		class: classType
     	}
 
+	console.log(data);	
 
-		//console.log(data);	
-
-       // $.post("/create", data, function(response){
+        $.post("/create", data, function(response){
         	//console.log(response);
         	var character = {
         		name: username,
@@ -495,12 +545,12 @@ $(document).ready(function() {
         	}
         	var $template = $(templates.characterItem(character));
 			$charSelect.append($template);
-        //});
+        });
     }
 
 	$game = $(".game-screen");
 	$gameClient = $(".game-screen .client");
-	$clientIframe = $("<iframe src='../../debug.html'></iframe>");
+	$clientIframe = $("<iframe src='../debug.html'></iframe>");
 	window.loadGame = function(evt){
 		setCookie("name", $(this).data("name"), 60*60);
 
@@ -521,12 +571,12 @@ $(document).ready(function() {
 	$(".selection").on("click", ".char", loadGame);
 
 	window.initGame = function(){
-		$clientIframe[0].contentWindow.focus();
 		$gameClient.css("visibility", "visible");
 		$gameClient.css({
 			opacity: 1,
 			top: 0
 		});
+		$clientIframe[0].contentWindow.focus();
 	}
 
 	$registerBtn.click(function(evt){
@@ -536,14 +586,14 @@ $(document).ready(function() {
 			password: $passwordInput.val()
 		}
 
-		initAccount();
-		/*
+		//initAccount();
+		
 		$.post("/register", info, function(data){
-
+			initAccount();
 			//var template = templates.characterItem(data);
 
 		});
-		*/
+		
 	});
 
 	function initAccount(token) {
@@ -557,13 +607,13 @@ $(document).ready(function() {
 		var charsUrl = "characters.json";
 
 		
-		$.get("classes.json", function(data){
-			//var response = JSON.parse(data);
+		$.get("/classes", function(data){
+			var response = JSON.parse(data);
 			$classInfo.html("");
 			$classList.html("");
-			//console.log("!",data);
-			var classes = data.classes;
+			var classes = response;
 			for(var obj in classes){
+				console.log(classes[obj].name);
 				$classList.append('<div>'+classes[obj].name+'</div>');
 				//console.log(templates.classSummary(classes[obj]));
 				var $template = $(templates.classSummary(classes[obj]));
@@ -574,15 +624,18 @@ $(document).ready(function() {
 		});
 
 		
-		$.get("characters.json", function(data){
+		$.get("/chars", token, function(data){
 			//var response = JSON.parse(data);
 			//console.log("!",data);
 			var chars = data;
-			for(var obj in chars){
-				var $template = $(templates.characterItem(chars[obj])).hide();
-				$charSelect.append($template);
-				$template.fadeIn();
-			}
+			console.log(chars);
+			//var compiled = _.templates(templates.classesModal, chars);
+			//$charSelect.html(compiled);
+			//for(var obj in chars){
+				//var $template = $(templates.characterItem(chars[obj])).hide();
+				//$charSelect.append($template);
+				//$template.fadeIn();
+			//}
 		});
 		
 		/*
@@ -741,16 +794,57 @@ $(document).ready(function() {
 		})), 
 		classes: new (Backbone.Collection.extend({
 			model: ClassModel,
-			url: 'classes-admin.json'
+			url: '/classes',
+			parse: function(response) {
+				// flatten the json
+				var items = [];
+				var id = 0;
+				for(var entry in response) {
+					var count
+					var item = response[entry];	
+					var parsed = {
+						id: id,
+						name: item.name,
+						description: item.description,
+						health: item.baseHealth,
+						mana: item.baseMana,
+						spritesheet: "",
+					}
+			
+					var stats = item.baseStats.stats;
+					var statNames = [];
+					var statBases = [];
+					var statGrowths = [];
+					for(var stat in stats) {
+						var current = stats[stat];
+						for(key in current) {
+							if(key != "growth") {
+								statNames.push(key);
+								statBases.push(current[key]);
+							} else {
+								statGrowths.push(current[key]);
+							}
+						}
+					}
+					parsed.stats = statNames.join(",");
+					parsed.base = statBases.join(",");					
+					parsed.growth = statGrowths.join(",");
+					items.push(parsed);
+					id++;
+				}
+				return items;
+			}
 		})), 
 		npcs: new (Backbone.Collection.extend({
 			model: NpcModel,
 			//url: 'npcs.json'
 			url: '/npcs',
 			parse: function(response) {
+				// fill in blank descriptions to prevent it from breaking
 				for(var entry in response) {
 					response[entry].description = "";
 				}
+				return response;
 			}
 		})), 
 		effects: new (Backbone.Collection.extend({
@@ -766,6 +860,7 @@ $(document).ready(function() {
 			//url: 'items2.json',			
 			url: '/items',
 			parse: function(response) {
+				// flatten the json
 				var items = [];
 				for(var entry in response) {
 					var item = response[entry];	
@@ -809,12 +904,12 @@ $(document).ready(function() {
 		}),
 		classes:  DefaultDetailView.extend({
 			template: _.template(templates.classPage()),
-			lists: ["stats", "growth"],
+			lists: ["stats", "base", "growth"],
 			ints: ["health", "mana"],
 		}),
 		npcs:  DefaultDetailView.extend({
 			template: _.template(templates.npcPage()),
-			ints: ["room", "weapon", "helmet", "torso", "legs", "feet", "experience", "level"],
+			ints: ["room", "weapon", "helmet", "torso", "legs", "feet", "experience", "level", "maximumHealth", "maximumMana"],
 		}),
 		effects:  DefaultDetailView.extend({
 			template: _.template(templates.effectPage()),

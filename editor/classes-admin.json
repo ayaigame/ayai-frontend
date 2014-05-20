@@ -1,0 +1,21 @@
+[{
+	"id": 0,
+	"name": "Mage",
+	"description": "A magical man.",
+	"health": "100",
+	"mana": "300",
+	"stats": "Strength,Intellect,Agility",
+	"growth": "1,3,2",
+	"spritesheet": "/spritesheets/mage.png",
+	"lastModified": "January 1st, 2000"
+}, {
+	"id": 1,
+	"name": "Warrior",
+	"description": "A manly man.",
+	"health": "400",
+	"mana": "50",
+	"stats": "Strength,Intellect,Agility",
+	"growth": "4,1,2",
+	"spritesheet": "/spritesheets/warrior.png",
+	"lastModified": "January 1st, 2000"
+}]

@@ -29,7 +29,8 @@ ul#buttons {
   padding: 0;
   bottom: 5px;
   position: fixed;
-  right: 30%; }
+  right: 30%;
+  display: none;}
   ul#buttons li {
     width: 25px;
     height: 25px;

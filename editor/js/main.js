@@ -553,7 +553,7 @@ $(document).ready(function() {
 	$clientIframe = $("<iframe src='../debug.html'></iframe>");
 	window.loadGame = function(evt){
 		setCookie("name", $(this).data("name"), 60*60);
-
+		
 		$game.css("visibility", "visible");
 		$game.css({
 			opacity: 1,
@@ -563,7 +563,7 @@ $(document).ready(function() {
 		$game.bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function() {
 			$game.unbind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd");
 			$gameClient.html($clientIframe);
-			$clientIframe.load(initGame);
+			$clientIframe.ready(initGame);
 			//console.log("TEEHEE");
 		});
 	}
@@ -571,12 +571,16 @@ $(document).ready(function() {
 	$(".selection").on("click", ".char", loadGame);
 
 	window.initGame = function(){
+		//window.$clientIframeTest = $clientIframe;
+		console.log("RDY");
 		$gameClient.css("visibility", "visible");
 		$gameClient.css({
 			opacity: 1,
 			top: 0
 		});
-		$clientIframe[0].contentWindow.focus();
+		$('body').css("overflow", "hidden");
+		$clientIframe.focus();
+		//setTimeout(function() {$clientIframe.focus();}, 2000);
 	}
 
 	$registerBtn.click(function(evt){

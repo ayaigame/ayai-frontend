@@ -739,7 +739,7 @@ $(document).ready(function() {
 					description: "",
 					health: 0,
 					mana: 0,
-					stats: "Intelligence,Strength,Agility",
+					stats: "intelligence,strength,agility",
 					base: "",
 					growth: "",
 					spritesheet: ""

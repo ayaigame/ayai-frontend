@@ -593,7 +593,7 @@ $(document).ready(function() {
 		//initAccount();
 		
 		$.post("/register", info, function(data){
-			initAccount();
+			initAccount(data);
 			//var template = templates.characterItem(data);
 
 		});

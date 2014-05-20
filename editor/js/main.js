@@ -25,7 +25,7 @@ $(document).ready(function() {
 	currentState = 0;
 	
 	var states = {
-		isLoggedIn: true,
+		isLoggedIn: false,
 		viewingAdmin: false
 	}
 
@@ -91,6 +91,7 @@ $(document).ready(function() {
 	});
 
 	$loginBtn.click(function(evt){
+		$loginBtn.html("loading");
 		evt.preventDefault();
 
 		var info = {
@@ -109,6 +110,10 @@ $(document).ready(function() {
 			},
 			success: function(data) {
 				initAccount(data);
+			},
+			error: function(data) {
+				alert("Login failed.");
+				resetLoginButtons();
 			}
 		});
 		
@@ -177,7 +182,7 @@ $(document).ready(function() {
 		searchResults: function() {
 			return '' +
 				'<% _.each(results, function(result) { %>' +
-					'<div><span><%=result.name%></span> (<%=result.type%>)</div>' +
+					'<div data-url="admin/<%=type%>/<%=id=%>"><span><%=result.name%></span> (<%=result.type%>)</div>' +
 				'<% }) %>';
 		},
 		collectionPage: function() {
@@ -504,10 +509,10 @@ $(document).ready(function() {
 		}, collectionView: function() {
 			return '<div class="list-view">' + 
 				'<h2><%=type%></h2>' +
-				'<div class="option">new</div>' +
+				'<div data-url="admin/<%=type%>/new" class="option new">new</div>' +
 				'<div class="clear breadcrumb">' +
-					'<a href="#">home</a>&nbsp;>&nbsp;' +
-					'<a href="#"><%=type%></a>' +
+					'<a href="#admin">home</a>&nbsp;>&nbsp;' +
+					'<a href="#admin/<%=type%>"><%=type%></a>' +
 				'</div>' +
 				'<div class="labels">' +
 					'<div class="title">Name</div>' +
@@ -544,7 +549,7 @@ $(document).ready(function() {
         		class: classType
         	}
         	var $template = $(templates.characterItem(character));
-			$charSelect.append($template);
+		$charSelect.append($template);
         });
     }
 
@@ -584,6 +589,7 @@ $(document).ready(function() {
 	}
 
 	$registerBtn.click(function(evt){
+		$registerBtn.html("loading");
 		evt.preventDefault();
 		var info = {
 			email: $emailInput.val(),
@@ -592,54 +598,48 @@ $(document).ready(function() {
 
 		//initAccount();
 		
-		$.post("/register", info, function(data){
-			initAccount(data);
+		$.ajax({
+			type: "POST",
+			url: "/register",
+			data: info,
+			success: function(data){
+				initAccount(data);
+			},
+			error: function(data) {
+				alert("Registration failed.");
+				resetLoginButtons();
+			}
 			//var template = templates.characterItem(data);
 
 		});
 		
 	});
 
+
+	function resetLoginButtons() {
+		$loginBtn.html("login");
+		$registerBtn.html("register");
+	}
+	
 	function initAccount(token) {
-		$(".login-page, .admin-content").hide();
-		$(".accounts, .player-content").show();
-		$searchBar.stop().fadeOut();
-		
 		setCookie("token",token,60*60);
 		$charSelect.html("");
-
+		states.isLoggedIn = true;
 		var charsUrl = "characters.json";
-
 		
-		$.get("/classes", function(data){
-			var response = JSON.parse(data);
-			$classInfo.html("");
-			$classList.html("");
-			var classes = response;
-			for(var obj in classes){
-				console.log(classes[obj].name);
-				$classList.append('<div>'+classes[obj].name+'</div>');
-				//console.log(templates.classSummary(classes[obj]));
-				var $template = $(templates.classSummary(classes[obj]));
-				$classInfo.append($template);
-			}
-
-			$classSummary = $(".modals .create .info");
-		});
-
-		
-		$.get("/chars", token, function(data){
-			//var response = JSON.parse(data);
+		$.post("/chars", token, function(data){
+			var chars = JSON.parse(data);
 			//console.log("!",data);
-			var chars = data;
+			//var chars = data;
 			console.log(chars);
 			//var compiled = _.templates(templates.classesModal, chars);
 			//$charSelect.html(compiled);
-			//for(var obj in chars){
-				//var $template = $(templates.characterItem(chars[obj])).hide();
-				//$charSelect.append($template);
-				//$template.fadeIn();
-			//}
+			for(var obj in chars){
+				var $template = $(templates.characterItem(chars[obj])).hide();
+				$charSelect.append($template);
+				$template.fadeIn();
+			}
+			displayMain();
 		});
 		
 		/*
@@ -679,6 +679,7 @@ $(document).ready(function() {
 					results.push({
 						name: model.get('name'),
 						type: category,
+						id: model.get('id'),
 						time: model.get('lastModified')
 					});
 				}
@@ -726,10 +727,47 @@ $(document).ready(function() {
 		}
 		return null;
 	}
+	
+	var models = {
+		classes: Backbone.Model.extend({
+				defaults: {
+					id: 0,
+					name: "New Class",
+					description: "",
+					health: 0,
+					mana: 0,
+					stats: "",
+					base: "",
+					growth: "",
+					spritesheet: ""
+				}			
+			}),
+		items: Backbone.Model.extend({
+						defaults: {
+							id: 0,
+							name: "New Item",
+							description: "",
+							value: 0,
+							weight: 0,
+							image: "",
+							itemType: "weapon1",
+							
+							range: 0,
+							damage: 0,
+							damageType: "",
 
+							slot: "",
+							protection: 0,
+							armorType: "",
+						}			
+					}),
+		quests: Backbone.Model.extend(),
+		effects: Backbone.Model.extend(),
+		npcs: Backbone.Model.extend(),
+		spells: Backbone.Model.extend()
+	}
 	var SpellModel = Backbone.Model.extend();
 	var NpcModel = Backbone.Model.extend();
-	var ClassModel = Backbone.Model.extend();
 	var QuestModel = Backbone.Model.extend();
 	var ItemModel = Backbone.Model.extend();
 	var EffectModel = Backbone.Model.extend();
@@ -776,14 +814,21 @@ $(document).ready(function() {
 					this.model.set(key, value);
 				}
 			}	
-			alert("Saved!");				
-			console.log(this.model.attributes);
+			alert("Saved!");
 		}
 	});
 
 	var ListView = Backbone.View.extend({
 		el: $('.admin-main'),
 		template: _.template(templates.collectionView()),
+		events: {
+			"click .option.new": "createNew"
+		},
+		createNew: function() {
+			var url = this.$el.find(".option.new").data("url");
+			console.log(this.$el.find(".option.new"), url);
+			router.navigate(url, {trigger: true});
+		},
 		render: function(list) {
 			console.log("??", list);
 			this.$el.html(this.template(list));
@@ -793,11 +838,11 @@ $(document).ready(function() {
 
 	var Collections = {
 		spells: new (Backbone.Collection.extend({
-			model: SpellModel,
+			model: models["spells"],
 			url: 'spells.json'
 		})), 
 		classes: new (Backbone.Collection.extend({
-			model: ClassModel,
+			model: models["classes"],
 			url: '/classes',
 			parse: function(response) {
 				// flatten the json
@@ -807,7 +852,7 @@ $(document).ready(function() {
 					var count
 					var item = response[entry];	
 					var parsed = {
-						id: id,
+						id: item.id,
 						name: item.name,
 						description: item.description,
 						health: item.baseHealth,
@@ -840,7 +885,7 @@ $(document).ready(function() {
 			}
 		})), 
 		npcs: new (Backbone.Collection.extend({
-			model: NpcModel,
+			model: models["npcs"],
 			//url: 'npcs.json'
 			url: '/npcs',
 			parse: function(response) {
@@ -852,15 +897,15 @@ $(document).ready(function() {
 			}
 		})), 
 		effects: new (Backbone.Collection.extend({
-			model: EffectModel,
+			model: models["effects"],
 			url: 'effects.json'
 		})),
 		quests: new (Backbone.Collection.extend({
-			model: QuestModel,
+			model: models["quests"],
 			url: 'quests.json'
 		})),
 		items: new (Backbone.Collection.extend({
-			model: ItemModel,
+			model: models["items"],
 			//url: 'items2.json',			
 			url: '/items',
 			parse: function(response) {
@@ -886,14 +931,14 @@ $(document).ready(function() {
 						armorType: "",
 					}
 					if(parsed.itemType == "armor"){
-						parsed.slot = item.slot;
-						parsed.protection = item.protection;
+						parsed.slot = item.itemType.slot;
+						parsed.protection = item.itemType.protection;
 					}
 
 					if(parsed.itemType == "weapon1"){
-						parsed.range = item.range;
-						parsed.damage = item.damage;
-						parsed.damageType = item.damageType;
+						parsed.range = item.itemType.range;
+						parsed.damage = item.itemType.damage;
+						parsed.damageType = item.itemType.damageType;
 					}
 					items.push(parsed);
 				}
@@ -910,6 +955,14 @@ $(document).ready(function() {
 			template: _.template(templates.classPage()),
 			lists: ["stats", "base", "growth"],
 			ints: ["health", "mana"],
+			saveChanges: function() {
+				console.log("!!!");
+				//this.model.set("name", this.model.get("id"));
+				$.post("/class", _.extend(this.model.attributes,{token:getCookie("token")}), function(response){ 
+					console.log(response);
+					router.navigate("admin/classes", {trigger:true});					
+				});
+			}
 		}),
 		npcs:  DefaultDetailView.extend({
 			template: _.template(templates.npcPage()),
@@ -927,7 +980,14 @@ $(document).ready(function() {
 		}),
 		items:  DefaultDetailView.extend({
 			template: _.template(templates.itemPage()),
-			ints: ["value","weight", "range", "damage"],
+			ints: ["value","weight", "range", "damage", "slot"],
+			saveChanges: function() {
+				$.post("/item", _.extend(this.model.attributes,{token:getCookie("token")}), function(response){ 
+					console.log(response);	
+					router.navigate("admin/items", {trigger:true});			
+				});
+				
+			}
 		})
 	};
 
@@ -987,8 +1047,21 @@ $(document).ready(function() {
 			displayAdmin();
 			var collection = Collections[type];
 			//var View = Views[type];
-			console.log("5");
-			currentDetail = new Views[type]({model: collection.get(id)});
+			var model = collection.get(id);
+			if(model != undefined) {
+				currentDetail = new Views[type]({model: collection.get(id)});
+			} else {
+				var id = -1;
+				_.each(collection.models, function(m) {
+					id = (m.get("id") > id) ? m.get("id") : id;
+				});
+				id++;
+				console.log("ID:",id);
+				var newmodel = new models[type];
+				newmodel.set("id", id);
+				collection.add(newmodel);
+				currentDetail = new Views[type]({model: newmodel});
+			}
 			currentDetail.render();
 		}
 	}
@@ -1015,7 +1088,7 @@ $(document).ready(function() {
 		admin: function() {
 			console.log("lold");
 			displayAdmin();
-			this.navigate("admin/spells", {trigger:true});
+			this.navigate("admin/classes", {trigger:true});
 		},
 		collectionView: function(collection) {
 			console.log(collection);
@@ -1052,7 +1125,31 @@ $(document).ready(function() {
 	}
 
 	function displayMain() {
-		
+		if(canShowAccounts()) {
+			console.log("maining");
+			resetLoginButtons();
+			$(".login-page, .admin-content").hide();
+			$(".accounts, .player-content").show();
+			$searchBar.stop().fadeOut();
+
+			$.get("/classes", function(data){
+				var response = JSON.parse(data);
+				$classInfo.html("");
+				$classList.html("");
+				var classes = response;
+				for(var obj in classes){
+					console.log(classes[obj].name);
+					$classList.append('<div>'+classes[obj].name+'</div>');
+					//console.log(templates.classSummary(classes[obj]));
+					var $template = $(templates.classSummary(classes[obj]));
+					$classInfo.append($template);
+				}
+				$classSummary = $(".modals .create .info");
+				$modalBackground.hide();
+				$modalContainer.hide();
+				$modals.hide();
+			});
+		}
 	}
 
 	function displayAdmin() {

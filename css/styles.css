@@ -1,6 +1,7 @@
         body {
 
             z-index: 0;
+            overflow: hidden;
         }
 
         #float

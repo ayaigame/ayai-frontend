@@ -85,12 +85,20 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 		p.renderStatistics();
 
 		if(p.flagged) {
-            //console.log(p.flagged);
-            //console.log(items);
 
-			if(p.oldItems.length != p.items.length) {
-				console.log("rerendering");
-				console.log(p.items);
+			var needToRender = false;
+
+			for(var i = 0; i < p.items.length; i++) {
+
+				if(p.oldItems[i] !== undefined && p.items[i].name != p.oldItems[i]) {
+
+					needToRender = true;
+					break;
+				}
+
+			}
+			
+			if(p.oldItems.length != p.items.length || needToRender) {
 				p.renderWindow();
 				p.flagged = false;
 			}
@@ -137,21 +145,18 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
        		var template = Handlebars.compile(tplSource);
 			var html = template(item);
 
-       		if(item.itemType.type == "weapon") {
-       			$("li#weapon1 span").css("display", "none"); 
+       		if(item.itemType.type == "weapon1") {
 				$("li#weapon1").html(html); 
 			}
 
 			else {
-				$("li#"+item.itemType.slot + " span").css("display", "none");
 				$("li#"+item.itemType.slot).html(html);
 			}
 		}
 
-		else {
 
-		}
-		
+
+
 	}
 
 	p.renderInventory = function() {
@@ -219,6 +224,8 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 				var item = p.items[p.draggedItemIndex];
 				console.log(item);
 				$(this).find(">span").css("display", "none"); 
+
+				$(this).html("");
 
 				ui.draggable.appendTo($(this));
 				ui.draggable.css("left", "0px");

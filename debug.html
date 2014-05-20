@@ -100,6 +100,8 @@
     </script>
 
     <script id="equipmentItem-template" type="text/x-handlebars-template">
+
+      <span class="slot-name">{{itemType.slot}}</span>
       <div class='item' data-model="{{json this}}">
           <img src="{{image}}" width=40 height=40 />
         <div class='item-tooltip'>
@@ -332,11 +334,11 @@
           <span class="title">Equipment</span> </div>
           <div id="slots">
             <ul class="slots left">
-              <li id="helmet"><span>Head</span></li>
-              <li id="torso"><span>Torso</span></li>
-              <li id="legs"><span>Legs</span></li>
-              <li id="feet"><span>Feet</span></li>
-              <li id="weapon1"><span>Weapon</span></li>
+              <li id="helmet"></li>
+              <li id="torso"></li>
+              <li id="legs"></li>
+              <li id="feet"></li>
+              <li id="weapon1"></li>
             </ul>      
           </div>
         </div>

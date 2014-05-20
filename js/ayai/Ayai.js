@@ -11,6 +11,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
         ayai.gameLoaded = false;
         ayai.verboseLogger = false; 
         ayai.connection = new Connection("ws://localhost:8007");
+        // ayai.connection = new Connection("ws://localhost/ws");
 
         ayai.TILE_WIDTH = 32;
         ayai.TILE_HEIGHT = 32;
@@ -116,7 +117,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
         ayai.game.load.spritesheet('itemicons', '../assets/sprites/ui/itemicons.png', 40, 40);
         ayai.game.load.spritesheet('sword', '../assets/sprites/weapons/swordsheet.png', 18, 18)
         ayai.game.load.image('skillicon', '../assets/sprites/ui/skillsheet.png');
-        ayai.game.load.tilemap('tilemap', ayai.tilemap, null, Phaser.Tilemap.TILED_JSON);
+        ayai.game.load.tilemap('tilemap', null, ayai.tilemap, Phaser.Tilemap.TILED_JSON);
         ayai.game.load.tileset('tileset', ayai.tileset, ayai.TILE_WIDTH, ayai.TILE_HEIGHT);
         ayai.game.load.audio('zelda', ['../assets/audio/music/overworld.mp3']);
         ayai.game.load.audio('sword', ['../assets/audio/sfx/sword.mp3']);
@@ -210,7 +211,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
                 ayai.startingY = evt.detail.msg.y;
                 ayai.spritesheet = evt.detail.msg.spritesheet;
                 ayai.tileset = "/assets/tiles/" + evt.detail.msg.tilesets[0].image;
-                ayai.tilemap = "/assets/maps/" + evt.detail.msg.tilemap;
+                ayai.tilemap = evt.detail.msg.tilemap//"/assets/maps/" + evt.detail.msg.tilemap;
                 ayai.currentTileset = 'tileset';
                 ayai.currentTilemap = 'tilemap';
                 break;
@@ -218,7 +219,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
             case "map":
                 ayai.tileset2 = "/assets/tiles/" + evt.detail.msg.tilesets[0].image;
                 ayai.tilemap2 = "/assets/maps/" + evt.detail.msg.tilemap;
-                ayai.game.load.tilemap('tilemap', ayai.tilemap2, null, Phaser.Tilemap.TILED_JSON);
+                ayai.game.load.tilemap('tilemap',  null, evt.detail.msg.tilemap, Phaser.Tilemap.TILED_JSON);
                 ayai.game.load.tileset('tileset', ayai.tileset2, ayai.TILE_WIDTH, ayai.TILE_HEIGHT);
                 ayai.game.load.start();
                 ayai.gameLoaded = false;

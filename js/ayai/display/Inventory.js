@@ -84,6 +84,19 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 
 		p.renderStatistics();
 
+		if(p.lootFlagged && p.lootOpened) {
+				
+			GameStateInterface.prototype.sendNPCInteractionMessage(p.corpse.loot.id);
+
+			if(p.oldLoot.length != p.loot.length) {
+
+				p.renderLoot();
+				p.lootFlagged = false;
+			}
+		
+		}
+
+
 		if(p.flagged) {
 
 			var needToRender = false;
@@ -159,32 +172,54 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 
 	p.lootOpen = function(json) {
 
-		$("div#loot").addClass("open")
-		$("div#loot div#loot-items").html("");
-        var tplSource = $("#inventoryItemsView-template").html();
-        var template = Handlebars.compile(tplSource);
-		var html = template(json.inventory);
-		$("div#loot div#loot-items").html(html);
-		p.registerTooltipMouseovers();
+		if(!($("div#loot").hasClass("open")))
+			$("div#loot").addClass("open")
+
+		p.lootOpened = true;
+
 
 		p.loot = json.inventory;
+		p.corpse = json.loot;
+
+		if(!p.lootFlagged)
+			p.renderLoot(json);
 
 		$("span.close").click(function() {
 
 			$("div#loot").removeClass("open");
+			p.lootOpened = false;
 		});
+
+	}
+
+	p.renderLoot = function(json) {
+
+		$("div#loot div#loot-items").html("");
+        var tplSource = $("#inventoryItemsView-template").html();
+        var template = Handlebars.compile(tplSource);
+		var html = template(p.loot);
+		$("div#loot div#loot-items").html(html);
+		p.registerTooltipMouseovers();
 
 		$("div#loot-items ul.slots li").click(function(e) {
 
-	        var itemId = json.inventory[$(this).index()].id;
-	        var entityId = json.loot.loot.id;
+	        var itemId = p.loot[$(this).index()].id;
+	        var entityId = p.corpse.loot.id;
+
+			p.oldLoot = [];
+
+			for(var i = 0; i < p.loot.length; i++)
+			{
+				p.oldLoot.push(p.loot[i].name);
+			}
+
 	        GameStateInterface.prototype.sendLootPickupMessage(entityId, itemId);
 
+
+			
+	        p.lootFlagged = true;
+
 	    });
-
-
-
-
 	}
 
 	p.renderInventory = function() {

@@ -3,7 +3,8 @@ ul#skills {
   margin: 0;
   position: fixed;
   bottom: 5px;
-  padding: 0; }
+  padding: 0; 
+  display: none;}
   ul#skills li {
     position: relative;
     border-radius: 5px;

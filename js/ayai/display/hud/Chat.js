@@ -38,12 +38,12 @@ define("Chat", ["ChatMessage"],  function(ChatMessage) {
         $("#chat-pane").scrollTop(99999);
 	}
 
-	p.send = function() {
+	p.send = function(name) {
 
 		var editbox = $("#editbox input");
 
 		if(editbox.val().length != 0) {
-		      var message = new ChatMessage(editbox.val(), "tim");
+		      var message = new ChatMessage(editbox.val(), name);
 		      console.log("Sending: " + message.data);
 		      p.connection.send(message.data);
 		      editbox.val("");

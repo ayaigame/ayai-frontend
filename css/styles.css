@@ -1,7 +1,12 @@
         body {
 
             z-index: 0;
-            overflow: hidden;
+          overflow: hidden;
+          margin: 0;
+          padding: 0;
+          
+          background-color: #333333;
+          font-family: sans-serif;
         }
 
         #float
@@ -131,14 +136,6 @@
         .overlay ul.icons li.settings.active div
         {
             -webkit-transform: rotate(40deg);
-        }
-
-
-        body {
-        margin: 0;
-        padding: 0;
-        background-color: #333333;
-        font-family: sans-serif;
         }
 
         .hidden {

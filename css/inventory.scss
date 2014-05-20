@@ -116,6 +116,28 @@ div#char-window {
         border-left: 1px solid white;
         width: $width / 2.5;
         height: $height / 2;
+        position: relative;
+
+        ul.stats {
+
+            text-align: left;
+            color: White;
+
+            li {
+
+                width: 100%;
+            }
+
+            span.field {
+                display: inline-block;
+            }
+
+            span.value  {
+
+                float: right;
+            }
+
+        }
 
     }
 

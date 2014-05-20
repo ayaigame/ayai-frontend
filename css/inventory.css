@@ -59,7 +59,17 @@ div#char-window div#equipment {
 div#char-window div#statistics {
   border-left: 1px solid white;
   width: 220px;
-  height: 300px; }
+  height: 300px;
+  position: relative; }
+  div#char-window div#statistics ul.stats {
+    text-align: left;
+    color: White; }
+    div#char-window div#statistics ul.stats li {
+      width: 100%; }
+    div#char-window div#statistics ul.stats span.field {
+      display: inline-block; }
+    div#char-window div#statistics ul.stats span.value {
+      float: right; }
 div#char-window div#inventory {
   border-top: 1px solid white;
   margin-top: 5px;

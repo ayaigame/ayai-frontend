@@ -134,7 +134,7 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
         var entities = entities.concat(projectiles);
 
         ayai.quests = json.models.quests;
-        ayai.inventory.sync(json.models.inventory, json.models.equipment);
+        ayai.inventory.sync(json.models.inventory, json.models.equipment, json.models.stats);
 
         for (var index in entities) {
 

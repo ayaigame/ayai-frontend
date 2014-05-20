@@ -38,7 +38,6 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
             if(p.isWeapon(item) || p.isArmor(item)) {
                 return true;
             }
-
             return false;
         }
 
@@ -77,10 +76,13 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 
 	};
 
-	p.sync = function(inventory, equipment) {
+	p.sync = function(inventory, equipment, statistics) {
 
 		p.items = inventory;
 		p.equipment = equipment;
+		p.statistics = statistics;
+
+		p.renderStatistics();
 
 		if(p.flagged) {
             //console.log(p.flagged);
@@ -97,12 +99,25 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 
 	p.renderWindow = function() {
 
+			console.log("rendering");
+			p.renderStatistics();
 			p.renderEquipment();
 			p.renderInventory();
 			p.registerTooltipMouseovers();
 			p.registerMenuOptions();
 			p.registerDraggables();
 
+	}
+
+	p.renderStatistics = function() {
+
+		var str = p.statistics[1].strength.toString();
+		var _int = p.statistics[0].intelligence.toString();
+		var agi = p.statistics[2].agility.toString();
+
+		$("div#statistics ul.stats li.str span.value").html(str);
+		$("div#statistics ul.stats li.int span.value").html(_int);
+		$("div#statistics ul.stats li.agi span.value").html(agi);
 	}
 
 	p.renderEquipment = function() {

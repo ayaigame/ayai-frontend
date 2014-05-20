@@ -67,7 +67,6 @@
     </script>
 
     <script id="inventoryItemsView-template" type="text/x-handlebars-template">
-     <span class="title"></span>
     <ul class="slots">
       {{#each this}}
       <li>
@@ -381,6 +380,12 @@
       </div>
     </div>
 
+    <div id="loot" class="ui-base ui-modal">
+
+      <div class="title"><span class="title">Loot</span><span class="title close">X</span></div>
+      
+      <div id="loot-items"></div>
+    </div>
     <div id="context-menu"></div>
 
       <script src="js/main.js">

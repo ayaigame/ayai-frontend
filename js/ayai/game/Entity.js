@@ -4,7 +4,6 @@ define("Entity", ["phaser"], function(Phaser) {
 
 	function Entity(json) {
 
-		this.id = json.id;
 
 		this.name = json.name;
 		this.spritesheet = json.spritesheet.path;
@@ -14,15 +13,22 @@ define("Entity", ["phaser"], function(Phaser) {
 
 		this.currentAnimation = null;
 
-		console.log(json);
+		if(json.loot !== undefined) {
 
-		if (json.name === undefined && json.id != ayai.characterId) {
+			this.entityType = p.ENTITY_TYPE.LOOT;
+			this.id = json.loot.id;
+		}
+
+		else if (json.name === undefined && json.id != ayai.characterId) {
 			this.entityType = p.ENTITY_TYPE.PROJECTILE;
 			this.healthBarEnabled = false;
+			this.id = json.id;
 		} 
+
 
         else {
 
+			this.id = json.id;
 			this.entityType = p.ENTITY_TYPE.CHARACTER;
             this.healthBarEnabled = true;
 
@@ -70,7 +76,8 @@ define("Entity", ["phaser"], function(Phaser) {
 	p.ENTITY_TYPE = {
 
 		CHARACTER: 0,
-		PROJECTILE: 1
+		PROJECTILE: 1,
+		LOOT: 2
 	}
 
 	p.FACING = {
@@ -125,7 +132,7 @@ define("Entity", ["phaser"], function(Phaser) {
 
 		}
 
-        if(this.entityType == p.ENTITY_TYPE.CHARACTER) {
+        if(this.entityType == p.ENTITY_TYPE.CHARACTER || this.entityType == p.ENTITY_TYPE.LOOT) {
 
             this.registerSpriteTargeting();
         }
@@ -255,11 +262,15 @@ define("Entity", ["phaser"], function(Phaser) {
 		this.sprite.input.useHandCursor = true;
 
 		this.sprite.events.onInputDown.add(function() {
-			Window.target = this;
-			console.log(Window.target.id);
-			$("ul.unitframes li#target").css("display", "none");
-			$("ul.unitframes li#target").css("display", "block");
-			ayai.gameState.sendNPCInteractionMessage(Window.target.id);
+
+			if(this.entityType == p.ENTITY_TYPE.CHARACTER) {
+				Window.target = this;
+				console.log(Window.target.id);
+				$("ul.unitframes li#target").css("display", "none");
+				$("ul.unitframes li#target").css("display", "block");
+			}
+
+			ayai.gameState.sendNPCInteractionMessage(this.id);
 		}, this);
 
 		var self = this;

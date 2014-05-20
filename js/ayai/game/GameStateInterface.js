@@ -1,5 +1,5 @@
-define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "StopMovementMessage", "AttackMessage", "UseItemMessage", "EquipMessage", "UnequipMessage", "DropItemMessage", "InteractMessage", "AbandonQuestMessage", "AcceptQuestMessage"], 
-    function(Entity, UnitFrame, StartMovementMessage, StopMovementMessage, AttackMessage, UseItemMessage, EquipMessage, UnequipMessage, DropItemMessage, InteractMessage, AbandonQuestMessage, AcceptQuestMessage) {
+define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "StopMovementMessage", "AttackMessage", "UseItemMessage", "EquipMessage", "UnequipMessage", "DropItemMessage", "InteractMessage", "AbandonQuestMessage", "AcceptQuestMessage", "LootPickupMessage"], 
+    function(Entity, UnitFrame, StartMovementMessage, StopMovementMessage, AttackMessage, UseItemMessage, EquipMessage, UnequipMessage, DropItemMessage, InteractMessage, AbandonQuestMessage, AcceptQuestMessage, LootPickupMessage) {
     //  constructor
     //  ===========
     var p = GameStateInterface.prototype;
@@ -55,6 +55,15 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
             p.connection.send(message.data);
         }
     };
+
+    p.sendLootPickupMessage = function(entityId, itemId) {
+
+        var message = new LootPickupMessage(entityId, itemId);
+        ayai.connection.send(message.data);
+
+        console.log("looting");
+        console.log(message.data);
+    }
 
     p.sendAbandonQuestMessage = function(questId) {
         var message = new AbandonQuestMessage(questId);
@@ -129,9 +138,11 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
         var players = json.players;
         var npcs = json.npcs;
         var projectiles = json.projs;
+        var loot = json.loot;
 
         var entities = players.concat(npcs);
-        var entities = entities.concat(projectiles);
+        entities = entities.concat(projectiles);
+        entities = entities.concat(loot);
 
         ayai.quests = json.models.quests;
         ayai.inventory.sync(json.models.inventory, json.models.equipment, json.models.stats);
@@ -148,18 +159,20 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
                 UnitFrame.prototype.syncTargetFrame(characterJson);
             }
             
-            if (this.entities[characterJson.id] == null) {
+            if ((this.entities[characterJson.id] == null && characterJson.loot === undefined) || (characterJson.loot !== undefined && this.entities[characterJson.loot.id] == null)) {
 
                 //new entity
-
                 this.addPlayerCharacter(characterJson);
-                
             } 
 
             else {
 
                 //update an existing entity
+
                 var entity = this.entities[characterJson.id];
+                if(entity == null)
+                    entity = this.entities[characterJson.loot.id];
+
                 entity.syncEntity(characterJson);
 
                 if(characterJson.id != Window.character.id) {
@@ -180,9 +193,10 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
 
     p.addPlayerCharacter = function(json) {
 
-        console.log("adding player character" + json.id);
+        
         var newChar = new Entity(json);
-        this.entities[json.id] = newChar;
+        console.log("adding player character" + newChar.id);
+        this.entities[newChar.id] = newChar;
         return newChar;
     };
 

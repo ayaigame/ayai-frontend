@@ -154,6 +154,34 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 			}
 		}
 
+	}
+
+
+	p.lootOpen = function(json) {
+
+		$("div#loot").addClass("open")
+		$("div#loot div#loot-items").html("");
+        var tplSource = $("#inventoryItemsView-template").html();
+        var template = Handlebars.compile(tplSource);
+		var html = template(json.inventory);
+		$("div#loot div#loot-items").html(html);
+		p.registerTooltipMouseovers();
+
+		p.loot = json.inventory;
+
+		$("span.close").click(function() {
+
+			$("div#loot").removeClass("open");
+		});
+
+		$("div#loot-items ul.slots li").click(function(e) {
+
+	        var itemId = json.inventory[$(this).index()].id;
+	        var entityId = json.loot.loot.id;
+	        GameStateInterface.prototype.sendLootPickupMessage(entityId, itemId);
+
+	    });
+
 
 
 
@@ -309,7 +337,7 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 	p.registerTooltipMouseovers = function() {
 
 		var tooltip = null;
-		$("div#char-window ul.slots li").mouseover(function(e) {
+		$("ul.slots li").mouseover(function(e) {
 
 			tooltip = $(this).children().children("div.item-tooltip");
 
@@ -333,7 +361,7 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 		});
 
 		
-		$("div#char-window ul.slots li").mouseout(function(ev) {
+		$("ul.slots li").mouseout(function(ev) {
 			$(tooltip).removeClass("open");
 			$(tooltip).css({
 						left: ev.clientX - 1500 ,
@@ -382,6 +410,7 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
                     left: e.pageX + 1,
                     top: e.pageY + 1
                 });
+
                 $("#context-menu li.drop").on("mousedown", function(e) {
 
                     p.oldItems = [];
@@ -396,6 +425,7 @@ define("Inventory", ["GameStateInterface"], function(GameStateInterface) {
 
 
                 });
+
                 $("#context-menu li.consume").on("mousedown", function(e) {
                     console.log("GOT CLICK FIRST");
 

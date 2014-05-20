@@ -1,17 +1,31 @@
-div#char-window div#container {
-  float: left;
-  width: 550px;
-  min-height: 600px; }
-div#char-window ul {
+div#loot {
+  left: 100px;
+  padding: 10px; }
+  div#loot div.title {
+    overflow: hidden; }
+  div#loot span.title {
+    float: left; }
+  div#loot span.close {
+    float: right;
+    cursor: pointer; }
+  div#loot li {
+    float: left; }
+    div#loot li:first-child {
+      margin-left: 0; }
+    div#loot li:last-child {
+      margin-right: 0; }
+
+ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
   height: auto; }
-  div#char-window ul li {
+  ul li {
     padding: 0;
     list-style-type: none;
     margin: 5px; }
-div#char-window ul.slots li {
+
+ul.slots li {
   cursor: pointer;
   border-radius: 3px;
   background: rgba(0, 0, 0, 0.6);
@@ -19,16 +33,23 @@ div#char-window ul.slots li {
   width: 40px;
   height: 40px;
   position: relative; }
-  div#char-window ul.slots li span.quantity {
+  ul.slots li span.quantity {
     position: absolute;
     right: 4px;
     bottom: 2px; }
-div#char-window ul.slots li:hover {
+
+ul.slots li:hover {
   box-shadow: inset 0px 0px 1px 1px  white; }
-div#char-window ul.slots li.over {
+
+ul.slots li.over {
   transition: all 0.1s linear;
   box-shadow: 0px 0px 7px 2px aliceblue;
   z-index: 0; }
+
+div#char-window div#container {
+  float: left;
+  width: 550px;
+  min-height: 600px; }
 div#char-window span.title {
   color: White;
   text-align: center; }
@@ -95,7 +116,8 @@ div#char-window div#inventory {
         float: left;
         width: 40px;
         height: 40px; }
-div#char-window div.item-tooltip {
+
+div.item-tooltip {
   width: 190px;
   height: 150px;
   background: rgba(0, 0, 0, 0.9);
@@ -104,11 +126,12 @@ div#char-window div.item-tooltip {
   position: fixed;
   opacity: 0;
   padding: 5px; }
-  div#char-window div.item-tooltip span.item-title.rare {
+  div.item-tooltip span.item-title.rare {
     color: cornflowerblue; }
-  div#char-window div.item-tooltip span {
+  div.item-tooltip span {
     color: White;
     float: left; }
-div#char-window div.item-tooltip.open {
+
+div.item-tooltip.open {
   z-index: 100;
   opacity: 1; }

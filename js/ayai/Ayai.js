@@ -44,7 +44,7 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
         var x = $("input#spawnEntityLocationX").val();
         var y = $("input#spawnEntityLocationY").val(); 
  
-        var message = new SpawnMessage(entityType, entityTypeId, x, y);
+        var message = new SpawnMessage(entityType, parseInt(entityTypeId), parseInt(x), parseInt(y));
         ayai.connection.send(message.data);
 
         console.log("spawning");
@@ -234,8 +234,13 @@ define("Ayai", ["phaser", "InputHandler", "Connection", "GameStateInterface", "I
                     ayai.gameState.updateEntities(evt.detail.msg);
                 break;
 
+            case "loot-open":
+                ayai.inventory.lootOpen(evt.detail.msg);
+                break;
+
             case "quest-offer":
                 ayai.acceptQuest.show(evt.detail.msg);
+                break;
 
             case "attack":
                 if (ayai.gameLoaded)

@@ -550,6 +550,9 @@ $(document).ready(function() {
         	}
         	var $template = $(templates.characterItem(character));
 		$charSelect.append($template);
+		$modalBackground.hide();
+		$modalContainer.hide();
+		$modals.hide();
         });
     }
 
@@ -736,7 +739,7 @@ $(document).ready(function() {
 					description: "",
 					health: 0,
 					mana: 0,
-					stats: "",
+					stats: "Intelligence,Strength,Agility",
 					base: "",
 					growth: "",
 					spritesheet: ""
@@ -1145,9 +1148,6 @@ $(document).ready(function() {
 					$classInfo.append($template);
 				}
 				$classSummary = $(".modals .create .info");
-				$modalBackground.hide();
-				$modalContainer.hide();
-				$modals.hide();
 			});
 		}
 	}

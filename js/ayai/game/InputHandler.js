@@ -34,7 +34,7 @@ define("InputHandler", ["phaser", "InputEvent", "UnitFrame"], function (Phaser, 
         }
 
         else {
-            p.chat.send();
+            p.chat.send(ayai.gameState.entities[ayai.characterId].name);
             p.chat.closeEditBox();
             p.reattachClickHandlers();
         }

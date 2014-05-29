@@ -61,7 +61,8 @@ The current version used by the project is Phaser v1.1.3 - Released: 21st Nov 20
 
 ####Terrain
 
-Phaser.js allows you to easily render a tilemap that is in [Tiled](http://www.mapeditor.org/) JSON format. 
+Phaser.js allows you to easily render a tilemap to the HTML canvas that is in [Tiled](http://www.mapeditor.org/) JSON format. 
+Refer to [`js/Ayai.js`](https://github.com/ayaigame/ayai-frontend/blob/develop/js/ayai/Ayai.js)
 
 Step 1: Load the assets.
 ```javascript
@@ -99,4 +100,55 @@ ayai.game.load.onLoadComplete.dispatch = function() {
     ayai.renderMap(ayai.currentTileset, ayai.currentTilemap);
 }
 ```
+
+####Sprites
+
+Phaser.js allows you to easily load spritesheets and display/move sprites on the HTML canvas. Refer to [`js/Ayai.js`](https://github.com/ayaigame/ayai-frontend/blob/develop/js/ayai/Ayai.js) and [`js/game/Entity.js`](https://github.com/ayaigame/ayai-frontend/blob/develop/js/ayai/game/Entity.js).
+
+Step 1. Load the assets
+
+```javascript
+ayai.preload = function() {
+
+    //ayai.game.load.spritesheet(spritesheetName, URL, frameWidth, frameHeight)
+    ayai.game.load.spritesheet('guy', '../assets/sprites/guy/guysheet.png', 32, 32);
+    ayai.game.load.spritesheet('fireball', '../assets/sprites/projectiles/fireball.png', 32, 32);
+}
+
+```
+
+Step 2. Render sprites
+
+```javascript
+function Entity(json) {
+    //....
+    
+    this.sprite = ayai.game.add.sprite(json.position.x, json.position.y, json.spritesheet);
+    
+    for (var i = 0; i < json.animations.length; i++) {
+			var animation = json.animations[i];
+			var frames = [];
+			for (var x = animation.startFrame; x <= animation.endFrame; x++) {
+				frames.push(x);
+			}
+
+			this.sprite.animations.add(animation.name, frames);
+		}
+		
+    //this.sprite.animations.play(animation, fps, loop)
+	this.sprite.animations.play(this.animations[0], 12, true);
+
+    //....
+}
+```
+
+Phaser.js also allows mouse listening on each sprite as well as many other built-in features.
+
+
+####UI Elements
+
+
+####Input Handling
+
+
 

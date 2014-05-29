@@ -1,7 +1,25 @@
 Ayai (HTML5 Frontend)
 =====================
 
+##Installation
+
+###Unix
+```
+git clone https://github.com/ayaigame/ayai-frontend.git
+```
+
+###Windows
+```
+git clone https://github.com/ayaigame/ayai-frontend.git
+```
+
+###Mac
+```
+git clone https://github.com/ayaigame/ayai-frontend.git
+```
+
 To install the mock frontend nginx webserver:
+
 
  sudo su <br/>
  apt-get update <br/>

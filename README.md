@@ -1,9 +1,12 @@
 Ayai (HTML5 Frontend)
 =====================
 
-##Installation
+##Overview
+The front-end component of Ayai is a browser game written in Javascript, leveraging the HTML5 canvas element to render sprites and terrain in WebGL. We used styled divs and Handlebars templates for other UI elements.
 
 Note: The main branch is 'develop'.
+
+##Installation
 
 ###Unix
 ```
@@ -46,10 +49,7 @@ python run-windows.py
 git clone https://github.com/ayaigame/ayai-frontend.git
 ```
 
-
-
-##Overview
-The front-end component of Ayai is a browser game written in Javascript, leveraging the HTML5 canvas element to render sprites and terrain in WebGL. We used styled divs and Handlebars templates for other UI elements.
+##Documentation
 
 ###Phaser.js - Terrain and Sprites
 We make extensive use of the [Phaser.js](http://phaser.io/) library to render images in WebGL.This library provides a layer of abstraction above the PIXI.js WebGL renderer, making it much easier to create 2D browser games with WebGL. 

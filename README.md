@@ -3,14 +3,42 @@ Ayai (HTML5 Frontend)
 
 ##Installation
 
+Note: The main branch is 'develop'.
+
 ###Unix
 ```
 git clone https://github.com/ayaigame/ayai-frontend.git
+sudo su
+apt-get update 
+apt-get install python-software-properties
+add-apt-repository ppa:nginx/stable
+apt-get update
+apt-cache show nginx
 ```
+Find the one with nginx version 1.4.4 and copy and paste it below where $VERSION is
+(for example 1.4.4-1~precise)
+
+```
+apt-get install nginx=$VERSION 
+cd /etc/nginx/sites-enabled 
+rm default
+wget https://raw2.github.com/ayaigame/ayai/master/provisioning/roles/common/files/conf/ayai.conf
+service nginx restart
+iptables -t nat -A OUTPUT -d 192.168.100.10 -j DNAT --to-destination 127.0.0.1
+
+```
+Then just edit ayai.conf and point it to the root of your frontend directory, and sudo nginx restart.
+
+You should then be able to access the following URLs from your local machine:
+
+Editor: http://192.168.100.10/editor <br />
+Game: http://192.168.100.10/debug.html
+
 
 ###Windows
 ```
 git clone https://github.com/ayaigame/ayai-frontend.git
+python run-windows.py
 ```
 
 ###Mac
@@ -18,27 +46,57 @@ git clone https://github.com/ayaigame/ayai-frontend.git
 git clone https://github.com/ayaigame/ayai-frontend.git
 ```
 
-To install the mock frontend nginx webserver:
 
 
- sudo su <br/>
- apt-get update <br/>
- apt-get install python-software-properties <br/>
- add-apt-repository ppa:nginx/stable <br/>
- apt-get update <br/>
- apt-cache show nginx <br/>
- 
-  //Find the one with nginx version 1.4.4 and copy and paste it below where $VERSION is  <br/>
-  //(for example 1.4.4-1~precise)
-  
- apt-get install nginx=$VERSION <br/>
- cd /etc/nginx/sites-enabled <br/>
- rm default <br/>
- wget https://raw2.github.com/ayaigame/ayai/master/provisioning/roles/common/files/conf/ayai.conf <br/>
- service nginx restart <br/>
- iptables -t nat -A OUTPUT -d 192.168.100.10 -j DNAT --to-destination 127.0.0.1 <br/>
- exit
+##Overview
+The front-end component of Ayai is a browser game written in Javascript, leveraging the HTML5 canvas element to render sprites and terrain in WebGL. We used styled divs and Handlebars templates for other UI elements.
 
-Then just edit ayai.conf and point it to the root of your frontend directory, and sudo nginx restart.
+###Phaser.js - Terrain and Sprites
+We make extensive use of the [Phaser.js](http://phaser.io/) library to render images in WebGL.This library provides a layer of abstraction above the PIXI.js WebGL renderer, making it much easier to create 2D browser games with WebGL. 
 
-You should then be able to access the debug page at http://192.168.100.10/debug.html.
+The current version used by the project is Phaser v1.1.3 - Released: 21st Nov 2013. At the time of this writing, the newest stable release of Phaser.js is Version: 2.0.5 "Tanchico" - Released: 20th May 2014. Adapting the project to use the new version would likely provide some benefits in stability and efficiency.
+
+[Examples of Phaser.js code](http://examples.phaser.io/)<br />
+[Phaser.js documentation](http://docs.phaser.io/)
+
+####Terrain
+
+Phaser.js allows you to easily render a tilemap that is in [Tiled](http://www.mapeditor.org/) JSON format. 
+
+Step 1: Load the assets.
+```javascript
+//ayai.tilemap = filename OR raw tiled JSON
+//ayai.tileset = URL of tileset to reference
+ayai.preload = function() {
+
+    ayai.game.load.tilemap('tilemap', null, ayai.tilemap, Phaser.Tilemap.TILED_JSON);
+    ayai.game.load.tileset('tileset', ayai.tileset, ayai.TILE_WIDTH, ayai.TILE_HEIGHT);
+
+}
+```
+
+Step 2: Render the assets.
+
+```javascript
+
+ayai.create = function() {
+
+    ayai.renderMap('tileset', 'tilemap');
+}
+
+```
+
+For loading assets while the game is running, ensure that the assets are loaded before rendering the map, i.e.:
+
+```javascript
+ayai.currentTileset = 'nextTileset';
+ayai.currentTilemap = 'nextTilemap';
+ayai.game.load.tilemap(ayai.currentTilemap, null, ayai.tilemap2, Phaser.Tilemap.TILED_JSON);
+ayai.game.load.tileset(ayai.currentTileset, ayai.tileset2, ayai.TILE_WIDTH, ayai.TILE_HEIGHT);
+
+ayai.game.load.onLoadComplete.dispatch = function() {
+
+    ayai.renderMap(ayai.currentTileset, ayai.currentTilemap);
+}
+```
+

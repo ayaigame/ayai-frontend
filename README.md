@@ -9,6 +9,11 @@ Note: The main branch is 'develop'.
 ##Installation
 
 ###Unix
+
+####Nginx Instructions :
+
+(needed to run admin system, work in progress)
+
 ```
 git clone https://github.com/ayaigame/ayai-frontend.git
 sudo su
@@ -28,15 +33,30 @@ rm default
 wget https://raw2.github.com/ayaigame/ayai/master/provisioning/roles/common/files/conf/ayai.conf
 service nginx restart
 iptables -t nat -A OUTPUT -d 192.168.100.10 -j DNAT --to-destination 127.0.0.1
-
 ```
-Then just edit ayai.conf and point it to the root of your frontend directory, and sudo nginx restart.
+
+Then just edit ayai.conf and point it to the root of your frontend directory, e.g.
+`root	/home/user/apps/ayai-frontend`
+
+`service nginx restart`
 
 You should then be able to access the following URLs from your local machine:
 
 Editor: http://192.168.100.10/editor <br />
 Game: http://192.168.100.10/debug.html
 
+
+####Simple Installation
+(only installs base game)
+```
+git clone https://github.com/ayaigame/ayai-frontend.git
+python run.py
+```
+You should then be able to access the following URLs from your local machine:
+
+Game: http://192.168.100.10/debug.html
+
+Note that to play the game, you must run the Scala server as well (see the [ayai-backend](https://github.com/ayaigame/ayai-backend) repository).
 
 ###Windows
 ```

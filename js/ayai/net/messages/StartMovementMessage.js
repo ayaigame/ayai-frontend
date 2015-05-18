@@ -34,6 +34,8 @@ define("StartMovementMessage", function() {
 
         }
 
+        console.log(direction)
+
         this.data = {
           type: "move",
           start: true,

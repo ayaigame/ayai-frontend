@@ -1,5 +1,5 @@
-define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "StopMovementMessage", "AttackMessage", "UseItemMessage", "EquipMessage", "UnequipMessage", "DropItemMessage", "InteractMessage", "AbandonQuestMessage", "AcceptQuestMessage", "LootPickupMessage"], 
-    function(Entity, UnitFrame, StartMovementMessage, StopMovementMessage, AttackMessage, UseItemMessage, EquipMessage, UnequipMessage, DropItemMessage, InteractMessage, AbandonQuestMessage, AcceptQuestMessage, LootPickupMessage) {
+define("GameStateInterface", ["phaser", "Entity", "UnitFrame", "PositionUpdateMessage",  "StartMovementMessage", "StopMovementMessage", "AttackMessage", "UseItemMessage", "EquipMessage", "UnequipMessage", "DropItemMessage", "InteractMessage", "AbandonQuestMessage", "AcceptQuestMessage", "LootPickupMessage"], 
+    function(Phaser, Entity, UnitFrame, PositionUpdateMessage, StartMovementMessage, StopMovementMessage, AttackMessage, UseItemMessage, EquipMessage, UnequipMessage, DropItemMessage, InteractMessage, AbandonQuestMessage, AcceptQuestMessage, LootPickupMessage) {
     //  constructor
     //  ===========
     var p = GameStateInterface.prototype;
@@ -180,6 +180,42 @@ define("GameStateInterface", ["Entity", "UnitFrame",  "StartMovementMessage", "S
                 }
             }
         }
+
+        for (var i = 0; i < npcs.length; i++) {
+            var npc = npcs[i];
+
+            var entity = this.entities[npc.id];
+
+            if (npc.state !== Entity.prototype.STATE.WALKING && 
+                npc.pathfinding && 
+                npc.pathfinding.path_dirty && 
+                npc.pathfinding.path && 
+                npc.pathfinding.path.length > 0) {
+
+                npc.state = Entity.prototype.STATE.WALKING;
+                var tweens = npc.pathfinding.path.map(function(pos) {
+                    return ayai.game.add.tween(entity.sprite).to({
+                        x: pos.position.x, y: pos.position.y
+                    }, 1000, Phaser.Easing.Linear.None);
+                    
+                    (function(position) {
+                        tween.onComplete.add(function() {
+                            entity.position = position;
+                        });
+                    })(pos.position);
+                });
+
+                tweens[0].chain.apply(tweens[0], tweens.slice(1));
+
+                tweens[tweens.length - 1].onComplete.add(function() {
+                    var lastPos = npc.pathfinding.path[npc.pathfinding.path.length - 1].position;
+                    var message = new PositionUpdateMessage(entity.id, lastPos.x, lastPos.y);
+                    // p.connection.send(message.data);
+                });
+
+                tweens[0].start();
+            }
+        };
 
 
         /*  TODO: If an entity hasn't been updated in 10-20 syncs, remove it?

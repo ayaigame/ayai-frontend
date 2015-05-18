@@ -24,7 +24,7 @@ define("Connection", ["MessageSender", "MessageReceiver"], function(MessageSende
 
           var characterName = getCookie("name");
           if (characterName == null)
-            characterName = "Goober";
+            characterName = "Ness";
           var msg = {'type': 'init', 'name': characterName};//, 'token': getCookie("token")};
           p.send(msg);
 

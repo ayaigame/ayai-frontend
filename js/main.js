@@ -33,6 +33,7 @@ window.onload = function() {
 		    InteractMessage: 'ayai/net/messages/InteractMessage',
 			StartMovementMessage: 'ayai/net/messages/StartMovementMessage',
 			StopMovementMessage: 'ayai/net/messages/StopMovementMessage',
+			PositionUpdateMessage: 'ayai/net/messages/PositionUpdateMessage',
 			UseItemMessage: 'ayai/net/messages/UseItemMessage',
 			LootPickupMessage: 'ayai/net/messages/LootPickupMessage',
 

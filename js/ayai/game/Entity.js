@@ -141,8 +141,10 @@ define("Entity", ["phaser"], function(Phaser) {
 
 	p.syncEntity = function(e) {
 
-		this.sprite.x = e.position.x;
-		this.sprite.y = e.position.y;
+		if (this.spritesheet !== 'npc') {
+			this.sprite.x = e.position.x;
+			this.sprite.y = e.position.y;
+		}
 
 		if (this.entityType == p.ENTITY_TYPE.CHARACTER) {
 
